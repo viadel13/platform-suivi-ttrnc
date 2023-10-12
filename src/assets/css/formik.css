@@ -1,0 +1,27 @@
+.formik{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+
+}
+
+.formik label{
+    font-weight: bold;
+    margin: 12px 0;
+}
+
+.formik input{
+    width: 420px;
+    height: 38px;
+    border: 1px solid rgb(189, 188, 188);
+    border-radius: 3px;
+
+}
+
+.formik button{
+    padding: 10px 30px;
+    border-radius: 5px;
+    background: rgb(161, 235, 228);
+    border: 1px solid rgb(8, 8, 8);
+    box-shadow: 1px 2px 3px 0px rgb(71, 71, 71);
+}
