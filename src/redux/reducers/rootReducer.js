@@ -1,6 +1,23 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../firebase/firebaseConfig";
 
-const localStorageDatas = JSON.parse(localStorage.getItem('datasEnvoi')) || [];
+
+
+
+const fetchDataFromFirestore = async () =>{
+    const querySnapshot = await getDocs(collection(db, "DatasEnvoi"));
+    const data = [];
+    querySnapshot.forEach((doc)=>{
+        data.push(doc.data());
+    })
+
+    localStorage.setItem("datasEnvoi", JSON.stringify(data));
+}
+
+fetchDataFromFirestore();
+
+const localStorageDatas = JSON.parse(localStorage.getItem('datasEnvoi')) || [] ;
 
 const initialState = {
     datasEnvoi: localStorageDatas,

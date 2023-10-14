@@ -10,7 +10,6 @@ const AjouterEnvoi = () => {
 
   const dispatch = useDispatch();
   const uuid = uuidv4().slice(0, 10);
-  const [datasForm, setDatasForm] = useState();
   
   const initialValues =  {
     nomProduit: '',
@@ -22,7 +21,6 @@ const AjouterEnvoi = () => {
   };
 
   const onSubmit = async values =>{
-    setDatasForm(values);
     dispatch(datasEnvoi(values));
     await addDoc(collection(db, "DatasEnvoi"), values);
     formik.handleReset();
