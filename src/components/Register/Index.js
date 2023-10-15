@@ -1,13 +1,25 @@
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 const Register = () => {
+
+  const[menuActif, setMenuActif] = useState('');
+
+  useEffect(()=>{
+    setMenuActif('active');
+
+    return ()=>{
+      setMenuActif('');
+    }
+  }, [])
+
   return (
 
       <div className="card p-4">
         <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
           <li className="nav-item text-center">
             <Link
-              className="nav-link active btl"
+              className="nav-link btl"
               id="pills-home-tab"
               data-toggle="pill"
               to="/"
@@ -20,7 +32,7 @@ const Register = () => {
           </li>
           <li className="nav-item text-center">
             <Link
-              className="nav-link btr"
+              className={`nav-link btr ${menuActif}`}
               id="pills-profile-tab"
               data-toggle="pill"
               to="/register"
