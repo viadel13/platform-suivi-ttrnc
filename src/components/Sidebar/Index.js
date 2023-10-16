@@ -24,7 +24,7 @@ const Sidebar = ({ isSidebarOpen }) => {
   return (
     <div className={`l-navbar ${isSidebarOpen ? "showDash" : ""}`} id="nav-bar">
       <nav className="navbar">
-        <div>
+        <div className="navbar-conteneur">
           <div className="TitleAppli">
             <a
               href="#"
@@ -32,17 +32,17 @@ const Sidebar = ({ isSidebarOpen }) => {
               style={{ textDecoration: "none" }}
             >
               <BiLayer className="nav_logo-icon" />
-              <span className="nav_logo-name">TTNRC</span>
+          
             </a>
           </div>
 
           <div className="nav_list">
             <Link to="/dashboard" className="nav_link active ">
               <BiSolidDashboard className=" nav_icon" />
-              <span className="nav_name">Dashboard</span>
+              <span className="nav_name" style={{ display: !isSidebarOpen ? "none" : "" }}>Dashboard</span>
             </Link>
 
-            <div id="navTitle">
+            <div className="navTitle">
               <span className={`nav_name ${isSidebarOpen ? "" : "spanHover"}`}>
                 Gestion des Envois
               </span>
@@ -50,35 +50,35 @@ const Sidebar = ({ isSidebarOpen }) => {
 
             <Link to="listeEnvois" className="nav_link">
               <BiListUl className=" nav_icon" />
-              <span className="nav_name">Liste des envois</span>
+           
             </Link>
             <Link to="ajouterEnvoi" className="nav_link">
               <MdAssignmentAdd className=" nav_icon" />
-              <span className="nav_name">Ajouter un envoi</span>
+             
             </Link>
 
-            <div id="navTitle">
+            <div className="navTitle">
               <span className={`nav_name ${isSidebarOpen ? "" : "spanHover"}`}>
                 Marchandises
               </span>
             </div>
             <Link to="listeMarchandises" className="nav_link">
               <BsCardList className=" nav_icon" />
-              <span className="nav_name">Liste marchandises</span>
+     
             </Link>
             <Link to="ajouterMarchandise" className="nav_link">
               <MdAddShoppingCart className=" nav_icon" />
-              <span className="nav_name">Ajouter marchandises</span>
+         
             </Link>
 
             <a href="#" className="nav_link">
               <LiaUserSolid className="nav_icon" />
-              <span className="nav_name">Users</span>
+          
             </a>
 
             <a href="#" className="nav_link" onClick={handleSignOut}>
               <LiaSignOutAltSolid className="nav_icon" />
-              <span className="nav_name">SignOut</span>
+        
             </a>
           </div>
         </div>

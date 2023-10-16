@@ -4,7 +4,6 @@ import { Outlet } from 'react-router-dom'
 const Authentification = () => {
   return (
     <div className="d-flex justify-content-center align-items-center p-2 login flex-column">
-  
       <Outlet />
     </div>
   )
