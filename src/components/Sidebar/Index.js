@@ -66,13 +66,9 @@ const Sidebar = ({ isSidebarOpen }) => {
               <BsCardList className=" nav_icon" />
               <span className="nav_name" style={{ display: !isSidebarOpen ? "none" : "" }}>Liste marchandises</span>
             </Link>
-            <Link to="ajouterEnvoi" className="nav_link">
-              <MdAssignmentAdd className=" nav_icon" />
-              <span className="nav_name"  style={{ display: !isSidebarOpen ? "none" : "" }}>Ajouter un envoi</span>
-            </Link>
             <Link to="ajouterMarchandise" className="nav_link">
               <MdAddShoppingCart className=" nav_icon" />
-              <span className="nav_name" style={{ display: !isSidebarOpen ? "none" : "" }}>Ajouter marchandises</span>
+              <span className="nav_name"  style={{ display: !isSidebarOpen ? "none" : "" }}>Ajouter un envoi</span>
             </Link>
 
             <a href="#" className="nav_link">
