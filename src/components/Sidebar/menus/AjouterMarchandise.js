@@ -2,7 +2,7 @@ import React from 'react'
 
 const AjouterMarchandise = () => {
   return (
-    <div className="container mt-5">
+    <div className="container">
     <h2>Ajouter une marchandise</h2>
     <h2>Ajouter une marchandise</h2>
     <h2>Ajouter une marchandise</h2>
