@@ -2,9 +2,13 @@ import React from 'react'
 
 const AjouterMarchandise = () => {
   return (
-    <div className="cont">
-    {/* <h2>Ajouter une marchandise</h2>
-    <form>
+    <div className="container mt-5">
+    <h2>Ajouter une marchandise</h2>
+    <h2>Ajouter une marchandise</h2>
+    <h2>Ajouter une marchandise</h2>
+    <h2>Ajouter une marchandise</h2>
+    <h2>Ajouter une marchandise</h2>
+    {/* <form>
       <div className="mb-3">
         <label htmlFor="nomMarchandise" className="form-label">Nom de la marchandise</label>
         <input type="text" className="form-control" id="nomMarchandise" name="nomMarchandise" required />
