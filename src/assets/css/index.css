@@ -233,12 +233,12 @@ a {
             width: 45px
         }
 
-        /* .l-navbar {
+        .l-navbar {
             left: 0px;
             padding: 1rem 0 0 0;
             width: 60px;
             min-height: 100vh;
-        } */
+        }
 
         .showDash {
             width: calc(var(--nav-width) + 175px);
