@@ -6,8 +6,8 @@ import Authentification from "../components/Authentification/Index";
 import Dashboard from "../components/Dashboard/Index";
 import AjouterEnvoi from "../components/Sidebar/menus/AjouterEnvoi";
 import ListeEnvois from "../components/Sidebar/menus/ListeEnvois";
-import ListeMarchandises from "../components/Sidebar/menus/ListeMarchandises";
-import AjouterMarchandise from "../components/Sidebar/menus/AjouterMarchandise";
+import ListMarchandise from "../components/Sidebar/menus/ListMarchandise";
+import AddMarchandise from "../components/Sidebar/menus/AddMarchandise";
 
 const Root = () => {
   return (
@@ -22,8 +22,8 @@ const Root = () => {
           <Route index element={<Accueil />} />
           <Route path="listeEnvois" element={<ListeEnvois />} />
           <Route path="ajouterEnvoi" element={<AjouterEnvoi />} />
-          <Route path="listeMarchandises" element={<ListeMarchandises />} />
-          <Route path="ajouterMarchandise" element={<AjouterMarchandise />} />
+          <Route path="listMarchandises" element={<ListMarchandise />} />
+          <Route path="addMarchandise" element={<AddMarchandise />} />
         </Route>
       </Routes>
    

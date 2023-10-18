@@ -62,11 +62,11 @@ const Sidebar = ({ isSidebarOpen }) => {
                 Marchandises
               </span>
             </div>
-            <Link to="listeMarchandises" className="nav_link">
+            <Link to="listMarchandises" className="nav_link">
               <BsCardList className=" nav_icon" />
               <span className="nav_name" style={{ display: !isSidebarOpen ? "none" : "" }}>Liste marchandises</span>
             </Link>
-            <Link to="ajouterMarchandise" className="nav_link">
+            <Link to="addMarchandise" className="nav_link">
               <MdAddShoppingCart className=" nav_icon" />
               <span className="nav_name"  style={{ display: !isSidebarOpen ? "none" : "" }}>Ajouter un envoi</span>
             </Link>
