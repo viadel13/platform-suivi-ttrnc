@@ -2,8 +2,8 @@ import React from 'react'
 
 const AjouterMarchandise = () => {
   return (
-    <div className="container mt-5">
-    <h2>Ajouter une marchandise</h2>
+    <div className="cont">
+    {/* <h2>Ajouter une marchandise</h2>
     <form>
       <div className="mb-3">
         <label htmlFor="nomMarchandise" className="form-label">Nom de la marchandise</label>
@@ -30,7 +30,7 @@ const AjouterMarchandise = () => {
         <input type="number" className="form-control" id="prix" name="prix" step="0.01" required />
       </div>
       <button type="submit" className="btn btn-primary">Ajouter la marchandise</button>
-    </form>
+    </form> */}
   </div>
   )
 }
