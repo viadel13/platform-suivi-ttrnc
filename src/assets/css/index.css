@@ -254,7 +254,15 @@ a {
     @media screen and (max-width: 768px) {
         .body {
             margin: calc(var(--header-height) + 2rem) 0 0 0;
-            padding-left: calc(var(--nav-width) + 0.5rem)
+          
+        }
+
+        .header_toggle {
+            color: var(--first-color);
+            font-size: 1.5rem;
+            position: relative;
+            left: -25px;
+            cursor: pointer
         }
     
         .header {
@@ -277,13 +285,14 @@ a {
         }
 
         .l-navbar {
-            left: 0;
+            left: -60px;
             padding: 1rem 0 0 0;
             width: 60px
         }
 
         .showDash {
-            width: calc(var(--nav-width) + 175px)
+            width: calc(var(--nav-width) + 175px);
+            left: 0px
         }
     
         .body-pd {
