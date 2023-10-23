@@ -15,6 +15,26 @@ const Register = () => {
     onSubmit: (values) => {
       console.log("valeur", values);
     },
+
+    validate: (values) => {
+      let errors = {};
+
+      if (!values.name) {
+        errors.name = "Required";
+      }
+
+      if (!values.email) {
+        errors.email = "Required";
+      }
+
+      if (!values.password) {
+        errors.password = "Required";
+      } else if (values.password.length !== 8) {
+        errors.password = "Veuillez entrer exactement 8 caractères";
+      }
+
+      return errors;
+    },
   });
 
   useEffect(() => {
@@ -70,6 +90,9 @@ const Register = () => {
               onChange={formik.handleChange}
               value={formik.values.name}
             />
+            {formik.touched.name && formik.errors.name ? (
+              <div className="text-danger mb-4">{formik.errors.name}</div>
+            ) : null}
 
             <input
               type="email"
@@ -79,6 +102,9 @@ const Register = () => {
               onChange={formik.handleChange}
               value={formik.values.email}
             />
+            {formik.touched.email && formik.errors.email ? (
+              <div className="text-danger mb-4">{formik.errors.email}</div>
+            ) : null}
 
             <input
               type="password"
@@ -90,7 +116,13 @@ const Register = () => {
               value={formik.values.password}
             />
 
-            <button type="submit" className="btn btn-primary w-100">Signup</button>
+            {formik.touched.password && formik.errors.password ? (
+              <div className="text-danger mb-4">{formik.errors.password}</div>
+            ) : null}
+
+            <button type="submit" className="btn btn-primary w-100">
+              Signup
+            </button>
           </form>
         </div>
       </div>

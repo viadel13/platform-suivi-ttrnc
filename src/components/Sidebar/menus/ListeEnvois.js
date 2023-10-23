@@ -1,85 +1,111 @@
-import { useEffect, useState } from "react";
-import { db } from "../../../firebase/firebaseConfig";
-import { collection, query, onSnapshot } from "firebase/firestore";
+import React from "react";
 
 const ListeEnvois = () => {
-  // const datasEnvoi = useSelector((state)=> state.platformeSuivi.datasEnvoi);
-  // const datasEnvoi = JSON.parse(localStorage.getItem('datasEnvoi'));
-  const [donneesEnvoi, setDonneesEnvoi] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  const q = query(collection(db, "DatasEnvoi"));
-
-  useEffect(() => {
-    const unsubscribe = onSnapshot(q, (querySnapchot) => {
-      const datas = [];
-      querySnapchot.forEach((doc) => {
-        datas.push(doc.data());
-      });
-
-      setDonneesEnvoi(datas);
-      setLoading(false);
-    });
-    return () => {
-      unsubscribe();
-    };
-  }, [q]);
-
-  const tableDatas = donneesEnvoi.map((i, index) => {
-    return (
-      <tr key={index}>
-        <td>{i.numeroSuivi}</td>
-        <td>{i.nomProduit}</td>
-        <td>{i.quantite}</td>
-        <td>{i.categorie}</td>
-        <td style={{width: '290px'}}>
-          <select className="form-select" aria-label="Default select example" style={{ border: 'none'}}>
-            <option value="1">En attente de dédouanement</option>
-            <option value="2">En transit </option>
-            <option value="3">En livraison</option>
-            <option value="4">Livré </option>
-          </select>
-        </td>
-      </tr>
-    );
-  });
-
   return (
-    <div className="container mt-5">
-      <div style={{ backgroundColor: "white" }}>
-        <h2>Liste des envois</h2>
-      </div>
-      <div className="table-responsive">
-        <table className="table table-bordered">
-          <thead className="table-primary">
-            <tr>
-              <th>Numéro de suivi</th>
-              <th>Nom du produit</th>
-              <th>Quantité</th>
-              <th>Catégorie</th>
-              <th>État</th>
-            </tr>
-          </thead>
-          <tbody>
-            {loading ? (
-              <tr>
-                <td colSpan="5" className="text-center p-4">
-                  <div className="spinner-border text-primary" role="status">
-                    <span className="visually-hidden">Loading...</span>
-                  </div>
-                </td>
-              </tr>
-            ) : tableDatas.length !== 0 ? (
-              tableDatas
-            ) : (
-              <tr>
-                <td colSpan="5" className="text-center p-4">
-                  Aucune donnée
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+    <div className="container">
+      <div className="col-md-12">
+        <div className="panel panel-default">
+          <div className="panel-heading">Employee</div>
+          <div className="panel-body">
+            <table className="table table-condensed table-striped">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Numéro</th>
+                  <th>Client</th>
+                  <th className="d-none d-md-table-cell">Categorie</th>
+                  <th className="d-none d-md-table-cell">Quantite</th>
+                  <th className="d-none d-md-table-cell">Prix</th>
+                  <th className="d-none d-md-table-cell">Etat</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  data-bs-toggle="collapse"
+                  data-bs-target="#demo1"
+                  className="accordion-toggle"
+                >
+                  <td>
+                    <button className="btn btn-default btn-sm">Clique</button>
+                  </td>
+                  <td>Carlos</td>
+                  <td>Mathias</td>
+                  <td className="d-none d-md-table-cell">Leme</td>
+                  <td className="d-none d-md-table-cell">SP</td>
+                  <td className="d-none d-md-table-cell">New</td>
+                </tr>
+                <tr>
+                  <td colSpan="6" className="hiddenRow">
+                    <div className="accordion-body collapse" id="demo1">
+                      <table className="table table-striped">
+                     
+                        <tbody>
+                          <tr
+                            data-bs-toggle="collapse"
+                            className="accordion-toggle"
+                            data-bs-target="#demo10"
+                          >
+                            <td>
+                              Categorie
+                            </td>
+                            <td>Google</td>
+                            <td>U$8.00000 </td>
+                            {/* <td>2016/09/27</td>
+                            <td>2017/09/27</td> */}
+                            <td>
+                              <a href="#" className="btn btn-default btn-sm">
+                                <i className="glyphicon glyphicon-cog"></i>
+                              </a>
+                            </td>
+                          </tr>
+                         
+                          <tr>
+                            <td>Quantite</td>
+                            <td>Google</td>
+                            <td>U$8.00000 </td>
+                            {/* <td>2016/09/27</td>
+                            <td>2017/09/27</td> */}
+                            <td>
+                              {" "}
+                              <a href="#" className="btn btn-default btn-sm">
+                                <i className="glyphicon glyphicon-cog"></i>
+                              </a>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>Prix</td>
+                            <td>Google</td>
+                            <td>U$8.00000 </td>
+                            <td>
+                              {" "}
+                              <a href="#" className="btn btn-default btn-sm">
+                                <i className="glyphicon glyphicon-cog"></i>
+                              </a>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>Etat</td>
+                            <td>Google</td>
+                            <td>U$8.00000 </td>
+                            <td>
+                              {" "}
+                              <a href="#" className="btn btn-default btn-sm">
+                                <i className="glyphicon glyphicon-cog"></i>
+                              </a>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </td>
+                </tr>
+             
+                   
+                   
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     </div>
   );
