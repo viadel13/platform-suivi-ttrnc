@@ -41,7 +41,7 @@ const Dashboard = () => {
       <div id="body-pd">
         <Navbar toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
         <Sidebar isSidebarOpen={isSidebarOpen} />
-        <div className="container-fluid height-100 bg-light">
+        <div className="container-fluid bg-light" style={{height: '100%', width: '100%'}}>
           <Outlet />
         </div>
       </div>

@@ -178,12 +178,17 @@ a {
     font-size: 1.25rem
 }
 
+.hiddenRow {
+    padding: 0 !important;
+}
+
 .showDash {
     left: 0
 }
 
-.body-pd {
-    padding-left: calc(var(--nav-width) + 1rem)
+#body-pd {
+    height: 100vh;
+    width: 100%;
 }
 
 .active {
@@ -254,7 +259,7 @@ a {
     @media screen and (max-width: 768px) {
         .body {
             margin: calc(var(--header-height) + 2rem) 0 0 0;
-          
+            
         }
 
         .header_toggle {
@@ -289,15 +294,14 @@ a {
             padding: 1rem 0 0 0;
             width: 60px
         }
-
+        
         .showDash {
             width: calc(var(--nav-width) + 175px);
             left: 0px
         }
-    
+
         .body-pd {
             padding-left: calc(var(--nav-width) + 80px);
             transition: .3s
-
         }
     }
