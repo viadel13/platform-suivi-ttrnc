@@ -7,7 +7,7 @@ const ListeEnvois = () => {
   const [donneesEnvoi, setDonneesEnvoi] = useState([]);
   const [loading, setLoading] = useState(true);
   // const [collapseShow, setCollapseShow] = useState(false);
-  const datasEnteteTab = ['Produit', 'Quantite', 'Prix', 'Etat'];
+
   
   const q = query(collection(db, "DatasEnvoi"));
 
@@ -37,7 +37,7 @@ const ListeEnvois = () => {
         <h2>Liste des envois</h2>
       </div>
 
-          <div>
+          <div id="card-tab">
             <table className="table table-condensed table-striped">
               <thead>
                 <tr className="text-center">
@@ -76,7 +76,7 @@ const ListeEnvois = () => {
                       <td className="d-none d-md-table-cell">{i.nomProduit}</td>
                       <td className="d-none d-md-table-cell">{i.quantite}</td>
                       <td className="d-none d-md-table-cell">{i.categorie}</td>
-                      <td className="d-none d-md-table-cell">en trasit</td>
+                      <td className="d-none d-md-table-cell">en transit</td>
                     </tr>
                     <tr className="d-md-none d-lg-none">
                       <td colSpan="6" className="hiddenRow">
@@ -87,33 +87,33 @@ const ListeEnvois = () => {
                             </thead>
                             <tbody>
                         
-                              <tr style={{ position: 'relative'}}>
-                                <th>
+                              <tr>
+                                <th className="">
                                   Produit
                                 </th>
-                                <td  style={{ position: 'absolute', left: '150px'}}>{i.nomProduit}</td>
+                                <td>{i.nomProduit}</td>
                               </tr>
                           
         
-                              <tr style={{ position: 'relative'}}>
+                              <tr>
                                 <th>
                                   Quantite
                                 </th>
-                                <td  style={{ position: 'absolute', left: '150px'}}>{i.quantite}</td>
+                                <td>{i.quantite}</td>
                               </tr>
-                              <tr style={{ position: 'relative'}}>
+                              <tr>
                                 <th>
                                   Prix
                                 </th>
-                                <td  style={{ position: 'absolute', left: '150px'}}>{i.prix}</td>
+                                <td>{i.prix}</td>
                               </tr>
                           
         
-                              <tr style={{ position: 'relative'}}>
+                              <tr>
                                 <th>
                                   Etat
                                 </th>
-                                <td  style={{ position: 'absolute', left: '150px'}}>En transit</td>
+                                <td>En transit</td>
                               </tr>
                              
                             
