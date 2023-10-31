@@ -22,7 +22,7 @@ const Sidebar = ({ isSidebarOpen }) => {
   }
 
   return (
-    <div className={`l-navbar ${isSidebarOpen ? "showDash" : ""}`} id="nav-bar">
+    <div className={`l-navbar d-none d-lg-block ${isSidebarOpen ? "showDash" : ""}`} id="nav-bar">
       <nav className="navbar">
         <div className="navbar-conteneur">
           <div className="TitleAppli">

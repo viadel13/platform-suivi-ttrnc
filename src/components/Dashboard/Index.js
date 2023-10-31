@@ -11,7 +11,16 @@ const Dashboard = () => {
   const [userSession, setUserSession] = useState("");
   const navigate = useNavigate();
 
+  const updateSidebarState = () => {
+    if (window.innerWidth <= 768) {
+      setIsSidebarOpen(false);
+      const bodypd = document.getElementById("body-pd");
+      bodypd.classList.remove("body-pd");
+    }
+  };
+
   useEffect(() => {
+    window.addEventListener("resize", updateSidebarState);
     const userStatut = onAuthStateChanged(auth, (user) => {
       if (user) {
         setUserSession(user);
@@ -20,10 +29,12 @@ const Dashboard = () => {
       }
     });
     return () => {
+      window.removeEventListener("resize", updateSidebarState);
       userStatut();
     };
   }, [navigate]);
-  
+
+
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
     const bodypd = document.getElementById("body-pd");
@@ -41,7 +52,7 @@ const Dashboard = () => {
       <div id="body-pd">
         <Navbar toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
         <Sidebar isSidebarOpen={isSidebarOpen} />
-        <div className="container-fluid bg-light" style={{height: '100%', width: '100%'}}>
+        <div className="container-fluid bg-light" style={{height: '100vh', width: '100%'}}>
           <Outlet />
         </div>
       </div>

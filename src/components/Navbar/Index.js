@@ -5,7 +5,7 @@ const Navbar = ({toggleSidebar, isSidebarOpen}) => {
   return (
     <>
       <header className={`header ${isSidebarOpen ? 'header-active' : 'header'}`} id="header-lg">
-        <div className="header_toggle d-none d-lg-block">
+        <div className="header_toggle d-none d-md-none d-lg-block">
           {isSidebarOpen ? (
             <MdOutlineClose className="header-toggle" onClick={toggleSidebar} />
           ) : (
@@ -14,7 +14,7 @@ const Navbar = ({toggleSidebar, isSidebarOpen}) => {
         </div>
         
         <div className="header_img">
-          <img src="https://i.imgur.com/hczKIze.jpg" alt="" />
+          <img src="https://i.imgur.com/hczKIze.jpg" alt="image-profil" />
         </div>
       </header>
 
@@ -23,7 +23,7 @@ const Navbar = ({toggleSidebar, isSidebarOpen}) => {
           {isSidebarOpen ? (
             <MdOutlineClose  data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample" />
           ) : (
-            <AiOutlineMenu  color="red"   data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample"  />
+            <AiOutlineMenu  color="red" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample"  />
           )}
         </div>
         <div className="header_img">
@@ -32,23 +32,23 @@ const Navbar = ({toggleSidebar, isSidebarOpen}) => {
       </header> 
 
 
-      <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
-  <div class="offcanvas-header">
-    <h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
-    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      <div className="offcanvas offcanvas-start" tabIndex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+  <div className="offcanvas-header">
+    <h5 className="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
+    <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
   </div>
-  <div class="offcanvas-body">
+  <div className="offcanvas-body">
     <div>
       Some text as placeholder. In real life you can have the elements you have chosen. Like, text, images, lists, etc.
     </div>
-    <div class="dropdown mt-3">
-      <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+    <div className="dropdown mt-3">
+      <button className="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
         Dropdown button
       </button>
-      <ul class="dropdown-menu">
-        <li><a class="dropdown-item" href="#">Action</a></li>
-        <li><a class="dropdown-item" href="#">Another action</a></li>
-        <li><a class="dropdown-item" href="#">Something else here</a></li>
+      <ul className="dropdown-menu">
+        <li><a className="dropdown-item" href="#">Action</a></li>
+        <li><a className="dropdown-item" href="#">Another action</a></li>
+        <li><a className="dropdown-item" href="#">Something else here</a></li>
       </ul>
     </div>
   </div>

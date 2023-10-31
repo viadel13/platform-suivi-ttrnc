@@ -213,7 +213,7 @@ a {
 }
 
 
-    @media screen and (min-width: 768px) {
+    @media screen and (min-width:992px) {
         .body {
             margin: calc(var(--header-height) + 2rem) 0 0 0;
             padding-left: calc(var(--nav-width) + 0.5rem)
@@ -253,9 +253,17 @@ a {
             padding-left: calc(var(--nav-width) + 100px);
             transition: .3s
 
-        }
+        } 
 
     } 
+
+    
+    @media screen and (min-width: 767px) and (max-width: 991px)  {
+        .body {
+            margin: calc(var(--header-height) + 2rem) 0 0 0;
+        }
+    }
+
     @media screen and (max-width: 768px) {
         .body {
             margin: calc(var(--header-height) + 2rem) 0 0 0;
@@ -295,7 +303,7 @@ a {
             width: 60px
         }
 
-        .showDash {
+        /* .showDash {
             width: calc(var(--nav-width) + 175px);
             left: 0px
         }
@@ -303,5 +311,5 @@ a {
         .body-pd {
             padding-left: calc(var(--nav-width) + 80px);
             transition: .3s
-        }
+        } */
     }
