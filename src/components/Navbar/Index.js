@@ -48,12 +48,8 @@ const Navbar = ({toggleSidebar, isSidebarOpen}) => {
       </header>
       
       <header className={`header d-lg-none`} >
-        <div className="header_toggle">
-          {isSidebarOpen ? (
-            <MdOutlineClose  data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample" />
-          ) : (
-            <AiOutlineMenu  data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample"  />
-          )}
+        <div className="header_toggle"  data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample"  >
+          <AiOutlineMenu  />
         </div>
         <div className="header_img">
           <img src="https://i.imgur.com/hczKIze.jpg" alt="" />
@@ -61,7 +57,7 @@ const Navbar = ({toggleSidebar, isSidebarOpen}) => {
       </header> 
 
 
-      <div className="offcanvas offcanvas-start text-bg-dark " tabIndex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+      <div className="offcanvas offcanvas-start" style={{backgroundColor: '#05010ff6'}} tabIndex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
         <div className="offcanvas-header border-bottom pb-4">
           <div className="offcanvas-title TitleAppli" id="offcanvasExampleLabel"> 
             <BiLayer className="nav_logo-icon" />
