@@ -1,7 +1,36 @@
 import { AiOutlineMenu } from "react-icons/ai";
 import { MdOutlineClose } from "react-icons/md";
+import { BiSolidDashboard, BiListUl } from "react-icons/bi";
+import { BsCardList } from "react-icons/bs";
+import { MdAssignmentAdd, MdAddShoppingCart } from "react-icons/md";
+import { BiLayer } from "react-icons/bi";
+import { LiaUserSolid, LiaSignOutAltSolid } from "react-icons/lia";
+import { Link, useNavigate } from "react-router-dom";
+import { getAuth, signOut } from "firebase/auth";
+
+
 
 const Navbar = ({toggleSidebar, isSidebarOpen}) => {
+  const navigate = useNavigate()
+  const handleLinkClick = (destination) => {
+    navigate(`${destination}`);
+    window.location.reload();
+
+  };
+  
+  function handleSignOut() {
+    setTimeout(async () => {
+      try {
+        const auth = getAuth();
+        await signOut(auth);
+      } catch (error) {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+
+        console.log("erreur est", errorMessage);
+      }
+    }, 1000);
+  }
   return (
     <>
       <header className={`header ${isSidebarOpen ? 'header-active' : 'header'}`} id="header-lg">
@@ -17,13 +46,13 @@ const Navbar = ({toggleSidebar, isSidebarOpen}) => {
           <img src="https://i.imgur.com/hczKIze.jpg" alt="image-profil" />
         </div>
       </header>
-
+      
       <header className={`header d-lg-none`} >
         <div className="header_toggle">
           {isSidebarOpen ? (
             <MdOutlineClose  data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample" />
           ) : (
-            <AiOutlineMenu  color="red" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample"  />
+            <AiOutlineMenu  data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample"  />
           )}
         </div>
         <div className="header_img">
@@ -32,27 +61,67 @@ const Navbar = ({toggleSidebar, isSidebarOpen}) => {
       </header> 
 
 
-      <div className="offcanvas offcanvas-start" tabIndex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
-  <div className="offcanvas-header">
-    <h5 className="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
-    <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-  </div>
-  <div className="offcanvas-body">
-    <div>
-      Some text as placeholder. In real life you can have the elements you have chosen. Like, text, images, lists, etc.
-    </div>
-    <div className="dropdown mt-3">
-      <button className="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
-        Dropdown button
-      </button>
-      <ul className="dropdown-menu">
-        <li><a className="dropdown-item" href="#">Action</a></li>
-        <li><a className="dropdown-item" href="#">Another action</a></li>
-        <li><a className="dropdown-item" href="#">Something else here</a></li>
-      </ul>
-    </div>
-  </div>
-</div>
+      <div className="offcanvas offcanvas-start text-bg-dark " tabIndex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+        <div className="offcanvas-header border-bottom pb-4">
+          <div className="offcanvas-title TitleAppli" id="offcanvasExampleLabel"> 
+            <BiLayer className="nav_logo-icon" />
+            <a href="#" style={{textDecoration: 'none'}}> <span className="nav_logo-name" >TTNRC</span> </a>
+          </div>
+          <button type="button" className="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div className="offcanvas-body">
+        <nav className="navbar">
+        <div className="navbar-conteneur">
+
+          <div className="nav_list">
+            <Link to="/dashboard" className="nav_link active" onClick={() => handleLinkClick("/dashboard")}>
+              <BiSolidDashboard className=" nav_icon" />
+              <span className="nav_name">Dashboard</span>
+            </Link>
+
+            <div className="navTitle">
+              <span className={`nav_name`}>
+                Gestion des Envois
+              </span>
+            </div>
+
+            <Link to="listeEnvois" className="nav_link" onClick={() => handleLinkClick("listeEnvois")}>
+              <BiListUl className=" nav_icon" />
+              <span className="nav_name">Liste des envois</span>
+            </Link>
+            <Link to="ajouterEnvoi" className="nav_link" onClick={() => handleLinkClick("ajouterEnvoi")}>
+              <MdAssignmentAdd className=" nav_icon" />
+              <span className="nav_name" >Ajouter un envoi</span>
+            </Link>
+
+            <div className="navTitle">
+              <span className={`nav_name`}>
+                Marchandises
+              </span>
+            </div>
+            <Link to="listMarchandises" className="nav_link" onClick={() => handleLinkClick("listMarchandises")}>
+              <BsCardList className=" nav_icon" />
+              <span className="nav_name">Liste marchandises</span>
+            </Link>
+            <Link to="addMarchandise" className="nav_link" onClick={() => handleLinkClick("addMarchandise")}>
+              <MdAddShoppingCart className=" nav_icon" />
+              <span className="nav_name" >Ajouter un envoi</span>
+            </Link>
+
+            <a href="#" className="nav_link">
+              <LiaUserSolid className="nav_icon" />
+              <span className="nav_name">Users</span>
+            </a>
+
+            <Link href="#" className="nav_link" onClick={handleSignOut}>
+              <LiaSignOutAltSolid className="nav_icon" />
+              <span className="nav_name">SignOut</span>
+            </Link>
+          </div>
+        </div>
+      </nav>
+        </div>
+      </div>
 
     </>
 
