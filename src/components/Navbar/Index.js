@@ -7,12 +7,16 @@ import { BiLayer } from "react-icons/bi";
 import { LiaUserSolid, LiaSignOutAltSolid } from "react-icons/lia";
 import { Link, useNavigate } from "react-router-dom";
 import { getAuth, signOut } from "firebase/auth";
+import { useState } from "react";
 
 
 
 const Navbar = ({toggleSidebar, isSidebarOpen}) => {
-  const navigate = useNavigate()
+  const[clickLien, setClickLien] = useState(false);
+  const navigate = useNavigate();
+
   const handleLinkClick = (destination) => {
+    setClickLien(true);
     navigate(`${destination}`);
     window.location.reload();
 
@@ -63,7 +67,7 @@ const Navbar = ({toggleSidebar, isSidebarOpen}) => {
             <BiLayer className="nav_logo-icon" />
             <a href="#" style={{textDecoration: 'none'}}> <span className="nav_logo-name" >TTNRC</span> </a>
           </div>
-          <button type="button" className="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          <button type="button" className={`btn-close btn-close-white ${clickLien && 'disabled'}`} data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div className="offcanvas-body">
         <nav className="navbar">
