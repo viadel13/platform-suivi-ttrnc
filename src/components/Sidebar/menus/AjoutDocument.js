@@ -3,7 +3,7 @@ import React from "react";
 const AjoutDocument = () => {
   return (
     <div className="ajoutDocument">
-      <div className="container card-ajoutDocument px-5 p-3">
+      <div className="container card-ajoutDocument">
         <div style={{ backgroundColor: "white" }}>
           <h2>Ajouter un Document</h2>
         </div>

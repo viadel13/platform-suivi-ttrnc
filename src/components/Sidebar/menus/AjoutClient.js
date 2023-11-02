@@ -7,7 +7,7 @@ const AjoutClient = () => {
 
   return (
     <div className="ajoutClient">
-      <div className=" card-ajoutClient container px-5 p-3">
+      <div className=" card-ajoutClient container ">
         <div style={{ backgroundColor: "white" }}>
           <h2>Ajouter un Client</h2>
         </div>

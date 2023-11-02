@@ -56,7 +56,7 @@ const AjouterEnvoi = () => {
   });
 
   return (
-    <div className="container ajoutEnvoi card-ajoutEnvoi px-5 p-3 ">
+    <div className="container ajoutEnvoi card-ajoutEnvoi ">
       <div style={{ backgroundColor: "white" }}>
         <h2>Ajouter un envoi</h2>
       </div>
