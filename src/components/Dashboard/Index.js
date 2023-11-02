@@ -52,7 +52,7 @@ const Dashboard = () => {
       <div id="body-pd">
         <Navbar toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
         <Sidebar isSidebarOpen={isSidebarOpen} />
-        <div className="container-fluid bg-light" style={{height: '100vh', width: '100%'}}>
+        <div className="container-fluid" style={{minHeight: '100vh', width: '100%', border: '1px solid white'}}>
           <Outlet />
         </div>
       </div>

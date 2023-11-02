@@ -17,14 +17,18 @@
     box-sizing: border-box
 }
 
+body{
+    min-height: 100vh;
+}
+
 .body {
     position: relative;
-    margin: var(--header-height) 0 0 0;
+
     padding: 0 1rem;
     font-family: var(--body-font);
     font-size: var(--normal-font-size);
     transition: .5s;
-    height: 100vh;
+
 }
 
 a {
@@ -78,7 +82,6 @@ a {
     z-index: var(--z-fixed);
     overflow-y: auto; 
 
-  
 }
 
 .l-navbar::-webkit-scrollbar{
@@ -213,12 +216,72 @@ a {
 }
 
 
+.card-ajoutClient{
+    box-shadow: 1px 1px 10px 2px rgb(228, 227, 227);
+    border-radius: 8px;
+    margin-bottom: 25px;
+}
+
+ .card-ajoutDocument, .card-ajoutEnvoi{
+    box-shadow: 1px 1px 10px 2px rgb(228, 227, 227);
+    border-radius: 8px;
+    margin-bottom: 25px;
+}
+
+.card-listeEnvoi{
+    box-shadow: 1px 1px 10px 2px rgb(228, 227, 227);
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+}
+
+.PhoneInputInput {
+    display: block;
+    width: 100%;
+    padding: .475rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #dee2e6;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+.PhoneInputInput:focus {
+    border-color:none;
+    outline: none;
+    box-shadow: 0 0 0 .25rem rgba(0, 123, 255, .25);
+}
+
+.PhoneInputCountrySelect {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+    border: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.PhoneInputCountryIcon {
+    font-size: 24px; /* Ajustez la taille de l'icône selon vos préférences */
+  }
+
     @media screen and (min-width:992px) {
         .body {
-            margin: calc(var(--header-height) + 2rem) 0 0 0;
-            padding-left: calc(var(--nav-width) + 0.5rem)
+            /* margin: calc(var(--header-height) + 2rem) 0 0 0; */
+            padding-left: calc(var(--nav-width) + 0.5rem);
+
         }
     
+        .ajoutClient, .ajoutEnvoi, .ListeEnvoi, .ajoutDocument{
+            margin-top: 80px;
+        }
+
         .header {
             height: calc(var(--header-height) + 1rem);
             padding: 0 2rem 0 calc(var(--nav-width) + 2rem)
@@ -240,7 +303,7 @@ a {
 
         .l-navbar {
             left: 0px;
-            padding: 1rem 0 0 0;
+            padding: 0;
             width: 60px;
             min-height: 100vh;
         }
@@ -251,23 +314,42 @@ a {
 
         .body-pd {
             padding-left: calc(var(--nav-width) + 100px);
-            transition: .3s
+            transition: .3s;
+            min-height: 100vh;
 
         } 
+
+        .TitleAppli{
+            background-color: rgb(10, 10, 10);
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            padding: 14px 0;
+            margin-bottom: 25px;
+            height: 62px;
+            border-bottom: 1px solid rgb(231, 229, 229);
+            font-size: 20px;
+        }
+        .TitleAppli a{
+            padding-bottom: 26px;
+        }
+
+        
 
     } 
 
     
     @media screen and (min-width: 767px) and (max-width: 991px)  {
-        .body {
-            margin: calc(var(--header-height) + 2rem) 0 0 0;
+     
+        .ajoutClient, .ajoutEnvoi, .ListeEnvoi, .ajoutDocument{
+            margin-top: 80px;
         }
     }
 
     @media screen and (max-width: 768px) {
-        .body {
-            margin: calc(var(--header-height) + 2rem) 0 0 0;
-            
+        
+        .ajoutClient, .ajoutEnvoi, .ListeEnvoi, .ajoutDocument{
+            margin-top: 80px;
         }
 
         .header_toggle {

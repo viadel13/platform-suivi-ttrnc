@@ -1,6 +1,8 @@
-import { AiOutlineMenu } from "react-icons/ai";
+import { AiOutlineMenu, AiOutlineFileAdd } from "react-icons/ai";
+import { IoDocumentsOutline } from "react-icons/io5";
 import { MdOutlineClose } from "react-icons/md";
 import { BiSolidDashboard, BiListUl } from "react-icons/bi";
+import { TbUsersPlus } from "react-icons/tb";
 import { BsCardList } from "react-icons/bs";
 import { MdAssignmentAdd, MdAddShoppingCart } from "react-icons/md";
 import { BiLayer } from "react-icons/bi";
@@ -52,7 +54,7 @@ const Navbar = ({toggleSidebar, isSidebarOpen}) => {
       </header>
       
       <header className={`header d-lg-none`} >
-        <div className="header_toggle"  data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample"  >
+        <div className="header_toggle"  data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
           <AiOutlineMenu  />
         </div>
         <div className="header_img">
@@ -63,7 +65,7 @@ const Navbar = ({toggleSidebar, isSidebarOpen}) => {
 
       <div className="offcanvas offcanvas-start" style={{backgroundColor: '#05010ff6'}} tabIndex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
         <div className="offcanvas-header border-bottom pb-4">
-          <div className="offcanvas-title TitleAppli" id="offcanvasExampleLabel"> 
+          <div className="offcanvas-title " id="offcanvasExampleLabel"> 
             <BiLayer className="nav_logo-icon" />
             <a href="#" style={{textDecoration: 'none'}}> <span className="nav_logo-name" >TTNRC</span> </a>
           </div>
@@ -99,23 +101,50 @@ const Navbar = ({toggleSidebar, isSidebarOpen}) => {
                 Marchandises
               </span>
             </div>
+
             <Link to="listMarchandises" className="nav_link" onClick={() => handleLinkClick("listMarchandises")}>
               <BsCardList className=" nav_icon" />
               <span className="nav_name">Liste marchandises</span>
             </Link>
             <Link to="addMarchandise" className="nav_link" onClick={() => handleLinkClick("addMarchandise")}>
               <MdAddShoppingCart className=" nav_icon" />
-              <span className="nav_name" >Ajouter un envoi</span>
+              <span className="nav_name" >Ajouter marchandise</span>
             </Link>
 
-            <a href="#" className="nav_link">
+            <div className="navTitle">
+              <span className={`nav_name`}>
+              Gestion Clients
+              </span>
+            </div>
+
+            <Link to="#" className="nav_link" onClick={() => handleLinkClick("listeClients")}>
               <LiaUserSolid className="nav_icon" />
-              <span className="nav_name">Users</span>
-            </a>
+              <span className="nav_name">Clients</span>
+            </Link>
+            <Link to="ajoutClient" className="nav_link"  onClick={() => handleLinkClick("ajoutClient")}>
+              <TbUsersPlus className="nav_icon" />
+              <span className="nav_name">Ajout client</span>
+            </Link>
+
+            <div className="navTitle">
+              <span className={`nav_name`}>
+                Gestion Documents
+              </span>
+            </div>
+
+            <Link to="#" className="nav_link" onClick={() => handleLinkClick("listeClients")}>
+              <IoDocumentsOutline className="nav_icon" />
+              <span className="nav_name">Documents</span>
+            </Link>
+            <Link to="ajoutDocument" className="nav_link"  onClick={() => handleLinkClick("ajoutDocument")}>
+              <AiOutlineFileAdd className="nav_icon" />
+              <span className="nav_name">Ajout Document</span>
+            </Link>
+
 
             <Link href="#" className="nav_link" onClick={handleSignOut}>
-              <LiaSignOutAltSolid className="nav_icon" />
-              <span className="nav_name">SignOut</span>
+              <LiaSignOutAltSolid color="red" className="nav_icon" />
+              <span className="nav_name text-danger">SignOut</span>
             </Link>
           </div>
         </div>

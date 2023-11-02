@@ -1,4 +1,7 @@
 import { BiSolidDashboard, BiListUl } from "react-icons/bi";
+import { AiOutlineFileAdd } from "react-icons/ai";
+import { IoDocumentsOutline } from "react-icons/io5";
+import { TbUsersPlus } from "react-icons/tb";
 import { BsCardList } from "react-icons/bs";
 import { MdAssignmentAdd, MdAddShoppingCart } from "react-icons/md";
 import { BiLayer } from "react-icons/bi";
@@ -23,12 +26,12 @@ const Sidebar = ({ isSidebarOpen }) => {
 
   return (
     <div className={`l-navbar d-none d-lg-block ${isSidebarOpen ? "showDash" : ""}`} id="nav-bar">
-      <nav className="navbar">
+      <nav className="navbar p-0">
         <div className="navbar-conteneur">
           <div className="TitleAppli">
             <a
               href="#"
-              className="nav_logo  border-bottom pb-4"
+              className="nav_logo"
               style={{ textDecoration: "none" }}
             >
               <BiLayer className="nav_logo-icon" />
@@ -56,7 +59,6 @@ const Sidebar = ({ isSidebarOpen }) => {
               <MdAssignmentAdd className=" nav_icon" />
               <span className="nav_name"  style={{ display: !isSidebarOpen ? "none" : "" }}>Ajouter un envoi</span>
             </Link>
-
             <div className="navTitle">
               <span className={`nav_name ${isSidebarOpen ? "" : "spanHover"}`} style={{ display: !isSidebarOpen ? "none" : "" }}>
                 Marchandises
@@ -68,17 +70,45 @@ const Sidebar = ({ isSidebarOpen }) => {
             </Link>
             <Link to="addMarchandise" className="nav_link">
               <MdAddShoppingCart className=" nav_icon" />
-              <span className="nav_name"  style={{ display: !isSidebarOpen ? "none" : "" }}>Ajouter un envoi</span>
+              <span className="nav_name"  style={{ display: !isSidebarOpen ? "none" : "" }}>Ajouter marchandise</span>
             </Link>
 
-            <a href="#" className="nav_link">
+            <div className="navTitle">
+              <span className={`nav_name ${isSidebarOpen ? "" : "spanHover"}`} style={{ display: !isSidebarOpen ? "none" : "" }}>
+                Gestion Clients
+              </span>
+            </div>
+
+            <Link to="#" className="nav_link">
               <LiaUserSolid className="nav_icon" />
-              <span className="nav_name" style={{ display: !isSidebarOpen ? "none" : "" }}>Users</span>
-            </a>
+              <span className="nav_name" style={{ display: !isSidebarOpen ? "none" : "" }}>Clients</span>
+            </Link>
+
+            <Link to="ajoutClient" className="nav_link">
+              <TbUsersPlus className="nav_icon" />
+              <span className="nav_name" style={{ display: !isSidebarOpen ? "none" : "" }}>Ajout Client</span>
+            </Link>
+
+            <div className="navTitle">
+              <span className={`nav_name ${isSidebarOpen ? "" : "spanHover"}`} style={{ display: !isSidebarOpen ? "none" : "" }}>
+                Gestion Documents
+              </span>
+            </div>
+
+            
+            <Link to="#" className="nav_link">
+              <IoDocumentsOutline className="nav_icon" />
+              <span className="nav_name" style={{ display: !isSidebarOpen ? "none" : "" }}>Documents</span>
+            </Link>
+
+            <Link to="ajoutDocument" className="nav_link">
+              <AiOutlineFileAdd className="nav_icon" />
+              <span className="nav_name" style={{ display: !isSidebarOpen ? "none" : "" }}>Ajout Document</span>
+            </Link>
 
             <a href="#" className="nav_link" onClick={handleSignOut}>
-              <LiaSignOutAltSolid className="nav_icon" />
-              <span className="nav_name" style={{ display: !isSidebarOpen ? "none" : "" }}>SignOut</span>
+              <LiaSignOutAltSolid color="red" className="nav_icon" />
+              <span className="nav_name text-danger" style={{ display: !isSidebarOpen ? "none" : "" }}>SignOut</span>
             </a>
           </div>
         </div>
