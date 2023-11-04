@@ -1,16 +1,20 @@
-import React from "react";
+import Breadcrumb from "../../Breadcrumb/Index";
 
 const AjoutDocument = () => {
+  const breadcrumbLinks = ["Gestion Documents", "Ajout Document"];
   return (
-    <div className="ajoutDocument">
-      <div className="container card-ajoutDocument">
-        <div style={{ backgroundColor: "white" }}>
-          <h2>Ajouter un Document</h2>
-        </div>
-        <form className="mt-5 py-4">
+    <div className="ajoutDocument container-fluid">
+      <div>
+        <h2 className="fs-4" style={{ fontWeight: "600" }}>
+          Ajouter un document
+        </h2>
+        <Breadcrumb links={breadcrumbLinks} />
+      </div>
+      <div className="container-fluid card-ajoutDocument">
+        <form className="form-document">
           <div className="row gx-5">
             <div className="col-12 col-md-6 col-lg-6">
-              <div className="mb-3">
+              <div className="mb-4">
                 <label htmlFor="cbl" className="form-label">
                   Connaissement-BL-LTA
                 </label>
@@ -22,7 +26,7 @@ const AjoutDocument = () => {
                 />
               </div>
 
-              <div className="mb-3">
+              <div className="mb-4">
                 <label htmlFor="Nfacture" className="form-label">
                   Numero facture
                 </label>
@@ -34,7 +38,7 @@ const AjoutDocument = () => {
                 />
               </div>
 
-              <div className="mb-3">
+              <div className="mb-4">
                 <label htmlFor="Lcolissage" className="form-label">
                   Liste collisage
                 </label>
@@ -46,22 +50,31 @@ const AjoutDocument = () => {
                 />
               </div>
 
-              <div className="mb-3">
+              <div className="mb-4">
                 <label htmlFor="Corigine" className="form-label">
                   Certificat d'origine
                 </label>
-                <input className="form-control" type="file" id="Corigine" name="Corigine" />
+                <input
+                  className="form-control"
+                  type="file"
+                  id="Corigine"
+                  name="Corigine"
+                />
               </div>
 
-              <div className="mb-3">
+              <div className="mb-4">
                 <label htmlFor="CphytoSanitaire" className="form-label">
                   Certificat phyto-sanitaire
                 </label>
-                <input className="form-control" type="file" id="CphytoSanitaire" />
+                <input
+                  className="form-control"
+                  type="file"
+                  id="CphytoSanitaire"
+                />
               </div>
             </div>
             <div className="col-12 col-md-6 col-lg-6">
-              <div className="row mb-3">
+              <div className="row mb-4">
                 <div className="col-4">
                   <label htmlFor="Numerorcv" className="form-label">
                     RVC
@@ -85,10 +98,10 @@ const AjoutDocument = () => {
                   />
                 </div>
               </div>
-              <div className="row mb-3">
+              <div className="row mb-4">
                 <div className="col-4">
                   <label htmlFor="Numeropad" className="form-label">
-                   PAD
+                    PAD
                   </label>
                   <input
                     className="form-control"
@@ -109,29 +122,43 @@ const AjoutDocument = () => {
                   />
                 </div>
               </div>
-            
-              <div className="mb-3">
+
+              <div className="mb-4">
                 <label htmlFor="Auenlevement" className="form-label">
                   Autorisation d'enlevement
                 </label>
-                <input className="form-control" type="file" id="Auenlevement" name="Auenlevement" />
+                <input
+                  className="form-control"
+                  type="file"
+                  id="Auenlevement"
+                  name="Auenlevement"
+                />
               </div>
-             
-              <div className="mb-3">
+
+              <div className="mb-4">
                 <label htmlFor="Bsortie" className="form-label">
-                    Bon de sortie
+                  Bon de sortie
                 </label>
-                <input className="form-control" type="file" id="Bsortie" name="Bsortie" />
+                <input
+                  className="form-control"
+                  type="file"
+                  id="Bsortie"
+                  name="Bsortie"
+                />
               </div>
-             
-             
-              <div className="mb-3">
+
+              <div className="mb-4">
                 <label htmlFor="autre" className="form-label">
-                    Autre
+                  Autre
                 </label>
-                <input className="form-control" type="file" id="autre" name="autre" multiple />
+                <input
+                  className="form-control"
+                  type="file"
+                  id="autre"
+                  name="autre"
+                  multiple
+                />
               </div>
-             
             </div>
           </div>
           <div className="d-flex justify-content-center">

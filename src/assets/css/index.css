@@ -14,14 +14,12 @@
 
 
 *, ::before, ::after {
-    box-sizing: border-box
+    box-sizing: border-box;
 }
 
 body{
     min-height: 100vh;
 }
-
-
 
 a {
     text-decoration: none
@@ -163,12 +161,24 @@ a {
 }
 
 
-
-.nav_link:hover {
+.nav_link::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: transparent;
+    transition: .3s;
+  }
+  
+  .nav_link:hover {
     color: var(--white-color);
-    background-color: #4344479d;
-}
-
+  }
+  
+  .nav_link:hover::before {
+    background: rgb(150, 145, 145);
+  }
 .nav_icon {
     font-size: 1.25rem
 }
@@ -184,6 +194,7 @@ a {
 #body-pd {
     height: 100vh;
     width: 100%;
+    transition: .3s;
 }
 
 .active {
@@ -209,22 +220,26 @@ a {
 
 
 .card-ajoutClient{
-    box-shadow: 1px 1px 10px 2px rgb(228, 227, 227);
-    border-radius: 8px;
+    box-shadow: 0px 1px 2px 1px rgb(228, 227, 227);
+    border-radius: 2px;
     margin-bottom: 25px;
+    background-color: white;
 }
 
  .card-ajoutDocument, .card-ajoutEnvoi{
-    box-shadow: 1px 1px 10px 2px rgb(228, 227, 227);
-    border-radius: 8px;
+    box-shadow: 0px 1px 2px 1px rgb(228, 227, 227);
+    border-radius: 2px;
     margin-bottom: 25px;
+    background-color: white;
+    padding: 0 15px;
 }
 
 .card-listeEnvoi{
-    box-shadow: 1px 1px 10px 2px rgb(228, 227, 227);
-    padding: 12px;
-    border-radius: 8px;
+    box-shadow: 0px 1px 2px 1px rgb(228, 227, 227);
+    border-radius: 2px;
     margin-bottom: 25px;
+    background-color: white;
+
 }
 
 .PhoneInputInput {
@@ -261,13 +276,15 @@ a {
 
 .PhoneInputCountryIcon {
     font-size: 24px; /* Ajustez la taille de l'icône selon vos préférences */
-  }
+}
+
+
 
     @media screen and (min-width:992px) {
       
         .body {
             position: relative;
-            padding-left: calc(var(--nav-width) + 0.5rem);
+            padding-left: calc(var(--nav-width) + 1rem);
             font-family: var(--body-font);
             font-size: var(--normal-font-size);
             transition: .5s;
@@ -300,8 +317,10 @@ a {
         .l-navbar {
             left: 0px;
             padding: 0;
-            width: 60px;
+            width: 75px;
             min-height: 100vh;
+            display: flex;
+            
         }
 
         .showDash {
@@ -329,34 +348,60 @@ a {
         .TitleAppli a{
             padding-bottom: 26px;
         }
-        .card-ajoutEnvoi{
-            padding: 30px 15px;
-        }
-        
-        .card-ajoutEnvoi{
-            padding: 30px 15px;
-        }
-        .card-ajoutDocument{
-            padding: 30px 15px;
-        }
-        .card-ajoutClient{
-            padding: 30px 15px;
+       
+        .card-ajoutClient, .card-ajoutDocument, .card-ajoutEnvoi{
+            padding: 12px 15px;
         }
 
-        
+        .breadcrumb{
+            font-size: 16px !important;
+            transition: .3s;
+        }
+        .searchEnvoi {
+            width: 206px !important;
+        }
 
     } 
 
     
-    @media screen and (min-width: 767px) and (max-width: 991px)  {
+    @media screen and (min-width: 768px) and (max-width: 991px)  {
+        .header {
+            height: calc(var(--header-height) + 1rem);
+            padding: 0 2rem 0 calc(var(--nav-width) + 1rem)
+        }
      
         .ajoutClient, .ajoutEnvoi, .ListeEnvoi, .ajoutDocument{
             margin-top: 80px;
         }
+        .breadcrumb{
+            font-size: 16px !important;
+            transition: .3s;
+        }
+        .rowMobile tr:nth-child(1),
+        .rowMobile tr:nth-child(2),
+        .rowMobile tr:nth-child(3){
+            display: none;
+            border: 1px solid red;
+        }
+    
+        .rowMobile tr:nth-child(3),
+        .rowMobile tr:nth-child(4),
+        .rowMobile tr:nth-child(5){
+            border: 1px solid transparent;
+        }
+        
+        .form-client{
+            padding: 12px 0;
+        }
+                
+        .searchEnvoi {
+            width: 206px !important;
+        }
+
+    
     }
 
-    @media screen and (max-width: 768px) {
-
+    @media screen and (max-width: 767px) {
         
         .body {
             position: relative;
@@ -404,6 +449,24 @@ a {
             width: 60px
         }
 
+        .form-client, .form-document, .form-envoi{
+            padding: 12px 0;
+        }
+
+        .rowMobile tr:nth-child(1),
+        .rowMobile tr:nth-child(2),
+        .rowMobile tr:nth-child(3),
+        .rowMobile tr:nth-child(4),
+        .rowMobile tr:nth-child(5){
+            border: 1px solid transparent;
+        }
+    
+        .breadcrumb{
+            font-size: 14px !important;
+            transition: .3s;
+        }
+        
+
         /* .showDash {
             width: calc(var(--nav-width) + 175px);
             left: 0px
@@ -413,4 +476,15 @@ a {
             padding-left: calc(var(--nav-width) + 80px);
             transition: .3s
         } */
+    }
+
+    @media screen and (max-width: 358px){
+         .breadcrumb{
+            font-size: 11px !important;
+            transition: .3s;
+        }
+        .Nsuivi{
+            font-size: 14px;
+            transition: .3s;
+        }
     }

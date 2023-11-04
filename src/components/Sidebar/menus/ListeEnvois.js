@@ -2,12 +2,13 @@ import { Fragment, useEffect, useState } from "react";
 import { db } from "../../../firebase/firebaseConfig";
 import { collection, query, onSnapshot } from "firebase/firestore";
 import { AiOutlinePlusCircle } from "react-icons/ai";
+import Breadcrumb from "../../Breadcrumb/Index";
 
 const ListeEnvois = () => {
   const [donneesEnvoi, setDonneesEnvoi] = useState([]);
   const [loading, setLoading] = useState(true);
+  const breadcrumbLinks = ["Gestion des Envois", "Liste des envois"];
   // const [collapseShow, setCollapseShow] = useState(false);
-  console.log(donneesEnvoi)
 
   const q = query(collection(db, "DatasEnvoi"));
 
@@ -30,26 +31,47 @@ const ListeEnvois = () => {
   }, [q, donneesEnvoi]);
 
   return (
-    <>
-      <div className="container ListeEnvoi">
-        <div style={{ backgroundColor: "white" }}>
-          <h2>Liste des envois</h2>
+    <div className="container-fluid ListeEnvoi">
+      <div>
+        <div>
+          <h2 className="fs-4" style={{ fontWeight: "600" }}>
+            Liste des envois
+          </h2>
+          <Breadcrumb links={breadcrumbLinks} />
         </div>
 
-        <div className="card-listeEnvoi">
+        <div className="card-listeEnvoi px-4 py-3">
+          <div className="row mb-2">
+            <div className="col-12 col-md-6 d-flex align-items-center">
+              <span className="me-2" style={{fontSize:'15px'}}>Show</span>
+              <select className="form-select px-2" style={{width: '90px', height: '34px', fontSize: '15px'}} aria-label="Default select example">
+                <option value="1">5</option>
+                <option value="2">10</option>
+                <option value="2">20</option>
+                <option value="3">100</option>
+              </select>
+              <span className="ms-2" style={{fontSize:'15px'}}>entries</span>
+            </div>
+            <div className="col-12 col-md-6 mt-2 d-flex align-items-center justify-content-end" >
+              <span className="me-2" style={{fontSize:'15px'}}>Search:</span>
+              <input class="form-control searchEnvoi" type="search" placeholder="Search" />
+            </div>
+
+          
+          </div>
           <table className="table">
             <thead>
               <tr className="text-center table-secondary">
-                <th className="d-lg-none d-md-none"></th>
-                <th>Numero suivi</th>
-                <th>Client</th>
+                <th className="d-lg-none "></th>
+                <th className="Nsuivi">Numero suivi</th>
+                <th  className="Nsuivi">Client</th>
                 <th className="d-none d-md-table-cell">Produit</th>
                 <th className="d-none d-md-table-cell">Quantite</th>
                 <th className="d-none d-md-table-cell">Categorie</th>
                 <th className="d-none d-md-table-cell">Poids</th>
-                <th className="d-none d-md-table-cell">Volume</th>
-                <th className="d-none d-md-table-cell">Prix</th>
-                <th className="d-none d-md-table-cell">Etat</th>
+                <th className="d-none d-lg-table-cell">Volume</th>
+                <th className="d-none d-lg-table-cell">Prix</th>
+                <th className="d-none d-lg-table-cell w-25">Etat</th>
               </tr>
             </thead>
             <tbody>
@@ -70,7 +92,7 @@ const ListeEnvois = () => {
                         data-bs-target={`#${index}`}
                         className="accordion-toggle text-center"
                       >
-                        <td className="d-lg-none d-md-none">
+                        <td className="d-lg-none ">
                           <AiOutlinePlusCircle
                             size={25}
                             color="green"
@@ -86,21 +108,15 @@ const ListeEnvois = () => {
                         <td className="d-none d-md-table-cell">
                           {i.categorie}
                         </td>
-                        <td className="d-none d-md-table-cell">
-                          {i.poids}Kg
-                        </td>
-                        <td className="d-none d-md-table-cell">
-                          {i.volume}m³
-                        </td>
-                        <td className="d-none d-md-table-cell">
-                          {i.prix}
-                        </td>
+                        <td className="d-none d-md-table-cell">{i.poids}Kg</td>
+                        <td className="d-none d-lg-table-cell">{i.volume}m³</td>
+                        <td className="d-none d-lg-table-cell">{i.prix} FRCFA</td>
                         <td
-                          className="d-none d-md-table-cell"
+                          className="d-none d-lg-table-cell"
                           style={{ width: "290px" }}
                         >
                           <select
-                            className="form-select"
+                            className="form-select text-center"
                             aria-label="Default select example"
                             style={{ border: "none" }}
                           >
@@ -113,17 +129,23 @@ const ListeEnvois = () => {
                           </select>
                         </td>
                       </tr>
-                      <tr className="d-md-none d-lg-none">
-                        <td colSpan="6" className="hiddenRow">
+
+                      {/* ligne collapse pour les ecrans moyens  */}
+
+                      <tr className="d-lg-none">
+                        <td colSpan="4" className="hiddenRow">
                           <div
                             className="accordion-body collapse"
                             id={`${index}`}
                           >
-                            <table className="table">
+                            <table
+                              className="table"
+                              style={{ border: "1px solid transparent" }}
+                            >
                               <thead></thead>
-                              <tbody>
+                              <tbody className="rowMobile">
                                 <tr>
-                                  <th className="">Produit</th>
+                                  <th>Produit</th>
                                   <td>{i.nomProduit}</td>
                                 </tr>
 
@@ -151,6 +173,7 @@ const ListeEnvois = () => {
                                       width: "290px",
                                       position: "relative",
                                       left: "-10px",
+                                      top: "-5px",
                                     }}
                                   >
                                     <select
@@ -186,7 +209,7 @@ const ListeEnvois = () => {
           </table>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

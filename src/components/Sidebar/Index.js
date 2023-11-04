@@ -25,10 +25,10 @@ const Sidebar = ({ isSidebarOpen }) => {
   }
 
   return (
-    <div className={`l-navbar d-none d-lg-block ${isSidebarOpen ? "showDash" : ""}`} id="nav-bar">
+    <div className={`l-navbar d-none d-lg-block ${isSidebarOpen ? "showDash" : ""}`} id="nav-bar" >
       <nav className="navbar p-0">
         <div className="navbar-conteneur">
-          <div className="TitleAppli">
+          <div className="TitleAppli" style={{display: !isSidebarOpen &&  "flex" , flexDirection: !isSidebarOpen && "column" , alignItems: !isSidebarOpen && "center"}}>
             <a
               href="#"
               className="nav_logo"
@@ -39,14 +39,14 @@ const Sidebar = ({ isSidebarOpen }) => {
             </a>
           </div>
 
-          <div className="nav_list">
+          <div className="nav_list" style={{display: !isSidebarOpen &&  "flex" , flexDirection: !isSidebarOpen && "column" , alignItems: !isSidebarOpen && "center"}}>
             <Link to="/dashboard" className="nav_link active ">
               <BiSolidDashboard className=" nav_icon" />
               <span className="nav_name" style={{ display: !isSidebarOpen ? "none" : "" }}>Dashboard</span>
             </Link>
 
             <div className="navTitle">
-              <span className={`nav_name ${isSidebarOpen ? "" : "spanHover"}`} style={{ display: !isSidebarOpen ? "none" : "" }}>
+              <span className={`nav_name  ${isSidebarOpen ? "" : "spanHover"}`} style={{ display: !isSidebarOpen ? "none" : "" }}>
                 Gestion des Envois
               </span>
             </div>

@@ -54,7 +54,7 @@ const Navbar = ({toggleSidebar, isSidebarOpen}) => {
       </header>
       
       <header className={`header d-lg-none`} >
-        <div className="header_toggle"  data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+        <div className="header_toggle"  data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample" style={{position: 'relative', left: '-51px'}}>
           <AiOutlineMenu  />
         </div>
         <div className="header_img">
