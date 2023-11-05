@@ -25,6 +25,7 @@ a {
     text-decoration: none
 }
 
+
 .header {
     width: 100%;
     height: var(--header-height);
@@ -199,6 +200,10 @@ a {
 
 .active {
     color: var(--white-color)
+}
+
+input:focus{
+    box-shadow: none !important;
 }
 
 .active::before {

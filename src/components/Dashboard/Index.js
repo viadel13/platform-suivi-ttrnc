@@ -5,12 +5,15 @@ import { Outlet } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import {auth} from '../../firebase/firebaseConfig';
+import { useDispatch } from "react-redux";
+import { toggleSide } from "../../redux/reducers/rootReducer";
 
 const Dashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [userSession, setUserSession] = useState("");
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
+  
   const updateSidebarState = () => {
     if (window.innerWidth <= 768) {
       setIsSidebarOpen(false);
@@ -18,6 +21,10 @@ const Dashboard = () => {
       bodypd.classList.remove("body-pd");
     }
   };
+
+  useEffect(()=>{
+    dispatch(toggleSide(isSidebarOpen))
+  },[isSidebarOpen])
 
   useEffect(() => {
     window.addEventListener("resize", updateSidebarState);

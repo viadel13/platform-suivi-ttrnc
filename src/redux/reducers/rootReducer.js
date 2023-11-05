@@ -1,10 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { collection, getDocs } from "firebase/firestore";
-import { db } from "../../firebase/firebaseConfig";
-
 
 const initialState = {
     datasEnvoi: [],
+    toggleSidebar: '',
 }
 
 const platformeSuiviSlice = createSlice({
@@ -16,11 +14,14 @@ const platformeSuiviSlice = createSlice({
         datasEnvoi: (state, action)=>{
             state.datasEnvoi = [...state.datasEnvoi, action.payload];
         },
+        toggleSide: (state, action)=>{
+            state.toggleSidebar = action.payload;
+        },
 
     }
 })
 
-export const {datasEnvoi} = platformeSuiviSlice.actions;
+export const {datasEnvoi, toggleSide} = platformeSuiviSlice.actions;
 
 
 export default platformeSuiviSlice.reducer;

@@ -3,11 +3,15 @@ import { db } from "../../../firebase/firebaseConfig";
 import { collection, query, onSnapshot } from "firebase/firestore";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import Breadcrumb from "../../Breadcrumb/Index";
+import { useSelector } from "react-redux";
+
 
 const ListeEnvois = () => {
   const [donneesEnvoi, setDonneesEnvoi] = useState([]);
   const [loading, setLoading] = useState(true);
   const breadcrumbLinks = ["Gestion des Envois", "Liste des envois"];
+  const toggleSidebar = useSelector((state)=> state.platformeSuivi.toggleSidebar);
+
   // const [collapseShow, setCollapseShow] = useState(false);
 
   const q = query(collection(db, "DatasEnvoi"));
@@ -54,14 +58,14 @@ const ListeEnvois = () => {
             </div>
             <div className="col-12 col-md-6 mt-2 d-flex align-items-center justify-content-end" >
               <span className="me-2" style={{fontSize:'15px'}}>Search:</span>
-              <input class="form-control searchEnvoi" type="search" placeholder="Search" />
+              <input className="form-control searchEnvoi" type="search" />
             </div>
 
           
           </div>
           <table className="table">
             <thead>
-              <tr className="text-center table-secondary">
+              <tr className="text-center table-secondary" style={{fontSize : toggleSidebar ? '14px' : '', transition: '.3s'}}>
                 <th className="d-lg-none "></th>
                 <th className="Nsuivi">Numero suivi</th>
                 <th  className="Nsuivi">Client</th>
@@ -91,6 +95,7 @@ const ListeEnvois = () => {
                         data-bs-toggle="collapse"
                         data-bs-target={`#${index}`}
                         className="accordion-toggle text-center"
+                        style={{fontSize : toggleSidebar ? '15px' : '', transition: '.3s'}}
                       >
                         <td className="d-lg-none ">
                           <AiOutlinePlusCircle

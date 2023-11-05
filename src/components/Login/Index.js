@@ -147,7 +147,7 @@ const Login = () => {
                 value={formik.values.password}
                 className="form-control"
                 placeholder="Password"
-                autoComplete="true"
+                autoComplete="false"
                 style={{ border: error ? "1px solid red" : "" }}
               />
               {formik.touched.password && formik.errors.password ? (
