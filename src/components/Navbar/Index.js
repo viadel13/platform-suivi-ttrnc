@@ -11,16 +11,20 @@ import { LiaUserSolid, LiaSignOutAltSolid } from "react-icons/lia";
 import { Link, useNavigate } from "react-router-dom";
 import { getAuth, signOut } from "firebase/auth";
 import { useState } from "react";
-
+import { useDispatch } from 'react-redux';
+import { modalEtat } from "../../redux/reducers/rootReducer";
 
 
 const Navbar = ({toggleSidebar, isSidebarOpen}) => {
+
   const[clickLien, setClickLien] = useState(false);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleLinkClick = (destination) => {
     setClickLien(true);
     navigate(`${destination}`);
+    dispatch(modalEtat(false));
     window.location.reload();
 
   };

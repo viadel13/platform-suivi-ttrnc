@@ -1,4 +1,7 @@
 import { useEffect, useState } from "react";
+import { useDispatch } from 'react-redux';
+import { modalEtat } from "../../../redux/reducers/rootReducer";
+import { useSelector } from "react-redux";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { db } from "../../../firebase/firebaseConfig";
 import { doc, setDoc } from "firebase/firestore";
@@ -16,7 +19,16 @@ const AjoutClient = () => {
   const [modal, setModal] = useState(true);
   const [statutClient, setStatutClient] = useState("");
   const [choixError, selectCHoixError] = useState(false);
+  const dispatch = useDispatch();
+  const modalShowEtat = useSelector((state)=> state.platformeSuivi.modalEtat);
+
   const auth = getAuth();
+
+  console.log('modal etat', modalShowEtat);
+
+  useEffect(()=>{
+    dispatch(modalEtat(true));
+  },[])
 
   useEffect(() => {
     if (statutClient === "") {
@@ -170,10 +182,9 @@ const AjoutClient = () => {
     window.location.reload();
   }
 
-  const showComponent = showModal ? (
+  const showComponent = modalShowEtat ? (
     <ModalAddClient
-      show={modal}
-      setShow={setModal}
+      show={modalShowEtat}
       setStatutClient={setStatutClient}
     />
   ) : (
@@ -467,7 +478,7 @@ const AjoutClient = () => {
             <h2>Erreur</h2>
             <h3 className="text-center mt-2">veuillez selectionner une option svp</h3> 
             <h3 className="text-center mt-2">recharger la page <br /> <p className="mt-2">&#128071;</p></h3>
-            <IoReloadOutline id="reload" className="mt-2" color="#237FD8" onClick={handleReload} />
+            <IoReloadOutline id="reload" className="mt-2" color="#237FD8" style={{cursor: 'pointer'}} onClick={handleReload} />
         </div>
       )}
     </>

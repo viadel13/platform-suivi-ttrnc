@@ -1,11 +1,15 @@
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import { modalEtat } from '../../redux/reducers/rootReducer';
+import { useDispatch } from 'react-redux';
 
 
-const ModalAddClient = ({show, setShow, setStatutClient}) => {
+const ModalAddClient = ({show, setStatutClient}) => {
+
+    const dispatch = useDispatch();
 
     const handleClose = (statut) => {
-        setShow(false);
+        dispatch(modalEtat(false));
         setStatutClient(statut);
     }
 
@@ -16,7 +20,6 @@ const ModalAddClient = ({show, setShow, setStatutClient}) => {
   
   return (
     <>
-
       <Modal centered show={show} onHide={()=>handleClose('close')}>
         <Modal.Header closeButton>
           <Modal.Title>Ajout client</Modal.Title>
