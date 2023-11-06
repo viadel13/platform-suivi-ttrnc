@@ -14,8 +14,7 @@ const ModalAddClient = ({show, setStatutClient}) => {
     }
 
     function handleClient(statut){
-        setStatutClient(statut);
-        handleClose();
+        handleClose(statut);
     }
   
   return (

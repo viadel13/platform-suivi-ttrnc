@@ -20,12 +20,12 @@ const AjoutClient = () => {
   const [choixError, selectCHoixError] = useState(false);
   const dispatch = useDispatch();
   const modalShowEtat = useSelector((state)=> state.platformeSuivi.modalEtat);
-
+  console.log(modalShowEtat)
   const auth = getAuth();
 
-  // useEffect(()=>{
-  //   dispatch(modalEtat(true));
-  // },[])
+  useEffect(()=>{
+    return()=>dispatch(modalEtat(true));
+  },[])
 
   useEffect(() => {
     if (statutClient === "") {
