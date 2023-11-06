@@ -23,8 +23,10 @@ const Navbar = ({toggleSidebar, isSidebarOpen}) => {
 
   const handleLinkClick = (destination) => {
     setClickLien(true);
+    if(destination === 'ajoutClient'){
+      dispatch(modalEtat(false));
+    }
     navigate(`${destination}`);
-    dispatch(modalEtat(false));
     window.location.reload();
 
   };

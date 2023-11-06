@@ -16,7 +16,6 @@ import { IoReloadOutline } from "react-icons/io5";
 const AjoutClient = () => {
   const breadcrumbLinks = ["Gestion Clients", "Ajout un client"];
   const [showModal, setShowModal] = useState(false);
-  const [modal, setModal] = useState(true);
   const [statutClient, setStatutClient] = useState("");
   const [choixError, selectCHoixError] = useState(false);
   const dispatch = useDispatch();
@@ -24,11 +23,9 @@ const AjoutClient = () => {
 
   const auth = getAuth();
 
-  console.log('modal etat', modalShowEtat);
-
-  useEffect(()=>{
-    dispatch(modalEtat(true));
-  },[])
+  // useEffect(()=>{
+  //   dispatch(modalEtat(true));
+  // },[])
 
   useEffect(() => {
     if (statutClient === "") {
@@ -79,6 +76,8 @@ const AjoutClient = () => {
 
       if (!values.telephone) {
         errors.telephone = "Ce champ est obligatoire";
+      } else if (isNaN(values.telephone)) {
+        errors.telephone = "Veuillez entrer un nombre valide";
       }
 
       if (statutClient === "entreprise") {
@@ -182,7 +181,7 @@ const AjoutClient = () => {
     window.location.reload();
   }
 
-  const showComponent = modalShowEtat ? (
+  const showComponent = showModal ? (
     <ModalAddClient
       show={modalShowEtat}
       setStatutClient={setStatutClient}
