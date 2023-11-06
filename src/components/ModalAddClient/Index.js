@@ -1,0 +1,38 @@
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+
+
+const ModalAddClient = ({show, setShow, setStatutClient}) => {
+
+    const handleClose = (statut) => {
+        setShow(false);
+        setStatutClient(statut);
+    }
+
+    function handleClient(statut){
+        setStatutClient(statut);
+        handleClose();
+    }
+  
+  return (
+    <>
+
+      <Modal centered show={show} onHide={()=>handleClose('close')}>
+        <Modal.Header closeButton>
+          <Modal.Title>Ajout client</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>veuillez choisir le type de client à inscrire</Modal.Body>
+        <Modal.Footer className='d-flex justify-content-center'>
+          <Button variant="success" onClick={()=>handleClient('entreprise')}>
+            Client Entreprise
+          </Button>
+          <Button variant="primary" onClick={()=>handleClient('client')}>
+            Client individuel
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </>
+  )
+}
+
+export default ModalAddClient;

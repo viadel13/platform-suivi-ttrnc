@@ -1,16 +1,33 @@
+import { useEffect, useState } from "react";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { db } from "../../../firebase/firebaseConfig";
-import { doc, setDoc  } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import { toast } from "react-toastify";
 import { useFormik } from "formik";
 import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
 import Breadcrumb from "../../Breadcrumb/Index";
+import ModalAddClient from "../../ModalAddClient/Index";
+import { IoReloadOutline } from "react-icons/io5";
 
 const AjoutClient = () => {
   const breadcrumbLinks = ["Gestion Clients", "Ajout un client"];
+  const [showModal, setShowModal] = useState(false);
+  const [modal, setModal] = useState(true);
+  const [statutClient, setStatutClient] = useState("");
+  const [choixError, selectCHoixError] = useState(false);
   const auth = getAuth();
 
+  useEffect(() => {
+    if (statutClient === "") {
+      setShowModal(true);
+    } else if (statutClient === "close") {
+      selectCHoixError(true);
+    } else {
+      setShowModal(false);
+    }
+  }, [statutClient, setShowModal, selectCHoixError]);
+  
   const formik = useFormik({
     initialValues: {
       niu: "",
@@ -20,7 +37,7 @@ const AjoutClient = () => {
       telephone: "",
       password: "",
       prenom: "",
-      quantite: "",
+      entreprise: "",
       siege: "",
     },
 
@@ -52,8 +69,10 @@ const AjoutClient = () => {
         errors.telephone = "Ce champ est obligatoire";
       }
 
-      if (!values.quantite) {
-        errors.quantite = "Ce champ est obligatoire";
+      if (statutClient === "entreprise") {
+        if (!values.entreprise) {
+          errors.entreprise = "Ce champ est obligatoire";
+        }
       }
 
       if (!values.sexe) {
@@ -76,37 +95,37 @@ const AjoutClient = () => {
 
   async function register() {
     try {
-      const response = await createUserWithEmailAndPassword(auth, formik.values.email, formik.values.password);
+      const response = await createUserWithEmailAndPassword(
+        auth,
+        formik.values.email,
+        formik.values.password
+      );
       if (response.user) {
         const userUID = response.user.uid;
 
-      // Créez un document dans la collection "Clients" avec l'UID de l'utilisateur comme ID
-      try {
-        const userDocRef = doc(db, "Clients", userUID);
-        await setDoc(userDocRef, formik.values);
-      } catch (error) {
-        console.log(error.message);
-      }
- 
-          toast.success(
-            "compte cree avec success",
-            {
-              position: "top-right",
-              autoClose: 5000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "light",
-            }
-          );
-      
+        // Créez un document dans la collection "Clients" avec l'UID de l'utilisateur comme ID
+        try {
+          const userDocRef = doc(db, "Clients", userUID);
+          await setDoc(userDocRef, formik.values);
+        } catch (error) {
+          console.log(error.message);
+        }
+
+        toast.success("compte cree avec success", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
       }
     } catch (error) {
       if (navigator.onLine === false) {
         // Pas de connexion Internet
-        
+
         toast.error(
           "Pas de connexion Internet. Veuillez vérifier votre connexion.",
           {
@@ -147,8 +166,17 @@ const AjoutClient = () => {
     }
   }
 
+  function handleReload(){
+    window.location.reload();
+  }
 
-  return (
+  const showComponent = showModal ? (
+    <ModalAddClient
+      show={modal}
+      setShow={setModal}
+      setStatutClient={setStatutClient}
+    />
+  ) : (
     <div className="container-fluid ajoutClient">
       <div>
         <h2 className="fs-4" style={{ fontWeight: "600" }}>
@@ -171,30 +199,48 @@ const AjoutClient = () => {
                   name="niu"
                   onChange={formik.handleChange}
                   value={formik.values.niu}
-                  style={{ border: formik.touched.niu && formik.errors.niu ? "1px solid red" : "" }}
+                  style={{
+                    border:
+                      formik.touched.niu && formik.errors.niu
+                        ? "1px solid red"
+                        : "",
+                  }}
                 />
                 {formik.touched.niu && formik.errors.niu ? (
-                  <div className="text-danger mb-4"><p style={{fontSize: "15px"}}>{formik.errors.niu}</p></div>
+                  <div className="text-danger mb-4">
+                    <p style={{ fontSize: "15px" }}>{formik.errors.niu}</p>
+                  </div>
                 ) : null}
               </div>
+              {statutClient === "entreprise" && (
+                <div className="mb-3">
+                  <label htmlFor="entreprise" className="form-label">
+                    Entreprise
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="entreprise"
+                    name="entreprise"
+                    onChange={formik.handleChange}
+                    value={formik.values.entreprise}
+                    style={{
+                      border:
+                        formik.touched.entreprise && formik.errors.entreprise
+                          ? "1px solid red"
+                          : "",
+                    }}
+                  />
+                  {formik.touched.entreprise && formik.errors.entreprise ? (
+                    <div className="text-danger mb-4">
+                      <p style={{ fontSize: "15px" }}>
+                        {formik.errors.entreprise}
+                      </p>
+                    </div>
+                  ) : null}
+                </div>
+              )}
 
-              <div className="mb-3">
-                <label htmlFor="email" className="form-label">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  className="form-control"
-                  id="email"
-                  name="email"
-                  onChange={formik.handleChange}
-                  value={formik.values.email}
-                  style={{ border: formik.touched.email && formik.errors.email ? "1px solid red" : "" }}
-                />
-                {formik.touched.email && formik.errors.email ? (
-                  <div className="text-danger mb-4"><p style={{fontSize: "15px"}}>{formik.errors.email}</p></div>
-                ) : null}
-              </div>
               <div>
                 <label className="mb-3">Sexe</label>
                 <div className="mb-3 d-flex">
@@ -209,7 +255,12 @@ const AjoutClient = () => {
                       onChange={(e) =>
                         formik.setFieldValue("sexe", e.target.value)
                       }
-                      style={{ border: formik.touched.sexe && formik.errors.sexe ? "1px solid red" : "" }}
+                      style={{
+                        border:
+                          formik.touched.sexe && formik.errors.sexe
+                            ? "1px solid red"
+                            : "",
+                      }}
                     />
                     <label className="form-check-label" htmlFor="homme">
                       Homme
@@ -226,7 +277,12 @@ const AjoutClient = () => {
                       onChange={(e) =>
                         formik.setFieldValue("sexe", e.target.value)
                       }
-                      style={{ border: formik.touched.sexe && formik.errors.sexe ? "1px solid red" : "" }}
+                      style={{
+                        border:
+                          formik.touched.sexe && formik.errors.sexe
+                            ? "1px solid red"
+                            : "",
+                      }}
                     />
 
                     <label className="form-check-label" htmlFor="femme">
@@ -235,7 +291,9 @@ const AjoutClient = () => {
                   </div>
                 </div>
                 {formik.touched.sexe && formik.errors.sexe ? (
-                  <div className="text-danger"><p style={{fontSize: "15px"}}>{formik.errors.sexe}</p></div>
+                  <div className="text-danger">
+                    <p style={{ fontSize: "15px" }}>{formik.errors.sexe}</p>
+                  </div>
                 ) : null}
               </div>
             </div>
@@ -251,27 +309,40 @@ const AjoutClient = () => {
                   name="nom"
                   onChange={formik.handleChange}
                   value={formik.values.nom}
-                  style={{ border: formik.touched.nom && formik.errors.nom ? "1px solid red" : "" }}
+                  style={{
+                    border:
+                      formik.touched.nom && formik.errors.nom
+                        ? "1px solid red"
+                        : "",
+                  }}
                 />
                 {formik.touched.nom && formik.errors.nom ? (
-                  <div className="text-danger mb-4"><p style={{fontSize: "15px"}}>{formik.errors.nom}</p></div>
+                  <div className="text-danger mb-4">
+                    <p style={{ fontSize: "15px" }}>{formik.errors.nom}</p>
+                  </div>
                 ) : null}
               </div>
               <div className="mb-3">
-                <label htmlFor="telephone" className="form-label">
-                  Telephone
+                <label htmlFor="email" className="form-label">
+                  Email
                 </label>
-                <PhoneInput
-                  placeholder="Enter phone number"
-                  id="telephone"
-                  name="telephone"
-                  value={formik.values.telephone}
-                  onChange={(value) => formik.setFieldValue("telephone", value)}
-                  style={{ border: formik.touched.telephone && formik.errors.telephone ? "1px solid red" : "" }}
+                <input
+                  type="email"
+                  className="form-control"
+                  id="email"
+                  name="email"
+                  onChange={formik.handleChange}
+                  value={formik.values.email}
+                  style={{
+                    border:
+                      formik.touched.email && formik.errors.email
+                        ? "1px solid red"
+                        : "",
+                  }}
                 />
-                {formik.touched.telephone && formik.errors.telephone ? (
+                {formik.touched.email && formik.errors.email ? (
                   <div className="text-danger mb-4">
-                    {formik.errors.telephone}
+                    <p style={{ fontSize: "15px" }}>{formik.errors.email}</p>
                   </div>
                 ) : null}
               </div>
@@ -288,11 +359,16 @@ const AjoutClient = () => {
                   autoComplete="false"
                   onChange={formik.handleChange}
                   value={formik.values.password}
-                  style={{ border: formik.touched.password && formik.errors.password ? "1px solid red" : "" }}
+                  style={{
+                    border:
+                      formik.touched.password && formik.errors.password
+                        ? "1px solid red"
+                        : "",
+                  }}
                 />
                 {formik.touched.password && formik.errors.password ? (
                   <div className="text-danger mb-4">
-                    <p style={{fontSize: "15px"}}>{formik.errors.password}</p>
+                    <p style={{ fontSize: "15px" }}>{formik.errors.password}</p>
                   </div>
                 ) : null}
               </div>
@@ -309,31 +385,43 @@ const AjoutClient = () => {
                   name="prenom"
                   onChange={formik.handleChange}
                   value={formik.values.prenom}
-                  style={{ border: formik.touched.prenom && formik.errors.prenom ? "1px solid red" : "" }}
+                  style={{
+                    border:
+                      formik.touched.prenom && formik.errors.prenom
+                        ? "1px solid red"
+                        : "",
+                  }}
                 />
                 {formik.touched.prenom && formik.errors.prenom ? (
-                  <div className="text-danger mb-4"><p style={{fontSize: "15px"}}>{formik.errors.prenom}</p></div>
-                ) : null}
-              </div>
-              <div className="mb-3">
-                <label htmlFor="quantite" className="form-label">
-                  Quantité
-                </label>
-                <input
-                  type="number"
-                  className="form-control"
-                  id="quantite"
-                  name="quantite"
-                  onChange={formik.handleChange}
-                  value={formik.values.quantite}
-                  style={{ border: formik.touched.quantite && formik.errors.quantite ? "1px solid red" : "" }}
-                />
-                {formik.touched.quantite && formik.errors.quantite ? (
                   <div className="text-danger mb-4">
-                    <p style={{fontSize: "15px"}}>{formik.errors.quantite}</p>
+                    <p style={{ fontSize: "15px" }}>{formik.errors.prenom}</p>
                   </div>
                 ) : null}
               </div>
+              <div className="mb-3">
+                <label htmlFor="telephone" className="form-label">
+                  Telephone
+                </label>
+                <PhoneInput
+                  placeholder="Enter phone number"
+                  id="telephone"
+                  name="telephone"
+                  value={formik.values.telephone}
+                  onChange={(value) => formik.setFieldValue("telephone", value)}
+                  style={{
+                    border:
+                      formik.touched.telephone && formik.errors.telephone
+                        ? "1px solid red"
+                        : "",
+                  }}
+                />
+                {formik.touched.telephone && formik.errors.telephone ? (
+                  <div className="text-danger mb-4">
+                    {formik.errors.telephone}
+                  </div>
+                ) : null}
+              </div>
+
               <div className="mb-3">
                 <label htmlFor="siege" className="form-label">
                   Siege
@@ -345,10 +433,17 @@ const AjoutClient = () => {
                   name="siege"
                   onChange={formik.handleChange}
                   value={formik.values.siege}
-                  style={{ border: formik.touched.siege && formik.errors.siege ? "1px solid red" : "" }}
+                  style={{
+                    border:
+                      formik.touched.siege && formik.errors.siege
+                        ? "1px solid red"
+                        : "",
+                  }}
                 />
                 {formik.touched.siege && formik.errors.siege ? (
-                  <div className="text-danger  mb-4"><p style={{fontSize: "15px"}}>{formik.errors.siege}</p></div>
+                  <div className="text-danger  mb-4">
+                    <p style={{ fontSize: "15px" }}>{formik.errors.siege}</p>
+                  </div>
                 ) : null}
               </div>
             </div>
@@ -361,6 +456,21 @@ const AjoutClient = () => {
         </form>
       </div>
     </div>
+  );
+
+  return (
+    <>
+      {!choixError ? (
+        showComponent
+      ) : (
+        <div className="container-fluid choixError  d-flex  flex-column  align-items-center justify-content-center" >
+            <h2>Erreur</h2>
+            <h3 className="text-center mt-2">veuillez selectionner une option svp</h3> 
+            <h3 className="text-center mt-2">recharger la page <br /> <p className="mt-2">&#128071;</p></h3>
+            <IoReloadOutline id="reload" className="mt-2" color="#237FD8" onClick={handleReload} />
+        </div>
+      )}
+    </>
   );
 };
 

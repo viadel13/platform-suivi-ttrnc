@@ -54,7 +54,7 @@ a {
     display: flex;
     justify-content: center;
     border-radius: 50%;
-    overflow: hidden
+    overflow: hidden;
 }
 
 .header_img img {
@@ -223,6 +223,11 @@ input:focus{
   
 }
 
+.choixError h2{
+    font-size: 50px;
+    color: rgba(255, 0, 0, 0.767);
+    
+}
 
 .card-ajoutClient{
     box-shadow: 0px 1px 2px 1px rgb(228, 227, 227);
@@ -283,8 +288,6 @@ input:focus{
     font-size: 24px; /* Ajustez la taille de l'icône selon vos préférences */
 }
 
-
-
     @media screen and (min-width:992px) {
       
         .body {
@@ -298,6 +301,10 @@ input:focus{
     
         .ajoutClient, .ajoutEnvoi, .ListeEnvoi, .ajoutDocument{
             margin-top: 80px;
+        }
+
+        .choixError{
+            margin-top: 180px;
         }
 
         .header {
@@ -365,6 +372,10 @@ input:focus{
         .searchEnvoi {
             width: 206px !important;
         }
+        #reload{
+            font-size: 70px;
+            transition: .3s;
+        }
 
     } 
 
@@ -378,6 +389,10 @@ input:focus{
         .ajoutClient, .ajoutEnvoi, .ListeEnvoi, .ajoutDocument{
             margin-top: 80px;
         }
+        .choixError{
+            margin-top: 180px;
+        }
+
         .breadcrumb{
             font-size: 16px !important;
             transition: .3s;
@@ -402,7 +417,10 @@ input:focus{
         .searchEnvoi {
             width: 206px !important;
         }
-
+        #reload{
+            font-size: 50px;
+            transition: .3s;
+        }
     
     }
 
@@ -420,6 +438,12 @@ input:focus{
         .ajoutClient, .ajoutEnvoi, .ListeEnvoi, .ajoutDocument{
             margin-top: 80px;
         }
+
+        .choixError{
+            margin-top: 150px;
+            
+        }
+
 
         .header_toggle {
             color: var(--first-color);
@@ -471,7 +495,15 @@ input:focus{
             transition: .3s;
         }
         
-
+        .Nsuivi{
+            font-size: 14px;
+            transition: .3s;
+        }
+        #reload{
+            font-size: 50px;
+            transition: .3s;
+        }
+    
         /* .showDash {
             width: calc(var(--nav-width) + 175px);
             left: 0px

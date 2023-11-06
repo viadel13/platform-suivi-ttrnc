@@ -1,4 +1,5 @@
 import { AiOutlineMenu, AiOutlineFileAdd } from "react-icons/ai";
+import profilUser from '../../assets/images/user-gear.png'
 import { IoDocumentsOutline } from "react-icons/io5";
 import { MdOutlineClose } from "react-icons/md";
 import { BiSolidDashboard, BiListUl } from "react-icons/bi";
@@ -49,7 +50,7 @@ const Navbar = ({toggleSidebar, isSidebarOpen}) => {
         </div>
         
         <div className="header_img">
-          <img src="https://i.imgur.com/hczKIze.jpg" alt="image-profil" />
+          <img src={profilUser} alt="profilUtilisateur"  />
         </div>
       </header>
       
@@ -58,7 +59,7 @@ const Navbar = ({toggleSidebar, isSidebarOpen}) => {
           <AiOutlineMenu  />
         </div>
         <div className="header_img">
-          <img src="https://i.imgur.com/hczKIze.jpg" alt="" />
+          <img src={profilUser} alt="profilUtilisateur" />
         </div>
       </header> 
 
