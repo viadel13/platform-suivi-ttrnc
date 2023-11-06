@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from 'react-redux';
+import { useDispatch } from "react-redux";
 import { modalEtat } from "../../../redux/reducers/rootReducer";
 import { useSelector } from "react-redux";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
@@ -19,13 +19,13 @@ const AjoutClient = () => {
   const [statutClient, setStatutClient] = useState("");
   const [choixError, selectCHoixError] = useState(false);
   const dispatch = useDispatch();
-  const modalShowEtat = useSelector((state)=> state.platformeSuivi.modalEtat);
-  console.log(modalShowEtat)
+  const modalShowEtat = useSelector((state) => state.platformeSuivi.modalEtat);
+  console.log(modalShowEtat);
   const auth = getAuth();
 
-  useEffect(()=>{
-    return()=>dispatch(modalEtat(true));
-  },[])
+  useEffect(() => {
+    return () => dispatch(modalEtat(true));
+  }, []);
 
   useEffect(() => {
     if (statutClient === "") {
@@ -36,7 +36,7 @@ const AjoutClient = () => {
       setShowModal(false);
     }
   }, [statutClient, setShowModal, selectCHoixError]);
-  
+
   const formik = useFormik({
     initialValues: {
       niu: "",
@@ -96,10 +96,12 @@ const AjoutClient = () => {
         errors.password = "Veuillez entrer au moins 8 caractères";
       }
 
-      if (!values.siege) {
-        errors.siege = "Ce champ est obligatoire";
+    
+      if (statutClient === "entreprise") {
+        if (!values.siege) {
+          errors.siege = "Ce champ est obligatoire";
+        }
       }
-
       return errors;
     },
   });
@@ -177,15 +179,12 @@ const AjoutClient = () => {
     }
   }
 
-  function handleReload(){
+  function handleReload() {
     window.location.reload();
   }
 
   const showComponent = showModal ? (
-    <ModalAddClient
-      show={modalShowEtat}
-      setStatutClient={setStatutClient}
-    />
+    <ModalAddClient show={modalShowEtat} setStatutClient={setStatutClient} />
   ) : (
     <div className="container-fluid ajoutClient">
       <div>
@@ -252,13 +251,13 @@ const AjoutClient = () => {
               )}
               {/* ici est le champ nom visible seulemt sur les ecrans de petites  taille */}
               <div className="mb-3 d-lg-none d-md-none">
-                <label htmlFor="nom" className="form-label">
+                <label htmlFor="nomSm" className="form-label">
                   Nom
                 </label>
                 <input
                   type="text"
                   className="form-control"
-                  id="nom"
+                  id="nomSm"
                   name="nom"
                   onChange={formik.handleChange}
                   value={formik.values.nom}
@@ -276,16 +275,16 @@ const AjoutClient = () => {
                 ) : null}
               </div>
               {/* fin*/}
-              
+
               {/* ici est le champ nom visible seulemt sur les ecrans de petites taille */}
               <div className="mb-3 d-lg-none d-md-none">
-                <label htmlFor="prenom" className="form-label">
+                <label htmlFor="prenomSm" className="form-label">
                   Prenom
                 </label>
                 <input
                   type="text"
                   className="form-control"
-                  id="prenom"
+                  id="prenomSm"
                   name="prenom"
                   onChange={formik.handleChange}
                   value={formik.values.prenom}
@@ -303,42 +302,45 @@ const AjoutClient = () => {
                 ) : null}
               </div>
               {/* fin*/}
-              
+
               {/* ici est le champ nom visible seulemt sur les ecrans de petites taille */}
-              <div className="mb-3 d-lg-none d-md-none">
-                <label htmlFor="siege" className="form-label">
-                  Siege
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="siege"
-                  name="siege"
-                  onChange={formik.handleChange}
-                  value={formik.values.siege}
-                  style={{
-                    border:
-                      formik.touched.siege && formik.errors.siege
-                        ? "1px solid red"
-                        : "",
-                  }}
-                />
-                {formik.touched.siege && formik.errors.siege ? (
-                  <div className="text-danger  mb-4">
-                    <p style={{ fontSize: "15px" }}>{formik.errors.siege}</p>
-                  </div>
-                ) : null}
-              </div>
+              {statutClient === "entreprise" && (
+                <div className="mb-3 d-lg-none d-md-none">
+                  <label htmlFor="siege" className="form-label">
+                    Siege
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="siegeSm"
+                    name="siege"
+                    onChange={formik.handleChange}
+                    value={formik.values.siege}
+                    style={{
+                      border:
+                        formik.touched.siege && formik.errors.siege
+                          ? "1px solid red"
+                          : "",
+                    }}
+                  />
+                  {formik.touched.siege && formik.errors.siege ? (
+                    <div className="text-danger  mb-4">
+                      <p style={{ fontSize: "15px" }}>{formik.errors.siege}</p>
+                    </div>
+                  ) : null}
+                </div>
+              )}
+
               {/* fin*/}
 
               {/* ici est le champ nom visible seulemt sur les ecrans de petites taille */}
-              <div className="mb-3 d-lg-none d-md-none d-md-block">
+              <div className="mb-3 d-lg-none d-md-none">
                 <label htmlFor="telephone" className="form-label">
                   Telephone
                 </label>
                 <PhoneInput
                   placeholder="Enter phone number"
-                  id="telephone"
+                  id="telephoneSm"
                   name="telephone"
                   value={formik.values.telephone}
                   onChange={(value) => formik.setFieldValue("telephone", value)}
@@ -411,7 +413,6 @@ const AjoutClient = () => {
                   </div>
                 ) : null}
               </div>
-
             </div>
 
             {/* ici est le champ nom visible seulemt sur les ecrans de grande taille */}
@@ -494,7 +495,6 @@ const AjoutClient = () => {
             {/* fin*/}
 
             <div className="col-12 col-md-4 col-lg-4">
-
               {/* ici est le champ nom visible seulemt sur les ecrans de grande taille */}
               <div className="mb-3 d-none d-lg-block d-md-block">
                 <label htmlFor="prenom" className="form-label">
@@ -548,33 +548,34 @@ const AjoutClient = () => {
               </div>
               {/* fin*/}
 
-              {/* ici est le champ nom visible seulemt sur les ecrans de grande taille */}      
-              <div className="mb-3 d-none d-lg-block d-md-block">
-                <label htmlFor="siege" className="form-label">
-                  Siege
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="siege"
-                  name="siege"
-                  onChange={formik.handleChange}
-                  value={formik.values.siege}
-                  style={{
-                    border:
-                      formik.touched.siege && formik.errors.siege
-                        ? "1px solid red"
-                        : "",
-                  }}
-                />
-                {formik.touched.siege && formik.errors.siege ? (
-                  <div className="text-danger  mb-4">
-                    <p style={{ fontSize: "15px" }}>{formik.errors.siege}</p>
-                  </div>
-                ) : null}
-              </div>
+              {/* ici est le champ nom visible seulemt sur les ecrans de grande taille */}
+              {statutClient === "entreprise" && (
+                <div className="mb-3 d-none d-lg-block d-md-block">
+                  <label htmlFor="siege" className="form-label">
+                    Siege
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="siege"
+                    name="siege"
+                    onChange={formik.handleChange}
+                    value={formik.values.siege}
+                    style={{
+                      border:
+                        formik.touched.siege && formik.errors.siege
+                          ? "1px solid red"
+                          : "",
+                    }}
+                  />
+                  {formik.touched.siege && formik.errors.siege ? (
+                    <div className="text-danger  mb-4">
+                      <p style={{ fontSize: "15px" }}>{formik.errors.siege}</p>
+                    </div>
+                  ) : null}
+                </div>
+              )}
               {/* fin*/}
-
             </div>
           </div>
           <div className="d-flex justify-content-center">
@@ -592,11 +593,21 @@ const AjoutClient = () => {
       {!choixError ? (
         showComponent
       ) : (
-        <div className="container-fluid choixError  d-flex  flex-column  align-items-center justify-content-center" >
-            <h2>Erreur</h2>
-            <h3 className="text-center mt-2">veuillez selectionner une option svp</h3> 
-            <h3 className="text-center mt-2">recharger la page <br /> <p className="mt-2">&#128071;</p></h3>
-            <IoReloadOutline id="reload" className="mt-2" color="#237FD8" style={{cursor: 'pointer'}} onClick={handleReload} />
+        <div className="container-fluid choixError  d-flex  flex-column  align-items-center justify-content-center">
+          <h2>Erreur</h2>
+          <h3 className="text-center mt-2">
+            veuillez selectionner une option svp
+          </h3>
+          <h3 className="text-center mt-2">
+            recharger la page <br /> <p className="mt-2">&#128071;</p>
+          </h3>
+          <IoReloadOutline
+            id="reload"
+            className="mt-2"
+            color="#237FD8"
+            style={{ cursor: "pointer" }}
+            onClick={handleReload}
+          />
         </div>
       )}
     </>
