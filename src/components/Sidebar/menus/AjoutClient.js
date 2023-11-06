@@ -250,7 +250,112 @@ const AjoutClient = () => {
                   ) : null}
                 </div>
               )}
+              {/* ici est le champ nom visible seulemt sur les ecrans de petites  taille */}
+              <div className="mb-3 d-lg-none d-md-none">
+                <label htmlFor="nom" className="form-label">
+                  Nom
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="nom"
+                  name="nom"
+                  onChange={formik.handleChange}
+                  value={formik.values.nom}
+                  style={{
+                    border:
+                      formik.touched.nom && formik.errors.nom
+                        ? "1px solid red"
+                        : "",
+                  }}
+                />
+                {formik.touched.nom && formik.errors.nom ? (
+                  <div className="text-danger mb-4">
+                    <p style={{ fontSize: "15px" }}>{formik.errors.nom}</p>
+                  </div>
+                ) : null}
+              </div>
+              {/* fin*/}
+              
+              {/* ici est le champ nom visible seulemt sur les ecrans de petites taille */}
+              <div className="mb-3 d-lg-none d-md-none">
+                <label htmlFor="prenom" className="form-label">
+                  Prenom
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="prenom"
+                  name="prenom"
+                  onChange={formik.handleChange}
+                  value={formik.values.prenom}
+                  style={{
+                    border:
+                      formik.touched.prenom && formik.errors.prenom
+                        ? "1px solid red"
+                        : "",
+                  }}
+                />
+                {formik.touched.prenom && formik.errors.prenom ? (
+                  <div className="text-danger mb-4">
+                    <p style={{ fontSize: "15px" }}>{formik.errors.prenom}</p>
+                  </div>
+                ) : null}
+              </div>
+              {/* fin*/}
+              
+              {/* ici est le champ nom visible seulemt sur les ecrans de petites taille */}
+              <div className="mb-3 d-lg-none d-md-none">
+                <label htmlFor="siege" className="form-label">
+                  Siege
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="siege"
+                  name="siege"
+                  onChange={formik.handleChange}
+                  value={formik.values.siege}
+                  style={{
+                    border:
+                      formik.touched.siege && formik.errors.siege
+                        ? "1px solid red"
+                        : "",
+                  }}
+                />
+                {formik.touched.siege && formik.errors.siege ? (
+                  <div className="text-danger  mb-4">
+                    <p style={{ fontSize: "15px" }}>{formik.errors.siege}</p>
+                  </div>
+                ) : null}
+              </div>
+              {/* fin*/}
 
+              {/* ici est le champ nom visible seulemt sur les ecrans de petites taille */}
+              <div className="mb-3 d-lg-none d-md-none d-md-block">
+                <label htmlFor="telephone" className="form-label">
+                  Telephone
+                </label>
+                <PhoneInput
+                  placeholder="Enter phone number"
+                  id="telephone"
+                  name="telephone"
+                  value={formik.values.telephone}
+                  onChange={(value) => formik.setFieldValue("telephone", value)}
+                  style={{
+                    border:
+                      formik.touched.telephone && formik.errors.telephone
+                        ? "1px solid red"
+                        : "",
+                  }}
+                />
+                {formik.touched.telephone && formik.errors.telephone ? (
+                  <div className="text-danger mb-4">
+                    {formik.errors.telephone}
+                  </div>
+                ) : null}
+              </div>
+              {/* fin*/}
               <div>
                 <label className="mb-3">Sexe</label>
                 <div className="mb-3 d-flex">
@@ -306,9 +411,12 @@ const AjoutClient = () => {
                   </div>
                 ) : null}
               </div>
+
             </div>
+
+            {/* ici est le champ nom visible seulemt sur les ecrans de grande taille */}
             <div className="col-12 col-md-4 col-lg-4">
-              <div className="mb-3">
+              <div className="mb-3  d-none d-lg-block d-md-block">
                 <label htmlFor="nom" className="form-label">
                   Nom
                 </label>
@@ -383,8 +491,12 @@ const AjoutClient = () => {
                 ) : null}
               </div>
             </div>
+            {/* fin*/}
+
             <div className="col-12 col-md-4 col-lg-4">
-              <div className="mb-3">
+
+              {/* ici est le champ nom visible seulemt sur les ecrans de grande taille */}
+              <div className="mb-3 d-none d-lg-block d-md-block">
                 <label htmlFor="prenom" className="form-label">
                   Prenom
                 </label>
@@ -408,7 +520,10 @@ const AjoutClient = () => {
                   </div>
                 ) : null}
               </div>
-              <div className="mb-3">
+              {/* fin*/}
+
+              {/* ici est le champ nom visible seulemt sur les ecrans de grande taille */}
+              <div className="mb-3 d-none d-lg-block d-md-block">
                 <label htmlFor="telephone" className="form-label">
                   Telephone
                 </label>
@@ -431,8 +546,10 @@ const AjoutClient = () => {
                   </div>
                 ) : null}
               </div>
+              {/* fin*/}
 
-              <div className="mb-3">
+              {/* ici est le champ nom visible seulemt sur les ecrans de grande taille */}      
+              <div className="mb-3 d-none d-lg-block d-md-block">
                 <label htmlFor="siege" className="form-label">
                   Siege
                 </label>
@@ -456,6 +573,8 @@ const AjoutClient = () => {
                   </div>
                 ) : null}
               </div>
+              {/* fin*/}
+
             </div>
           </div>
           <div className="d-flex justify-content-center">
