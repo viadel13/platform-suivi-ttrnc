@@ -288,6 +288,14 @@ input:focus{
     font-size: 24px; /* Ajustez la taille de l'icône selon vos préférences */
 }
 
+.card-client{
+    border-radius: 2px;
+    padding: 10px 18px 25px 18px;
+    background-color: #ffffff !important;
+    border-color: #f0f0f0 !important;
+ 
+}
+
     @media screen and (min-width:992px) {
       
         .body {
@@ -299,7 +307,7 @@ input:focus{
         
         }
     
-        .ajoutClient, .ajoutEnvoi, .ListeEnvoi, .ajoutDocument{
+        .ajoutClient, .ajoutEnvoi, .ListeEnvoi, .ListeClient, .ajoutDocument{
             margin-top: 80px;
         }
 
@@ -386,7 +394,7 @@ input:focus{
             padding: 0 2rem 0 calc(var(--nav-width) + 1rem)
         }
      
-        .ajoutClient, .ajoutEnvoi, .ListeEnvoi, .ajoutDocument{
+        .ajoutClient, .ajoutEnvoi, .ListeEnvoi, .ListeClient, .ajoutDocument{
             margin-top: 80px;
         }
         .choixError{
@@ -435,7 +443,7 @@ input:focus{
         
         }
         
-        .ajoutClient, .ajoutEnvoi, .ListeEnvoi, .ajoutDocument{
+        .ajoutClient, .ajoutEnvoi, .ListeEnvoi, .ListeClient, .ajoutDocument{
             margin-top: 80px;
         }
 

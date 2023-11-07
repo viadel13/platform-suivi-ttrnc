@@ -124,7 +124,7 @@ const Navbar = ({toggleSidebar, isSidebarOpen}) => {
               </span>
             </div>
 
-            <Link to="#" className="nav_link" onClick={() => handleLinkClick("listeClients")}>
+            <Link to="listeClients" className="nav_link" onClick={() => handleLinkClick("listeClients")}>
               <LiaUserSolid className="nav_icon" />
               <span className="nav_name">Clients</span>
             </Link>

@@ -115,7 +115,7 @@ const Login = () => {
   ) : (
     <>
       <div className="d-flex justify-content-center align-items-center p-2 login flex-column">
-        <div className="card p-4">
+        <div className="card card-login p-4">
           <div className="d-flex justify-content-center">
             <h1 className="display-4" style={{ fontWeight: "400" }}>
               Login

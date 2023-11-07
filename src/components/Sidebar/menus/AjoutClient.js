@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { modalEtat } from "../../../redux/reducers/rootReducer";
 import { useSelector } from "react-redux";
@@ -20,14 +20,14 @@ const AjoutClient = () => {
   const [choixError, selectCHoixError] = useState(false);
   const dispatch = useDispatch();
   const modalShowEtat = useSelector((state) => state.platformeSuivi.modalEtat);
-  console.log(modalShowEtat);
+
   const auth = getAuth();
 
   useEffect(() => {
     return () => dispatch(modalEtat(true));
-  }, []);
+  }, [dispatch]);
 
-  useEffect(() => {
+    useLayoutEffect(() => {
     if (statutClient === "") {
       setShowModal(true);
     } else if (statutClient === "close") {

@@ -46,7 +46,7 @@ const ListeEnvois = () => {
 
         <div className="card-listeEnvoi px-4 py-3">
           <div className="row mb-2">
-            <div className="col-12 col-md-6 d-flex align-items-center">
+            <div className="col-12 col-md-6 py-2 d-flex align-items-center">
               <span className="me-2" style={{fontSize:'15px'}}>Show</span>
               <select className="form-select px-2" style={{width: '90px', height: '34px', fontSize: '15px'}} aria-label="Default select example">
                 <option value="1">5</option>
@@ -56,7 +56,7 @@ const ListeEnvois = () => {
               </select>
               <span className="ms-2" style={{fontSize:'15px'}}>entries</span>
             </div>
-            <div className="col-12 col-md-6 mt-2 d-flex align-items-center justify-content-end" >
+            <div className="col-12 col-md-6 d-flex align-items-center justify-content-end" >
               <span className="me-2" style={{fontSize:'15px'}}>Search:</span>
               <input className="form-control searchEnvoi" type="search" />
             </div>

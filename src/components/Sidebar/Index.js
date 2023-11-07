@@ -79,7 +79,7 @@ const Sidebar = ({ isSidebarOpen }) => {
               </span>
             </div>
 
-            <Link to="#" className="nav_link">
+            <Link to="listeClients" className="nav_link">
               <LiaUserSolid className="nav_icon" />
               <span className="nav_name" style={{ display: !isSidebarOpen ? "none" : "" }}>Clients</span>
             </Link>
