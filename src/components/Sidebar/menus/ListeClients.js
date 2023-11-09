@@ -67,6 +67,7 @@ const ListeClients = () => {
                   src={i.sexe === "femme" ? profilWomen : profilMan}
                   width={70}
                   className="rounded-circle mb-3"
+                  alt="sexe utilisateur"
                 />
                 <h5 style={{ fontWeight: "600", lineHeight: "1.2" }}>
                   {i.nom}
@@ -74,8 +75,8 @@ const ListeClients = () => {
                 <small>Statut</small>
                 <h6 style={{ fontWeight: "600", lineHeight: "1.2" }}>
                   {i.entreprise === ""
-                    ? "Client entreprise"
-                    : "Clent individuel"}
+                    ? "Client individuel"
+                    : i.entreprise}
                 </h6>
                 <div className="mt-3">
                   <button className="btn btn-sm btn-primary me-2 my-2">

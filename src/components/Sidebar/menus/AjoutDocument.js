@@ -1,7 +1,92 @@
 import Breadcrumb from "../../Breadcrumb/Index";
+import { useFormik } from "formik";
+import { collection, addDoc, onSnapshot, query } from "firebase/firestore";
+import { db } from "../../../firebase/firebaseConfig";
+import { useState, useEffect } from "react";
 
 const AjoutDocument = () => {
   const breadcrumbLinks = ["Gestion Documents", "Ajout Document"];
+  const [loading, setLoading] = useState(true);
+  const[donneesEnvoi, setDonneesEnvoi]=useState([]);
+
+  const q = query(collection(db, "DatasEnvoi"));
+
+  useEffect(() => {
+    const unsubscribe = onSnapshot(q, (querySnapchot) => {
+      const datas = [];
+      querySnapchot.forEach((doc) => {
+        datas.push(doc.data());
+      });
+
+      if (JSON.stringify(datas) !== JSON.stringify(donneesEnvoi)) {
+        setDonneesEnvoi(datas);
+      }
+
+      setLoading(false);
+      return () => {
+        unsubscribe();
+      };
+    });
+  }, [q, donneesEnvoi]);
+
+
+  const initialValues = {
+    client: "",
+    nomProduit: "",
+    quantite: "",
+    categorie: "",
+    poids: "",
+    volume: "",
+    prix: "",
+  };
+
+  const onSubmit = async (values) => {
+
+    // formik.handleReset();
+  };
+
+  const validate = values=>{
+    let errors = {};
+
+    if (!values.client) {
+      errors.client = "Veuillez choisir un client svp";
+    }
+    if (!values.nomProduit) {
+      errors.nomProduit = "Ce champ est obligatoire";
+    }
+    if (!values.quantite) {
+      errors.quantite = "Ce champ est obligatoire";
+    }
+    if (!values.categorie) {
+      errors.categorie = "Ce champ est obligatoire";
+    }
+    if (!values.poids) {
+      errors.poids = "Ce champ est obligatoire";
+    } else if (isNaN(values.poids)) {
+      errors.poids = "Veuillez entrer un nombre valide";
+    }
+    
+    if (!values.volume) {
+      errors.volume = "Ce champ est obligatoire";
+    } else if (isNaN(values.poids)) {
+      errors.volume = "Veuillez entrer un nombre valide";
+    }
+    if (!values.prix) {
+      errors.prix = "Ce champ est obligatoire";
+    } else if (isNaN(values.poids)) {
+      errors.prix = "Veuillez entrer un nombre valide";
+    }
+
+    return errors;
+  }
+
+
+  const formik = useFormik({
+    initialValues,
+    onSubmit,
+    validate,
+  });
+
   return (
     <div className="ajoutDocument container-fluid">
       <div>
@@ -14,6 +99,26 @@ const AjoutDocument = () => {
         <form className="form-document">
           <div className="row gx-5">
             <div className="col-12 col-md-6 col-lg-6">
+            <div className="mb-4">
+                <label htmlFor="client" className="form-label">
+                  Numero suivi
+                </label>
+                <select
+                  className="form-select"
+                  aria-label="Default select example"
+                  onChange={formik.handleChange}
+                  value={formik.values.client}
+                  name="client"
+                  id="client"
+                >
+                  <option value="">Choisir un numero</option>
+                  {donneesEnvoi.map((i, index) => {
+                    return <option key={index}>{i.numeroSuivi} - {i.client}</option>;
+                  })}
+                </select>
+           
+             </div>
+
               <div className="mb-4">
                 <label htmlFor="cbl" className="form-label">
                   Connaissement-BL-LTA

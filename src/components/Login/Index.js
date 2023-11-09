@@ -12,7 +12,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const navigate = useNavigate();
-
+  
   useEffect(() => {
     setMenuActif("active");
     return () => {
@@ -22,6 +22,7 @@ const Login = () => {
 
   const formik = useFormik({
     initialValues: {
+      
       email: "",
       password: "",
     },
@@ -115,6 +116,7 @@ const Login = () => {
   ) : (
     <>
       <div className="d-flex justify-content-center align-items-center p-2 login flex-column">
+      
         <div className="card card-login p-4">
           <div className="d-flex justify-content-center">
             <h1 className="display-4" style={{ fontWeight: "400" }}>
