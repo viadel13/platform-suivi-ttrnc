@@ -52,7 +52,7 @@ const AjouterEnvoi = () => {
     formik.handleReset();
   };
 
-  const validate = values=>{
+  const validate = values => {
     let errors = {};
 
     if (!values.client) {
@@ -72,7 +72,7 @@ const AjouterEnvoi = () => {
     } else if (isNaN(values.poids)) {
       errors.poids = "Veuillez entrer un nombre valide";
     }
-    
+
     if (!values.volume) {
       errors.volume = "Ce champ est obligatoire";
     } else if (isNaN(values.poids)) {
@@ -97,12 +97,12 @@ const AjouterEnvoi = () => {
     <div className="container-fluid ajoutEnvoi">
 
       <div>
-          <h2 className="fs-4" style={{fontWeight: '600'}}>Ajouter un envoi</h2>
-          <Breadcrumb links={breadcrumbLinks} />
+        <h2 className="fs-4" style={{ fontWeight: '600' }}>Ajouter un envoi</h2>
+        <Breadcrumb links={breadcrumbLinks} />
       </div>
 
       <div className=" card-ajoutEnvoi ">
-  
+
         <form className="form-envoi" onSubmit={formik.handleSubmit}>
           <div className="row">
             <div className="col-12 col-md-6 col-lg-6">
@@ -125,7 +125,7 @@ const AjouterEnvoi = () => {
                   })}
                 </select>
                 {formik.touched.client && formik.errors.client ? (
-                  <div className="text-danger mb-4"><p style={{fontSize: "15px"}}>{formik.errors.client}</p></div>
+                  <div className="text-danger mb-4"><p style={{ fontSize: "15px" }}>{formik.errors.client}</p></div>
                 ) : null}
               </div>
               <div className="mb-3">
@@ -141,8 +141,8 @@ const AjouterEnvoi = () => {
                   value={formik.values.nomProduit}
                   style={{ border: formik.touched.nomProduit && formik.errors.nomProduit ? "1px solid red" : "" }}
                 />
-                   {formik.touched.nomProduit && formik.errors.nomProduit ? (
-                  <div className="text-danger mb-4"><p style={{fontSize: "15px"}}>{formik.errors.nomProduit}</p></div>
+                {formik.touched.nomProduit && formik.errors.nomProduit ? (
+                  <div className="text-danger mb-4"><p style={{ fontSize: "15px" }}>{formik.errors.nomProduit}</p></div>
                 ) : null}
               </div>
 
@@ -159,8 +159,8 @@ const AjouterEnvoi = () => {
                   value={formik.values.quantite}
                   style={{ border: formik.touched.quantite && formik.errors.quantite ? "1px solid red" : "" }}
                 />
-                   {formik.touched.quantite && formik.errors.quantite ? (
-                  <div className="text-danger mb-4"><p style={{fontSize: "15px"}}>{formik.errors.quantite}</p></div>
+                {formik.touched.quantite && formik.errors.quantite ? (
+                  <div className="text-danger mb-4"><p style={{ fontSize: "15px" }}>{formik.errors.quantite}</p></div>
                 ) : null}
               </div>
 
@@ -179,8 +179,8 @@ const AjouterEnvoi = () => {
                   value={formik.values.prix}
                   style={{ border: formik.touched.prix && formik.errors.prix ? "1px solid red" : "" }}
                 />
-                   {formik.touched.prix && formik.errors.prix ? (
-                  <div className="text-danger mb-4"><p style={{fontSize: "15px"}}>{formik.errors.prix}</p></div>
+                {formik.touched.prix && formik.errors.prix ? (
+                  <div className="text-danger mb-4"><p style={{ fontSize: "15px" }}>{formik.errors.prix}</p></div>
                 ) : null}
               </div>
             </div>
@@ -198,8 +198,8 @@ const AjouterEnvoi = () => {
                   value={formik.values.categorie}
                   style={{ border: formik.touched.categorie && formik.errors.categorie ? "1px solid red" : "" }}
                 />
-                   {formik.touched.prix && formik.errors.prix ? (
-                  <div className="text-danger mb-4"><p style={{fontSize: "15px"}}>{formik.errors.prix}</p></div>
+                {formik.touched.prix && formik.errors.prix ? (
+                  <div className="text-danger mb-4"><p style={{ fontSize: "15px" }}>{formik.errors.prix}</p></div>
                 ) : null}
               </div>
               <>
@@ -218,14 +218,14 @@ const AjouterEnvoi = () => {
                     value={formik.values.poids}
                     style={{ border: formik.touched.poids && formik.errors.poids ? "1px solid red" : "" }}
                   />
-             
+
                   <span className="input-group-text" id="kgAddon">
                     kg
                   </span>
-               
+
                 </div>
                 {formik.touched.poids && formik.errors.poids ? (
-                  <div className="text-danger mb-4"><p style={{fontSize: "15px"}}>{formik.errors.poids}</p></div>
+                  <div className="text-danger mb-4"><p style={{ fontSize: "15px" }}>{formik.errors.poids}</p></div>
                 ) : null}
               </>
 
@@ -250,7 +250,7 @@ const AjouterEnvoi = () => {
                   </span>
                 </div>
                 {formik.touched.volume && formik.errors.volume ? (
-                  <div className="text-danger mb-4"><p style={{fontSize: "15px"}}>{formik.errors.volume}</p></div>
+                  <div className="text-danger mb-4"><p style={{ fontSize: "15px" }}>{formik.errors.volume}</p></div>
                 ) : null}
               </>
             </div>

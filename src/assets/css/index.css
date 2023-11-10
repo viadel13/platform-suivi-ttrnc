@@ -74,7 +74,7 @@ a {
     overflow-y: auto; 
 
 }
-/* 
+
 .l-navbar::-webkit-scrollbar{
 	width:5px;
 	border-radius:10px;
@@ -94,7 +94,7 @@ a {
 }
 .l-navbar:hover::-webkit-scrollbar-thumbs{
 	display:block;
-} */
+}
 
 .navbar {
     height: 100vh;
