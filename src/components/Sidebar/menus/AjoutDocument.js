@@ -261,300 +261,304 @@ const AjoutDocument = () => {
 
   return (
     <div className="ajoutDocument container-fluid">
-      {/* <div className="bg-black d-flex justify-content-center align-content-center" style={{height: '100%'}} >
-        <span class="loader-telverse"></span>
-      </div> */}
-       <Fragment>
-        <div className="mb-2">
-          <h2 className="fs-4" style={{ fontWeight: "600" }}>
-            Ajouter un document
-          </h2>
-          <Breadcrumb links={breadcrumbLinks} />
-          {televerseShow && (
-            <Fragment>
-
-              <div className="progress">
-                <div className={`progress-bar progress-bar-striped progress-bar-animated  ${totalProgress >= 100 && 'bg-success'}`} role="progressbar" aria-label="Example with label" style={{ width: `${totalProgress}%` }} aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{totalProgress}%
-                </div>
+      {televerseShow ? (
+        <div className="d-flex flex-column justify-content-center align-items-center" style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '100%', textAlign: 'center' }}>
+          <span className="loader-telverse"></span>
+          <Fragment>
+            <div className="progress mt-3 mb-2" style={{ width: '300px' }}>
+              <div className={`progress-bar progress-bar-striped progress-bar-animated ${totalProgress >= 100 && 'bg-success'}`} role="progressbar" style={{ width: `${totalProgress}%` }} aria-valuenow={totalProgress} aria-valuemin="0" aria-valuemax="100">
+                {totalProgress}%
               </div>
-              <small>{totalProgress >= 100 ? 'Televersement termine avec success' : 'Televersement fichiers en cours veuillez patienter ...'}</small>
-
-            </Fragment>
-          )}
-
-
+            </div>
+            <small>{totalProgress >= 100 ? 'Televersement termine avec succès' : 'Televersement en cours, merci de patienter...'}</small>
+          </Fragment>
         </div>
-        <div className="container-fluid card-ajoutDocument">
-          <form className="form-document" onSubmit={formik.handleSubmit}>
-            <div className="row gx-5">
-              <div className="col-12 col-md-6 col-lg-6">
-                <div className="mb-4">
-                  <label htmlFor="Nsuivi" className="form-label">
-                    Numero suivi
-                  </label>
-                  <select
-                    className="form-select"
-                    aria-label="Default select example"
-                    onChange={formik.handleChange}
-                    value={formik.values.suivi}
-                    name="suivi"
-                    id="Nsuivi"
-                    style={{ border: formik.touched.suivi && formik.errors.suivi ? "1px solid red" : "" }}
-                  >
-                    <option value="">Choisir un numero</option>
-                    {donneesEnvoi.map((i, index) => {
-                      return <option key={index}>{i.numeroSuivi} - {i.client}</option>;
-                    })}
-                  </select>
-                  {formik.touched.suivi && formik.errors.suivi ? (
-                    <div className="text-danger mb-4"><p style={{ fontSize: "15px" }}>{formik.errors.suivi}</p></div>
-                  ) : null}
-                </div>
-
-                <div className="mb-4">
-                  <label htmlFor="cbl" className="form-label">
-                    Connaissement-BL-LTA
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="cbl"
-                    name="cbl"
-                    onChange={formik.handleChange}
-                    value={formik.values.cbl}
-                    style={{ border: formik.touched.cbl && formik.errors.cbl ? "1px solid red" : "" }}
-                  />
-                  {formik.touched.cbl && formik.errors.cbl ? (
-                    <div className="text-danger mb-4"><p style={{ fontSize: "15px" }}>{formik.errors.cbl}</p></div>
-                  ) : null}
-                </div>
-
-                <div className="mb-4">
-                  <label htmlFor="Nfacture" className="form-label">
-                    Numero facture
-                  </label>
-                  <input
-                    type="number"
-                    className="form-control"
-                    id="Nfacture"
-                    name="Nfacture"
-                    onChange={formik.handleChange}
-                    value={formik.values.Nfacture}
-                    style={{ border: formik.touched.Nfacture && formik.errors.Nfacture ? "1px solid red" : "" }}
-                  />
-                  {formik.touched.Nfacture && formik.errors.Nfacture ? (
-                    <div className="text-danger mb-4"><p style={{ fontSize: "15px" }}>{formik.errors.Nfacture}</p></div>
-                  ) : null}
-                </div>
-
-                <div className="mb-4">
-                  <label htmlFor="Lcolissage" className="form-label">
-                    Liste collisage
-                  </label>
-                  <input
-                    className="form-control"
-                    type="file"
-                    id="Lcolissage"
-                    name="Lcolissage"
-                    accept=".pdf"
-                    onChange={formik.handleChange}
-                    ref={form1}
-                    value={formik.values.Lcolissage}
-                    style={{ border: formik.touched.Lcolissage && formik.errors.Lcolissage ? "1px solid red" : "" }}
-                  />
-                  {formik.touched.Lcolissage && formik.errors.Lcolissage ? (
-                    <div className="text-danger mb-4"><p style={{ fontSize: "15px" }}>{formik.errors.Lcolissage}</p></div>
-                  ) : null}
-                </div>
-
-                <div className="mb-4">
-                  <label htmlFor="Corigine" className="form-label">
-                    Certificat d'origine
-                  </label>
-                  <input
-                    className="form-control"
-                    type="file"
-                    id="Corigine"
-                    name="Corigine"
-                    accept=".pdf"
-                    onChange={formik.handleChange}
-                    ref={form2}
-                    value={formik.values.Corigine}
-                    style={{ border: formik.touched.Corigine && formik.errors.Corigine ? "1px solid red" : "" }}
-                  />
-                  {formik.touched.Corigine && formik.errors.Corigine ? (
-                    <div className="text-danger mb-4"><p style={{ fontSize: "15px" }}>{formik.errors.Corigine}</p></div>
-                  ) : null}
-                </div>
-
-                <div className="mb-4">
-                  <label htmlFor="CphytoSanitaire" className="form-label">
-                    Certificat phyto-sanitaire
-                  </label>
-                  <input
-                    className="form-control"
-                    type="file"
-                    name="CphytoSanitaire"
-                    id="CphytoSanitaire"
-                    accept=".pdf"
-                    onChange={formik.handleChange}
-                    ref={form3}
-                    value={formik.values.CphytoSanitaire}
-                    style={{ border: formik.touched.CphytoSanitaire && formik.errors.CphytoSanitaire ? "1px solid red" : "" }}
-                  />
-                  {formik.touched.CphytoSanitaire && formik.errors.CphytoSanitaire ? (
-                    <div className="text-danger mb-4"><p style={{ fontSize: "15px" }}>{formik.errors.CphytoSanitaire}</p></div>
-                  ) : null}
-                </div>
-              </div>
-              <div className="col-12 col-md-6 col-lg-6">
-                <div className="row mb-4">
-                  <div className="col-4">
-                    <label htmlFor="Numerorcv" className="form-label">
-                      RVC
+      ) : (
+        <Fragment>
+          <div className="mb-2">
+            <h2 className="fs-4" style={{ fontWeight: "600" }}>
+              Ajouter un document
+            </h2>
+            <Breadcrumb links={breadcrumbLinks} />
+          </div>
+          <div className="container-fluid card-ajoutDocument">
+            <form className="form-document" onSubmit={formik.handleSubmit}>
+              <div className="row gx-5">
+                <div className="col-12 col-md-6 col-lg-6">
+                  <div className="mb-4">
+                    <label htmlFor="Nsuivi" className="form-label">
+                      Numero suivi
                     </label>
-                    <input
-                      className="form-control"
-                      type="number"
-                      id="Numerorcv"
-                      name="Numerorcv"
+                    <select
+                      className="form-select"
+                      aria-label="Default select example"
                       onChange={formik.handleChange}
-                      value={formik.values.Numerorcv}
-                      style={{ border: formik.touched.Numerorcv && formik.errors.Numerorcv ? "1px solid red" : "" }}
-                    />
-                    {formik.touched.Numerorcv && formik.errors.Numerorcv ? (
-                      <div className="text-danger mb-4"><p style={{ fontSize: "15px" }}>{formik.errors.Numerorcv}</p></div>
+                      value={formik.values.suivi}
+                      name="suivi"
+                      id="Nsuivi"
+                      style={{ border: formik.touched.suivi && formik.errors.suivi ? "1px solid red" : "" }}
+                    >
+                      <option value="">Choisir un numero</option>
+                      {donneesEnvoi.map((i, index) => {
+                        return <option key={index}>{i.numeroSuivi} - {i.client}</option>;
+                      })}
+                    </select>
+                    {formik.touched.suivi && formik.errors.suivi ? (
+                      <div className="text-danger mb-4"><p style={{ fontSize: "15px" }}>{formik.errors.suivi}</p></div>
                     ) : null}
                   </div>
-                  <div className="col">
-                    <label htmlFor="FichierRcv" className="form-label">
-                      Fichier
+
+                  <div className="mb-4">
+                    <label htmlFor="cbl" className="form-label">
+                      Connaissement-BL-LTA
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="cbl"
+                      name="cbl"
+                      onChange={formik.handleChange}
+                      value={formik.values.cbl}
+                      style={{ border: formik.touched.cbl && formik.errors.cbl ? "1px solid red" : "" }}
+                    />
+                    {formik.touched.cbl && formik.errors.cbl ? (
+                      <div className="text-danger mb-4"><p style={{ fontSize: "15px" }}>{formik.errors.cbl}</p></div>
+                    ) : null}
+                  </div>
+
+                  <div className="mb-4">
+                    <label htmlFor="Nfacture" className="form-label">
+                      Numero facture
+                    </label>
+                    <input
+                      type="number"
+                      className="form-control"
+                      id="Nfacture"
+                      name="Nfacture"
+                      onChange={formik.handleChange}
+                      value={formik.values.Nfacture}
+                      style={{ border: formik.touched.Nfacture && formik.errors.Nfacture ? "1px solid red" : "" }}
+                    />
+                    {formik.touched.Nfacture && formik.errors.Nfacture ? (
+                      <div className="text-danger mb-4"><p style={{ fontSize: "15px" }}>{formik.errors.Nfacture}</p></div>
+                    ) : null}
+                  </div>
+
+                  <div className="mb-4">
+                    <label htmlFor="Lcolissage" className="form-label">
+                      Liste collisage
                     </label>
                     <input
                       className="form-control"
                       type="file"
-                      id="FichierRcv"
-                      name="FichierRcv"
+                      id="Lcolissage"
+                      name="Lcolissage"
                       accept=".pdf"
                       onChange={formik.handleChange}
-                      ref={form4}
-                      value={formik.values.FichierRcv}
-                      style={{ border: formik.touched.FichierRcv && formik.errors.FichierRcv ? "1px solid red" : "" }}
+                      ref={form1}
+                      value={formik.values.Lcolissage}
+                      style={{ border: formik.touched.Lcolissage && formik.errors.Lcolissage ? "1px solid red" : "" }}
                     />
-                    {formik.touched.FichierRcv && formik.errors.FichierRcv ? (
-                      <div className="text-danger mb-4"><p style={{ fontSize: "15px" }}>{formik.errors.FichierRcv}</p></div>
+                    {formik.touched.Lcolissage && formik.errors.Lcolissage ? (
+                      <div className="text-danger mb-4"><p style={{ fontSize: "15px" }}>{formik.errors.Lcolissage}</p></div>
                     ) : null}
                   </div>
-                </div>
-                <div className="row mb-4">
-                  <div className="col-4">
-                    <label htmlFor="Numeropad" className="form-label">
-                      PAD
-                    </label>
-                    <input
-                      className="form-control"
-                      type="number"
-                      id="Numeropad"
-                      name="Numeropad"
-                      onChange={formik.handleChange}
-                      value={formik.values.Numeropad}
-                      style={{ border: formik.touched.Numeropad && formik.errors.Numeropad ? "1px solid red" : "" }}
-                    />
-                    {formik.touched.Numeropad && formik.errors.Numeropad ? (
-                      <div className="text-danger mb-4"><p style={{ fontSize: "15px" }}>{formik.errors.Numeropad}</p></div>
-                    ) : null}
-                  </div>
-                  <div className="col">
-                    <label htmlFor="FichierPad" className="form-label">
-                      Fichier
+
+                  <div className="mb-4">
+                    <label htmlFor="Corigine" className="form-label">
+                      Certificat d'origine
                     </label>
                     <input
                       className="form-control"
                       type="file"
-                      id="FichierPad"
-                      name="FichierPad"
+                      id="Corigine"
+                      name="Corigine"
                       accept=".pdf"
                       onChange={formik.handleChange}
-                      ref={form5}
-                      value={formik.values.FichierPad}
-                      style={{ border: formik.touched.FichierPad && formik.errors.FichierPad ? "1px solid red" : "" }}
+                      ref={form2}
+                      value={formik.values.Corigine}
+                      style={{ border: formik.touched.Corigine && formik.errors.Corigine ? "1px solid red" : "" }}
                     />
-                    {formik.touched.FichierPad && formik.errors.FichierPad ? (
-                      <div className="text-danger mb-4"><p style={{ fontSize: "15px" }}>{formik.errors.FichierPad}</p></div>
+                    {formik.touched.Corigine && formik.errors.Corigine ? (
+                      <div className="text-danger mb-4"><p style={{ fontSize: "15px" }}>{formik.errors.Corigine}</p></div>
+                    ) : null}
+                  </div>
+
+                  <div className="mb-4">
+                    <label htmlFor="CphytoSanitaire" className="form-label">
+                      Certificat phyto-sanitaire
+                    </label>
+                    <input
+                      className="form-control"
+                      type="file"
+                      name="CphytoSanitaire"
+                      id="CphytoSanitaire"
+                      accept=".pdf"
+                      onChange={formik.handleChange}
+                      ref={form3}
+                      value={formik.values.CphytoSanitaire}
+                      style={{ border: formik.touched.CphytoSanitaire && formik.errors.CphytoSanitaire ? "1px solid red" : "" }}
+                    />
+                    {formik.touched.CphytoSanitaire && formik.errors.CphytoSanitaire ? (
+                      <div className="text-danger mb-4"><p style={{ fontSize: "15px" }}>{formik.errors.CphytoSanitaire}</p></div>
                     ) : null}
                   </div>
                 </div>
+                <div className="col-12 col-md-6 col-lg-6">
+                  <div className="row mb-4">
+                    <div className="col-4">
+                      <label htmlFor="Numerorcv" className="form-label">
+                        RVC
+                      </label>
+                      <input
+                        className="form-control"
+                        type="number"
+                        id="Numerorcv"
+                        name="Numerorcv"
+                        onChange={formik.handleChange}
+                        value={formik.values.Numerorcv}
+                        style={{ border: formik.touched.Numerorcv && formik.errors.Numerorcv ? "1px solid red" : "" }}
+                      />
+                      {formik.touched.Numerorcv && formik.errors.Numerorcv ? (
+                        <div className="text-danger mb-4"><p style={{ fontSize: "15px" }}>{formik.errors.Numerorcv}</p></div>
+                      ) : null}
+                    </div>
+                    <div className="col">
+                      <label htmlFor="FichierRcv" className="form-label">
+                        Fichier
+                      </label>
+                      <input
+                        className="form-control"
+                        type="file"
+                        id="FichierRcv"
+                        name="FichierRcv"
+                        accept=".pdf"
+                        onChange={formik.handleChange}
+                        ref={form4}
+                        value={formik.values.FichierRcv}
+                        style={{ border: formik.touched.FichierRcv && formik.errors.FichierRcv ? "1px solid red" : "" }}
+                      />
+                      {formik.touched.FichierRcv && formik.errors.FichierRcv ? (
+                        <div className="text-danger mb-4"><p style={{ fontSize: "15px" }}>{formik.errors.FichierRcv}</p></div>
+                      ) : null}
+                    </div>
+                  </div>
+                  <div className="row mb-4">
+                    <div className="col-4">
+                      <label htmlFor="Numeropad" className="form-label">
+                        PAD
+                      </label>
+                      <input
+                        className="form-control"
+                        type="number"
+                        id="Numeropad"
+                        name="Numeropad"
+                        onChange={formik.handleChange}
+                        value={formik.values.Numeropad}
+                        style={{ border: formik.touched.Numeropad && formik.errors.Numeropad ? "1px solid red" : "" }}
+                      />
+                      {formik.touched.Numeropad && formik.errors.Numeropad ? (
+                        <div className="text-danger mb-4"><p style={{ fontSize: "15px" }}>{formik.errors.Numeropad}</p></div>
+                      ) : null}
+                    </div>
+                    <div className="col">
+                      <label htmlFor="FichierPad" className="form-label">
+                        Fichier
+                      </label>
+                      <input
+                        className="form-control"
+                        type="file"
+                        id="FichierPad"
+                        name="FichierPad"
+                        accept=".pdf"
+                        onChange={formik.handleChange}
+                        ref={form5}
+                        value={formik.values.FichierPad}
+                        style={{ border: formik.touched.FichierPad && formik.errors.FichierPad ? "1px solid red" : "" }}
+                      />
+                      {formik.touched.FichierPad && formik.errors.FichierPad ? (
+                        <div className="text-danger mb-4"><p style={{ fontSize: "15px" }}>{formik.errors.FichierPad}</p></div>
+                      ) : null}
+                    </div>
+                  </div>
 
-                <div className="mb-4">
-                  <label htmlFor="Auenlevement" className="form-label">
-                    Autorisation d'enlevement
-                  </label>
-                  <input
-                    className="form-control"
-                    type="file"
-                    id="Auenlevement"
-                    name="Auenlevement"
-                    onChange={formik.handleChange}
-                    ref={form6}
-                    value={formik.values.Auenlevement}
-                    style={{ border: formik.touched.Auenlevement && formik.errors.Auenlevement ? "1px solid red" : "" }}
-                  />
-                  {formik.touched.Auenlevement && formik.errors.Auenlevement ? (
-                    <div className="text-danger mb-4"><p style={{ fontSize: "15px" }}>{formik.errors.Auenlevement}</p></div>
-                  ) : null}
-                </div>
+                  <div className="mb-4">
+                    <label htmlFor="Auenlevement" className="form-label">
+                      Autorisation d'enlevement
+                    </label>
+                    <input
+                      className="form-control"
+                      type="file"
+                      id="Auenlevement"
+                      accept=".pdf"
+                      name="Auenlevement"
+                      onChange={formik.handleChange}
+                      ref={form6}
+                      value={formik.values.Auenlevement}
+                      style={{ border: formik.touched.Auenlevement && formik.errors.Auenlevement ? "1px solid red" : "" }}
+                    />
+                    {formik.touched.Auenlevement && formik.errors.Auenlevement ? (
+                      <div className="text-danger mb-4"><p style={{ fontSize: "15px" }}>{formik.errors.Auenlevement}</p></div>
+                    ) : null}
+                  </div>
 
-                <div className="mb-4">
-                  <label htmlFor="Bsortie" className="form-label">
-                    Bon de sortie
-                  </label>
-                  <input
-                    className="form-control"
-                    type="file"
-                    id="Bsortie"
-                    name="Bsortie"
-                    accept=".pdf"
-                    onChange={formik.handleChange}
-                    ref={form7}
-                    value={formik.values.Bsortie}
-                    style={{ border: formik.touched.Bsortie && formik.errors.Bsortie ? "1px solid red" : "" }}
-                  />
-                  {formik.touched.Bsortie && formik.errors.Bsortie ? (
-                    <div className="text-danger mb-4"><p style={{ fontSize: "15px" }}>{formik.errors.Bsortie}</p></div>
-                  ) : null}
-                </div>
+                  <div className="mb-4">
+                    <label htmlFor="Bsortie" className="form-label">
+                      Bon de sortie
+                    </label>
+                    <input
+                      className="form-control"
+                      type="file"
+                      id="Bsortie"
+                      name="Bsortie"
+                      accept=".pdf"
+                      onChange={formik.handleChange}
+                      ref={form7}
+                      value={formik.values.Bsortie}
+                      style={{ border: formik.touched.Bsortie && formik.errors.Bsortie ? "1px solid red" : "" }}
+                    />
+                    {formik.touched.Bsortie && formik.errors.Bsortie ? (
+                      <div className="text-danger mb-4"><p style={{ fontSize: "15px" }}>{formik.errors.Bsortie}</p></div>
+                    ) : null}
+                  </div>
 
-                <div className="mb-4">
-                  <label htmlFor="autre" className="form-label">
-                    Autre
-                  </label>
-                  <input
-                    className="form-control"
-                    type="file"
-                    id="autre"
-                    name="files"
-                    accept=".pdf"
-                    ref={form8}
-                    multiple
-                    onChange={(event) => {
-                      formik.setFieldValue("files", event.currentTarget.files);
-                    }}
-                    style={{ border: formik.touched.files && formik.errors.files ? "1px solid red" : "" }}
-                  />
-                  {formik.touched.files && formik.errors.files ? (
-                    <div className="text-danger mb-4"><p style={{ fontSize: "15px" }}>{formik.errors.files}</p></div>
-                  ) : null}
+                  <div className="mb-4">
+                    <label htmlFor="autre" className="form-label">
+                      Autre
+                    </label>
+                    <input
+                      className="form-control"
+                      type="file"
+                      id="autre"
+                      name="files"
+                      accept=".pdf"
+                      ref={form8}
+                      multiple
+                      onChange={(event) => {
+                        formik.setFieldValue("files", event.currentTarget.files);
+                      }}
+                      style={{ border: formik.touched.files && formik.errors.files ? "1px solid red" : "" }}
+                    />
+                    {formik.touched.files && formik.errors.files ? (
+                      <div className="text-danger mb-4"><p style={{ fontSize: "15px" }}>{formik.errors.files}</p></div>
+                    ) : null}
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="d-flex justify-content-center">
-              <button type="submit" className="btn btn-primary mt-4">
-                Ajouter Document
-              </button>
-            </div>
-          </form>
-        </div>
-      </Fragment> 
+              <div className="d-flex justify-content-center">
+                <button type="submit" className="btn btn-primary mt-4">
+                  Ajouter Document
+                </button>
+              </div>
+            </form>
+          </div>
+        </Fragment>
+      )
+      }
+
+
+
+
     </div>
   );
 };
