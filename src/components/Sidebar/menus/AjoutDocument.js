@@ -524,7 +524,7 @@ const AjoutDocument = () => {
 
                   <div className="mb-4">
                     <label htmlFor="autre" className="form-label">
-                      Autre
+                      Autre (facultatif)
                     </label>
                     <input
                       className="form-control"

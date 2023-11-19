@@ -10,8 +10,7 @@
     --normal-font-size: 1rem;
     --z-fixed: 100
 }
-
-
+  
 
 *, ::before, ::after {
     box-sizing: border-box;
@@ -252,6 +251,14 @@ input:focus{
 
 }
 
+.card-listeDocument{
+    box-shadow: 0px 1px 2px 1px rgb(228, 227, 227);
+    border-radius: 2px;
+    margin-bottom: 25px;
+    background-color: white;
+
+}
+
 .PhoneInputInput {
     display: block;
     width: 100%;
@@ -293,8 +300,13 @@ input:focus{
     padding: 10px 18px 25px 18px;
     background-color: #ffffff !important;
     border-color: #f0f0f0 !important;
- 
 }
+
+.scrollable-content {
+    max-height: 300px; /* Ajustez la hauteur maximale selon vos besoins */
+    overflow-y: auto; /* Ajoutez une barre de défilement uniquement si nécessaire */
+    overflow-x: hidden;
+  }
 
     @media screen and (min-width:992px) {
       
@@ -304,10 +316,9 @@ input:focus{
             font-family: var(--body-font);
             font-size: var(--normal-font-size);
             transition: .5s;
-        
         }
     
-        .ajoutClient, .ajoutEnvoi, .ListeEnvoi, .ListeClient, .ajoutDocument{
+        .ajoutClient, .ajoutEnvoi, .ListeEnvoi, .ListeClient, .ajoutDocument, .ListeDocument{
             margin-top: 80px;
             
         }
@@ -385,7 +396,9 @@ input:focus{
             font-size: 70px;
             transition: .3s;
         }
-
+        #table-document{
+            width: 70%;
+        }
     } 
 
     
@@ -395,7 +408,7 @@ input:focus{
             padding: 0 2rem 0 calc(var(--nav-width) + 1rem)
         }
      
-        .ajoutClient, .ajoutEnvoi, .ListeEnvoi, .ListeClient, .ajoutDocument{
+        .ajoutClient, .ajoutEnvoi, .ListeEnvoi, .ListeClient, .ajoutDocument, .ListeDocument{
             margin-top: 80px;
         }
         .choixError{
@@ -444,7 +457,7 @@ input:focus{
         
         }
         
-        .ajoutClient, .ajoutEnvoi, .ListeEnvoi, .ListeClient, .ajoutDocument{
+        .ajoutClient, .ajoutEnvoi, .ListeEnvoi, .ListeClient, .ajoutDocument, .ListeDocument{
             margin-top: 80px;
         }
 

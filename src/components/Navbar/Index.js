@@ -139,7 +139,7 @@ const Navbar = ({toggleSidebar, isSidebarOpen}) => {
               </span>
             </div>
 
-            <Link to="#" className="nav_link" onClick={() => handleLinkClick("listeClients")}>
+            <Link to="listeDocuments" className="nav_link" onClick={() => handleLinkClick("listeDocuments")}>
               <IoDocumentsOutline className="nav_icon" />
               <span className="nav_name">Documents</span>
             </Link>

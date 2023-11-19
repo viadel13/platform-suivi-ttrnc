@@ -99,7 +99,7 @@ const Sidebar = ({ isSidebarOpen }) => {
               </div>
 
               
-              <Link to="#" className="nav_link">
+              <Link to="listeDocuments" className="nav_link">
                 <IoDocumentsOutline className="nav_icon" />
                 <span className="nav_name" style={{ display: !isSidebarOpen ? "none" : "" }}>Documents</span>
               </Link>

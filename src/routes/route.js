@@ -9,6 +9,7 @@ import AjoutDocument from "../components/Sidebar/menus/AjoutDocument";
 import AjouterMarchandise from "../components/Sidebar/menus/AjouterMarchandise";
 import ListeMarchandises from "../components/Sidebar/menus/ListeMarchandises";
 import ListeClients from "../components/Sidebar/menus/ListeClients";
+import ListeDocuments from "../components/Sidebar/menus/ListeDocuments";
 
 const Root = () => {
   return (
@@ -24,6 +25,7 @@ const Root = () => {
           <Route path="ajoutClient" element={<AjoutClient />} />
           <Route path="listeClients" element={<ListeClients />} />
           <Route path="ajoutDocument" element={<AjoutDocument />} />
+          <Route path="listeDocuments" element={<ListeDocuments />} />
         </Route>
       </Routes>
    
