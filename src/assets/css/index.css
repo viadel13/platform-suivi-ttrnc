@@ -309,6 +309,7 @@ input:focus{
     
         .ajoutClient, .ajoutEnvoi, .ListeEnvoi, .ListeClient, .ajoutDocument{
             margin-top: 80px;
+            
         }
 
         .choixError{
