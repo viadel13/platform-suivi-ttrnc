@@ -305,7 +305,7 @@ input:focus{
 .scrollable-content {
     max-height: 300px; /* Ajustez la hauteur maximale selon vos besoins */
     overflow-y: auto; /* Ajoutez une barre de défilement uniquement si nécessaire */
-    overflow-x: hidden;
+    overflow-x: auto;
   }
 
     @media screen and (min-width:992px) {
@@ -432,10 +432,10 @@ input:focus{
             border: 1px solid transparent;
         }
         
-        .form-client{
+        .form-client, .form-document, .form-client, .form-envoi {
             padding: 12px 0;
         }
-                
+                   
         .searchEnvoi {
             width: 206px !important;
         }

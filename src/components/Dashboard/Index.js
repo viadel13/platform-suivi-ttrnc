@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Navbar from "../Navbar/Index";
 import Sidebar from "../Sidebar/Index";
 import { Outlet } from "react-router-dom";
@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import { toggleSide } from "../../redux/reducers/rootReducer";
 
 const Dashboard = () => {
+  console.log('dashboard monte');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [userSession, setUserSession] = useState("");
   const navigate = useNavigate();
@@ -24,7 +25,7 @@ const Dashboard = () => {
 
   useEffect(()=>{
     dispatch(toggleSide(isSidebarOpen))
-  },[isSidebarOpen])
+  },[isSidebarOpen, dispatch])
 
   useEffect(() => {
     window.addEventListener("resize", updateSidebarState);
@@ -41,12 +42,13 @@ const Dashboard = () => {
     };
   }, [navigate]);
 
-
-  const toggleSidebar = () => {
+  
+  const toggleSidebar = useCallback (() => {
     setIsSidebarOpen(!isSidebarOpen);
     const bodypd = document.getElementById("body-pd");
     bodypd.classList.toggle("body-pd");
-  };
+  }, [isSidebarOpen]);
+
   return userSession === "" ? (
     <div
       className="d-flex justify-content-center align-items-center"
@@ -59,7 +61,7 @@ const Dashboard = () => {
       <div id="body-pd">
         <Navbar toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
         <Sidebar isSidebarOpen={isSidebarOpen} />
-        <div className="container-fluid p-0 m-0" style={{minHeight: '100vh', width: '100%', border: '1px solid white', background: '#F9FBFD', transition: '.3s'}}>
+        <div className="container-fluid p-0 m-0" style={{minHeight: '100vh', width: '100%', border: '1px solid  white', background: '#F9FBFD', transition: '.3s'}}>
           <Outlet />
         </div>
       </div>

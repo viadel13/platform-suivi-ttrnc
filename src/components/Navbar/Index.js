@@ -13,10 +13,11 @@ import { getAuth, signOut } from "firebase/auth";
 import { useState } from "react";
 import { useDispatch } from 'react-redux';
 import { modalEtat } from "../../redux/reducers/rootReducer";
+import { memo } from "react";
 
 
 const Navbar = ({toggleSidebar, isSidebarOpen}) => {
-
+  console.log('navbar monte');
   const[clickLien, setClickLien] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -45,7 +46,7 @@ const Navbar = ({toggleSidebar, isSidebarOpen}) => {
     }, 1000);
   }
   return (
-    <>
+    <div>
       <header className={`header ${isSidebarOpen ? 'header-active' : 'header'}`} id="header-lg">
         <div className="header_toggle d-none d-md-none d-lg-block">
           {isSidebarOpen ? (
@@ -159,9 +160,9 @@ const Navbar = ({toggleSidebar, isSidebarOpen}) => {
         </div>
       </div>
 
-    </>
+    </div>
 
   );
 };
 
-export default Navbar;
+export default memo(Navbar);

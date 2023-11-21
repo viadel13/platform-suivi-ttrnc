@@ -1,9 +1,8 @@
 import Breadcrumb from "../../Breadcrumb/Index";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { collection, query, onSnapshot } from "firebase/firestore";
 import { db } from "../../../firebase/firebaseConfig";
 import MoadalDetailsDoc from "../../ModalDetailsDoc/Index";
-import Button from 'react-bootstrap/Button';
 
 const ListeDocuments = () => {
   const breadcrumbLinks = ["Gestion Documents", "Documents"];
@@ -32,11 +31,17 @@ const ListeDocuments = () => {
       };
     });
   }, [q, donneesEnvoi]);
-
+  
   function modal(datas){
     setModalShow(true);
     setDataIndex(datas)
   }
+
+   
+  const handleCloseModal = useCallback (() => {
+    setModalShow(false);
+  }, []);
+
 
   const handleMouseEnter = (index) => {
     setHoveredRowIndex(index);
@@ -126,12 +131,9 @@ const ListeDocuments = () => {
             </tbody>
           </table>
         </div>
-
       </div>
-      {/* <Button variant="primary" onClick={() => setModalShow(true)}>
-        Launch modal with grid
-      </Button> */}
-      <MoadalDetailsDoc show={modalShow} datasIndex={dataIndex} onHide={() => setModalShow(false)} />
+      
+      <MoadalDetailsDoc show={modalShow} datasIndex={dataIndex} onHide={handleCloseModal} />
     </div>
   )
 }

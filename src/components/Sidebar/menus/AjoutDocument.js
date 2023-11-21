@@ -8,6 +8,7 @@ import { Fragment } from "react";
 import { toast } from "react-toastify";
 
 const AjoutDocument = () => {
+  console.log('Ajout Document est monte');
   const breadcrumbLinks = ["Gestion Documents", "Ajout Document"];
   const form1 = useRef(null);
   const form2 = useRef(null);
@@ -20,11 +21,51 @@ const AjoutDocument = () => {
 
   const [loading, setLoading] = useState(true);
   const [donneesEnvoi, setDonneesEnvoi] = useState([]);
+  const [donneesEnvoiDoc, setDonneesEnvoiDoc] = useState([]);
   const storage = getStorage();
   const [totalProgress, setTotalProgress] = useState(0);
   const [televerseShow, setTeleverseShow] = useState(false);
-
   const q = query(collection(db, "DatasEnvoi"));
+
+  useEffect(() => {
+    const unsubscribe = onSnapshot(q, (querySnapchot) => {
+      const datas = [];
+      querySnapchot.forEach((doc) => {
+        datas.push(doc.data());
+      });
+
+      if (JSON.stringify(datas) !== JSON.stringify(donneesEnvoi)) {
+        setDonneesEnvoi(datas);
+      }
+
+      setLoading(false);
+      return () => {
+        unsubscribe();
+      };
+    });
+  }, [q, donneesEnvoi]);
+
+  const queryDoc = query(collection(db, "Documents"));
+
+  useEffect(() => {
+    const unsubscribe = onSnapshot(queryDoc, (querySnapchot) => {
+      const datas = [];
+      querySnapchot.forEach((doc) => {
+        datas.push(doc.data());
+      });
+
+      if (JSON.stringify(datas) !== JSON.stringify(donneesEnvoiDoc)) {
+        setDonneesEnvoiDoc(datas);
+      }
+
+      setLoading(false);
+      return () => {
+        unsubscribe();
+      };
+    });
+  }, [queryDoc, donneesEnvoiDoc]);
+
+  const numerosSuiviDejaAjoutes = donneesEnvoiDoc && donneesEnvoiDoc.map((item) => item.NumeroSuivi);
 
   useEffect(() => {
     if (televerseShow) {
@@ -44,24 +85,6 @@ const AjoutDocument = () => {
     }
   }, [totalProgress, setTeleverseShow]);
 
-
-  useEffect(() => {
-    const unsubscribe = onSnapshot(q, (querySnapchot) => {
-      const datas = [];
-      querySnapchot.forEach((doc) => {
-        datas.push(doc.data());
-      });
-
-      if (JSON.stringify(datas) !== JSON.stringify(donneesEnvoi)) {
-        setDonneesEnvoi(datas);
-      }
-
-      setLoading(false);
-      return () => {
-        unsubscribe();
-      };
-    });
-  }, [q, donneesEnvoi]);
 
 
   const initialValues = {
@@ -165,7 +188,10 @@ const AjoutDocument = () => {
             autres: downloadURLs.length < 8 ? [] : downloadURLs.length > 8 ? downloadURLs.slice(7) : [downloadURLs[7]] || [],
           });
           formik.handleReset();
-          form8.current.value = null;
+          if (form8.current) {
+            form8.current.value = null;
+          }
+
 
         } catch (error) {
           console.log(error)
@@ -300,7 +326,7 @@ const AjoutDocument = () => {
                     >
                       <option value="">Choisir un numero</option>
                       {donneesEnvoi.map((i, index) => {
-                        return <option key={index}>{i.numeroSuivi} - {i.client}</option>;
+                        return <option key={index} disabled={numerosSuiviDejaAjoutes.includes(`${i.numeroSuivi} - ${i.client}`)}>{i.numeroSuivi} - {i.client}</option>;
                       })}
                     </select>
                     {formik.touched.suivi && formik.errors.suivi ? (

@@ -1,13 +1,57 @@
+import { memo } from 'react';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Modal from 'react-bootstrap/Modal';
 import Row from 'react-bootstrap/Row';
+
 const MoadalDetailsDoc = (props) => {
+  console.log('Composant modal detail est monte')
   const datasIndex = props.datasIndex
+  // console.log(datasIndex)
+  function handleDownload(link){
+    window.location.href =  `${link}`
+  }
+
+  async function handleDownloadAll(links) {
+    try {
+      // Créer un tableau de promesses pour chaque téléchargement individuel
+      const downloadPromises = links.map((link) => {
+        return new Promise((resolve, reject) => {
+          // Télécharger le fichier
+          const xhr = new XMLHttpRequest();
+          xhr.open('GET', link, true);
+          xhr.responseType = 'blob';
+          xhr.onload = () => {
+            const blob = new Blob([xhr.response]);
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = link.split('/').pop(); // Utiliser le nom du fichier pour le téléchargement
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            resolve();
+          };
+          xhr.onerror = () => {
+            reject(new Error(`Erreur de téléchargement pour ${link}`));
+          };
+          xhr.send();
+        });
+      });
+
+      // Attendre que toutes les promesses de téléchargement soient résolues
+      await Promise.all(downloadPromises);
+
+      console.log('Tous les fichiers ont été téléchargés avec succès.');
+    } catch (error) {
+      console.error('Erreur lors du téléchargement des fichiers:', error);
+    }
+  }
+
 
   return (
-    <>
+    <div>
       <Modal centered show={props.show} onHide={props.onHide} aria-labelledby="contained-modal-title-vcenter">
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
@@ -40,7 +84,7 @@ const MoadalDetailsDoc = (props) => {
                     Liste collisage
                   </Col>
                   <Col xs={6} md={6}>
-                    <button className='btn btn-success btn-sm'> Telecharger </button>
+                    <button className='btn btn-success btn-sm' onClick={()=>handleDownload(datasIndex.listeColissage)}> Telecharger </button>
                   </Col>
                 </Row>
                 <Row className='mt-3 '>
@@ -48,7 +92,7 @@ const MoadalDetailsDoc = (props) => {
                     Certificat d'origine
                   </Col>
                   <Col xs={6} md={6}>
-                    <button className='btn btn-success btn-sm'> Telecharger </button>
+                    <button className='btn btn-success btn-sm' onClick={()=>handleDownload(datasIndex.certificatOrigine)}> Telecharger </button>
                   </Col>
                 </Row>
                 <Row className='mt-3'>
@@ -56,7 +100,7 @@ const MoadalDetailsDoc = (props) => {
                     Certificat phyto-sanitaire
                   </Col>
                   <Col xs={6} md={6}>
-                    <button className='btn btn-success btn-sm'> Telecharger </button>
+                    <button className='btn btn-success btn-sm' onClick={()=>handleDownload(datasIndex.certificatPhytoSanitaire)}> Telecharger </button>
                   </Col>
                 </Row>
                 <Row className='mt-3 py-2' style={{ borderTop: '1px solid #cfd0d1', borderBottom: '1px solid #cfd0d1' }}>
@@ -70,7 +114,7 @@ const MoadalDetailsDoc = (props) => {
                     Fichier
                   </Col>
                   <Col xs={6} md={6}>
-                    <button className='btn btn-success btn-sm'> Telecharger </button>
+                    <button className='btn btn-success btn-sm' onClick={()=>handleDownload(datasIndex.fichierRCV)}> Telecharger </button>
                   </Col>
                 </Row>
                 <Row className='mt-3 py-2' style={{ borderTop: '1px solid #cfd0d1', borderBottom: '1px solid #cfd0d1' }}>
@@ -84,7 +128,7 @@ const MoadalDetailsDoc = (props) => {
                     Fichier
                   </Col>
                   <Col xs={6} md={6}>
-                    <button className='btn btn-success btn-sm'> Telecharger </button>
+                    <button className='btn btn-success btn-sm' onClick={()=>handleDownload(datasIndex.FichierPAD)}> Telecharger </button>
                   </Col>
                 </Row>
                 <Row className='mt-3'>
@@ -92,7 +136,7 @@ const MoadalDetailsDoc = (props) => {
                     Autorisation d'enlevement
                   </Col>
                   <Col xs={6} md={6}>
-                    <button className='btn btn-success btn-sm'> Telecharger </button>
+                    <button className='btn btn-success btn-sm' onClick={()=>handleDownload(datasIndex.autorisationEnlevement)}> Telecharger </button>
                   </Col>
                 </Row>
                 <Row className='mt-3'>
@@ -100,7 +144,7 @@ const MoadalDetailsDoc = (props) => {
                     Bon de sortie
                   </Col>
                   <Col xs={6} md={6}>
-                    <button className='btn btn-success btn-sm'> Telecharger </button>
+                    <button className='btn btn-success btn-sm' onClick={()=>handleDownload(datasIndex.bonSortie)}> Telecharger </button>
                   </Col>
                 </Row>
                 {datasIndex.autres.length !== 0 && (
@@ -109,7 +153,7 @@ const MoadalDetailsDoc = (props) => {
                       Autre
                     </Col>
                     <Col xs={6} md={6}>
-                      <button className='btn btn-success btn-sm'> Telecharger </button>
+                      <button className='btn btn-success btn-sm' onClick={()=>handleDownloadAll(datasIndex.autres)}> Telecharger </button>
                     </Col>
                   </Row>
                 )}
@@ -130,8 +174,8 @@ const MoadalDetailsDoc = (props) => {
         </Modal.Footer>
       </Modal>
 
-    </>
+    </div>
   )
 }
 
-export default MoadalDetailsDoc;
+export default memo(MoadalDetailsDoc);

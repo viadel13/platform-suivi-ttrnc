@@ -2,10 +2,11 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { modalEtat } from '../../redux/reducers/rootReducer';
 import { useDispatch } from 'react-redux';
+import { memo } from 'react';
 
 
 const ModalAddClient = ({ show, setStatutClient }) => {
-
+  console.log('modal client est monte');
   const dispatch = useDispatch();
 
   const handleClose = (statut) => {
@@ -38,4 +39,4 @@ const ModalAddClient = ({ show, setStatutClient }) => {
   )
 }
 
-export default ModalAddClient;
+export default memo(ModalAddClient);

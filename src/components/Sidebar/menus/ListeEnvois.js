@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 
 
 const ListeEnvois = () => {
+  console.log('liste Envoi monte');
   const [donneesEnvoi, setDonneesEnvoi] = useState([]);
   const [loading, setLoading] = useState(true);
   const breadcrumbLinks = ["Gestion des Envois", "Liste des envois"];
@@ -17,6 +18,7 @@ const ListeEnvois = () => {
   const q = query(collection(db, "DatasEnvoi"));
 
   useEffect(() => {
+   
     const unsubscribe = onSnapshot(q, (querySnapchot) => {
       const datas = [];
       querySnapchot.forEach((doc) => {

@@ -3,6 +3,7 @@ import { AiOutlineFileAdd } from "react-icons/ai";
 import { IoDocumentsOutline } from "react-icons/io5";
 import { TbUsersPlus } from "react-icons/tb";
 import { BsCardList } from "react-icons/bs";
+import { memo } from "react";
 import { MdAssignmentAdd, MdAddShoppingCart } from "react-icons/md";
 import { BiLayer } from "react-icons/bi";
 import { LiaUserSolid, LiaSignOutAltSolid } from "react-icons/lia";
@@ -11,6 +12,7 @@ import { getAuth, signOut } from "firebase/auth";
 import { Scrollbars } from 'react-custom-scrollbars-2';
 
 const Sidebar = ({ isSidebarOpen }) => {
+  console.log('sidebar monte');
   function handleSignOut() {
     setTimeout(async () => {
       try {
@@ -122,4 +124,4 @@ const Sidebar = ({ isSidebarOpen }) => {
   );
 };
 
-export default Sidebar;
+export default memo(Sidebar);

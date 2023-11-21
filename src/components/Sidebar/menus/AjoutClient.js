@@ -14,6 +14,7 @@ import ModalAddClient from "../../ModalAddClient/Index";
 import { IoReloadOutline } from "react-icons/io5";
 
 const AjoutClient = () => {
+  console.log('Ajout envoi client')
   const breadcrumbLinks = ["Gestion Clients", "Ajout un client"];
   const [showModal, setShowModal] = useState(false);
   const [statutClient, setStatutClient] = useState("");
