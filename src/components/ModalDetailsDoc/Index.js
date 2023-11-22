@@ -60,7 +60,7 @@ const MoadalDetailsDoc = (props) => {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body className="grid-example">
-          {datasIndex ? (<Container>
+          {datasIndex ? (
             <Container>
               <div className='scrollable-content'>
                 <Row>
@@ -165,7 +165,7 @@ const MoadalDetailsDoc = (props) => {
             </Container>
 
 
-          </Container>) : <p>Chargement ...</p>
+        ) : <p>Chargement ...</p>
           }
 
         </Modal.Body>

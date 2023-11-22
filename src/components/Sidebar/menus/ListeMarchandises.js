@@ -1,14 +1,17 @@
-import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import ModalDetailMarchandise from '../../ModalDetailMarchandise/Index'
+import { useCallback, useEffect, useState } from "react";
 import { collection, query, onSnapshot } from "firebase/firestore";
 import { db } from "../../../firebase/firebaseConfig";
 import Breadcrumb from "../../Breadcrumb/Index";
 
 const ListeMarchandises = () => {
+  console.log('composant ListeMarchandises est monte')
   const [donneesEnvoi, setDonneesEnvoi] = useState([]);
   const [loading, setLoading] = useState(true);
   const breadcrumbLinks = ["Marchandises", "Liste marchandises"];
   const [hoveredRowIndex, setHoveredRowIndex] = useState(null);
+  const [modalShow, setModalShow] = useState(false);
+  const[dataIndex, setDataIndex] = useState();
 
   const q = query(collection(db, "Marchandises"));
 
@@ -30,7 +33,12 @@ const ListeMarchandises = () => {
     });
   }, [q, donneesEnvoi]);
 
-  
+    
+  function modal(datas){
+    setModalShow(true);
+    setDataIndex(datas)
+  }
+
   const handleMouseEnter = (index) => {
     setHoveredRowIndex(index);
   };
@@ -38,6 +46,10 @@ const ListeMarchandises = () => {
   const handleMouseLeave = () => {
     setHoveredRowIndex(null);
   };
+
+  const handleCloseModal = useCallback (() => {
+    setModalShow(false);
+  }, []);
 
 
   const datasTable = donneesEnvoi.map((i, index) => {
@@ -51,6 +63,7 @@ const ListeMarchandises = () => {
         onMouseEnter={() => handleMouseEnter(index)}
         onMouseLeave={handleMouseLeave}
         style={{ cursor: 'pointer' }}
+        onClick={() => modal(i)}
       >
         <td>{i.cible}</td>
         <td>{i.nomMarchandise}</td>
@@ -118,7 +131,7 @@ const ListeMarchandises = () => {
 
 
       </div>
-
+      <ModalDetailMarchandise show={modalShow} datasIndex={dataIndex} onHide ={handleCloseModal} />
     </div>
   )
 }
