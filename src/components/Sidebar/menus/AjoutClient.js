@@ -125,7 +125,7 @@ const AjoutClient = () => {
           console.log(error.message);
         }
 
-        toast.success("compte cree avec success", {
+        toast.success("Client cree avec success", {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,

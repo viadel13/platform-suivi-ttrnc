@@ -1,41 +1,125 @@
-import React from 'react'
+import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { collection, query, onSnapshot } from "firebase/firestore";
+import { db } from "../../../firebase/firebaseConfig";
+import Breadcrumb from "../../Breadcrumb/Index";
 
 const ListeMarchandises = () => {
-  return (
-    <div className="container mt-5">
-    <h2>Liste des marchandises</h2>
-    <div className="table-responsive">
-      <table className="table table-bordered">
-        <thead>
-          <tr>
-            <th>Numéro de suivi</th>
-            <th>Nom du produit</th>
-            <th>Catégorie</th>
-            <th>Prix</th>
-            <th>État</th>
-          </tr>
-        </thead>
-        <tbody>
+  const [donneesEnvoi, setDonneesEnvoi] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const breadcrumbLinks = ["Marchandises", "Liste marchandises"];
+  const [hoveredRowIndex, setHoveredRowIndex] = useState(null);
 
-          <tr>
-            <td>ABC123</td>
-            <td>iPhone X</td>
-            <td>Électronique</td>
-            <td>$999.99</td>
-            <td>En attente de vente</td>
-          </tr>
-          <tr>
-            <td>ABC123</td>
-            <td>Samsung Galaxy S20</td>
-            <td>Électronique</td>
-            <td>$799.99</td>
-            <td>En attente de vente</td>
-          </tr>
-   
-        </tbody>
-      </table>
+  const q = query(collection(db, "Marchandises"));
+
+  useEffect(() => {
+    const unsubscribe = onSnapshot(q, (querySnapchot) => {
+      const datas = [];
+      querySnapchot.forEach((doc) => {
+        datas.push(doc.data());
+      });
+
+      if (JSON.stringify(datas) !== JSON.stringify(donneesEnvoi)) {
+        setDonneesEnvoi(datas);
+      }
+
+      setLoading(false);
+      return () => {
+        unsubscribe();
+      };
+    });
+  }, [q, donneesEnvoi]);
+
+  
+  const handleMouseEnter = (index) => {
+    setHoveredRowIndex(index);
+  };
+
+  const handleMouseLeave = () => {
+    setHoveredRowIndex(null);
+  };
+
+
+  const datasTable = donneesEnvoi.map((i, index) => {
+
+    const isRowHovered = index === hoveredRowIndex;
+
+    return (
+      <tr key={index} 
+        id="rowTdMarchandise" 
+        className={` ${isRowHovered ? 'table-primary' : ''}`}
+        onMouseEnter={() => handleMouseEnter(index)}
+        onMouseLeave={handleMouseLeave}
+        style={{ cursor: 'pointer' }}
+      >
+        <td>{i.cible}</td>
+        <td>{i.nomMarchandise}</td>
+        <td>12/02/2023</td>
+      </tr>
+    )
+
+  })
+
+  return (
+    <div className="container-fluid ListeMarchandise">
+      <div>
+        <h2 className="fs-4" style={{ fontWeight: "600" }}>
+          Liste des marchandises
+        </h2>
+        <Breadcrumb links={breadcrumbLinks} />
+      </div>
+      <div className="card-listeMarchandise px-2 py-3 ">
+        <div className="row mb-2">
+          <div className="col-12 col-md-6 py-2 d-flex align-items-center">
+            <span className="me-2" style={{ fontSize: '15px' }}>Show</span>
+            <select className="form-select px-2" style={{ width: '90px', height: '34px', fontSize: '15px' }} aria-label="Default select example">
+              <option value="1">5</option>
+              <option value="2">10</option>
+              <option value="2">20</option>
+              <option value="3">100</option>
+            </select>
+            <span className="ms-2" style={{ fontSize: '15px' }}>entries</span>
+          </div>
+          <div className="col-12 col-md-6 d-flex align-items-center justify-content-end" >
+            <span className="me-2" style={{ fontSize: '15px' }}>Search:</span>
+            <input className="form-control searchEnvoi" type="search" />
+          </div>
+        </div>
+        <div className="d-flex justify-content-center">
+          <table className="table" id="table-marchandise">
+            <thead>
+              <tr className="table-secondary" id="rowThMarchandise">
+                <th scope="col" style={{width: '40%'}}>Cible</th>
+                <th scope="col">Marchandise</th>
+                <th scope="col">Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {loading ? (
+                <tr>
+                  <td colSpan="4" className="text-center p-4">
+                    <div className="spinner-border text-primary" role="status">
+                      <span className="visually-hidden">Loading...</span>
+                    </div>
+                  </td>
+                </tr>
+              )
+                : donneesEnvoi.length !== 0 ? datasTable : (
+                  <tr>
+                    <td colSpan="4" className="text-center p-4">
+                      Aucune donnée
+                    </td>
+                  </tr>
+                )
+              }
+            </tbody>
+          </table>
+        </div>
+
+
+      </div>
+
     </div>
-  </div>
   )
 }
 

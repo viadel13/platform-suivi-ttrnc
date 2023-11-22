@@ -7,6 +7,7 @@ import { datasEnvoi } from "../../../redux/reducers/rootReducer";
 import { v4 as uuidv4 } from "uuid";
 import { useState } from "react";
 import Breadcrumb from "../../Breadcrumb/Index";
+import { toast } from "react-toastify";
 
 const AjouterEnvoi = () => {
   console.log('Ajout envoi monte')
@@ -51,6 +52,16 @@ const AjouterEnvoi = () => {
     dispatch(datasEnvoi(values));
     await addDoc(collection(db, "DatasEnvoi"), values);
     formik.handleReset();
+    toast.success("Envoi ajouter avec success", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
   };
 
   const validate = values => {
@@ -64,6 +75,8 @@ const AjouterEnvoi = () => {
     }
     if (!values.quantite) {
       errors.quantite = "Ce champ est obligatoire";
+    } else if (isNaN(values.quantite)) {
+      errors.quantite = "Veuillez entrer un nombre valide";
     }
     if (!values.categorie) {
       errors.categorie = "Ce champ est obligatoire";
@@ -102,7 +115,7 @@ const AjouterEnvoi = () => {
         <Breadcrumb links={breadcrumbLinks} />
       </div>
 
-      <div className=" card-ajoutEnvoi ">
+      <div className=" card-ajoutEnvoi">
 
         <form className="form-envoi" onSubmit={formik.handleSubmit}>
           <div className="row">

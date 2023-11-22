@@ -76,7 +76,7 @@ const ListeClients = () => {
                 <h6 style={{ fontWeight: "600", lineHeight: "1.2" }}>
                   {i.entreprise === ""
                     ? "Client individuel"
-                    : i.entreprise}
+                    : "Client entreprise"}
                 </h6>
                 <div className="mt-3">
                   <button className="btn btn-sm btn-primary me-2 my-2">

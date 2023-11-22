@@ -235,7 +235,7 @@ input:focus{
     background-color: white;
 }
 
- .card-ajoutDocument, .card-ajoutEnvoi{
+ .card-ajoutDocument, .card-ajoutEnvoi, .card-ajoutMarchandise{
     box-shadow: 0px 1px 2px 1px rgb(228, 227, 227);
     border-radius: 2px;
     margin-bottom: 25px;
@@ -243,7 +243,7 @@ input:focus{
     padding: 0 15px;
 }
 
-.card-listeEnvoi{
+.card-listeEnvoi, .card-listeMarchandise{
     box-shadow: 0px 1px 2px 1px rgb(228, 227, 227);
     border-radius: 2px;
     margin-bottom: 25px;
@@ -318,7 +318,7 @@ input:focus{
             transition: .5s;
         }
     
-        .ajoutClient, .ajoutEnvoi, .ListeEnvoi, .ListeClient, .ajoutDocument, .ListeDocument{
+        .ajoutClient, .ajoutEnvoi, .ListeEnvoi, .ListeClient, .ajoutDocument, .ListeDocument, .ajouterMarchandise, .ListeMarchandise{
             margin-top: 80px;
             
         }
@@ -381,7 +381,7 @@ input:focus{
             padding-bottom: 26px;
         }
        
-        .card-ajoutClient, .card-ajoutDocument, .card-ajoutEnvoi{
+        .card-ajoutClient, .card-ajoutDocument, .card-ajoutEnvoi, .card-ajoutMarchandise{
             padding: 12px 15px;
         }
 
@@ -396,9 +396,11 @@ input:focus{
             font-size: 70px;
             transition: .3s;
         }
-        #table-document{
+        #table-document, #table-marchandise{
             width: 70%;
         }
+
+    
     } 
 
     
@@ -408,7 +410,7 @@ input:focus{
             padding: 0 2rem 0 calc(var(--nav-width) + 1rem)
         }
      
-        .ajoutClient, .ajoutEnvoi, .ListeEnvoi, .ListeClient, .ajoutDocument, .ListeDocument{
+        .ajoutClient, .ajoutEnvoi, .ListeEnvoi, .ListeClient, .ajoutDocument, .ListeDocument, .ajouterMarchandise, .ListeMarchandise{
             margin-top: 80px;
         }
         .choixError{
@@ -432,7 +434,7 @@ input:focus{
             border: 1px solid transparent;
         }
         
-        .form-client, .form-document, .form-client, .form-envoi {
+        .form-client, .form-document, .form-client, .form-envoi, .form-marchandise{
             padding: 12px 0;
         }
                    
@@ -457,7 +459,7 @@ input:focus{
         
         }
         
-        .ajoutClient, .ajoutEnvoi, .ListeEnvoi, .ListeClient, .ajoutDocument, .ListeDocument{
+        .ajoutClient, .ajoutEnvoi, .ListeEnvoi, .ListeClient, .ajoutDocument, .ListeDocument, .ajouterMarchandise, .ListeMarchandise{
             margin-top: 80px;
         }
 
@@ -500,7 +502,7 @@ input:focus{
             width: 60px
         }
 
-        .form-client, .form-document, .form-envoi{
+        .form-client, .form-document, .form-envoi, .form-marchandise{
             padding: 12px 0;
         }
 
@@ -519,6 +521,15 @@ input:focus{
         
         .Nsuivi{
             font-size: 14px;
+            transition: .3s;
+        }
+        #rowThMarchandise{
+            font-size: 13px;
+            transition: .3s;
+        }
+
+        #rowTdMarchandise{
+            font-size: 13px;
             transition: .3s;
         }
         #reload{
@@ -544,6 +555,14 @@ input:focus{
         }
         .Nsuivi{
             font-size: 14px;
+            transition: .3s;
+        }
+        #rowThMarchandise{
+            font-size: 12px;
+            transition: .3s;
+        }
+        #rowTdMarchandise{
+            font-size: 13px;
             transition: .3s;
         }
     }
