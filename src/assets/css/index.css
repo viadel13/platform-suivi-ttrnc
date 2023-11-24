@@ -240,6 +240,12 @@ input:focus{
     margin-bottom: 25px;
     background-color: white;
 }
+.card-chart{
+    box-shadow: 0px 1px 2px 1px rgb(228, 227, 227);
+    border-radius: 2px;
+    margin-bottom: 25px;
+    background-color: white;
+}
 
  .card-ajoutDocument, .card-ajoutEnvoi, .card-ajoutMarchandise{
     box-shadow: 0px 1px 2px 1px rgb(228, 227, 227);
@@ -315,7 +321,7 @@ input:focus{
     padding: 5px 5px 5px 5px;
     background-color: #ffffff !important;
     border-color: #f0f0f0 !important;
-    border-bottom: 4px solid #3498db !important;
+    border-bottom: 4px solid #0994f1 !important;
     box-shadow: 0px 0px 5px 0px #e0dfdf;
 }
 

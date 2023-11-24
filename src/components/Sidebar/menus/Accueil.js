@@ -95,8 +95,8 @@ const Accueil = () => {
           </div>
         </div>
         <div className="row">
-          <div className="col-lg-6 col-md-6 col-sm-6">
-            {/* <Chart /> */}
+          <div className="col-lg-6 col-md-6 col-sm-6 card-chart">
+            <Chart />
           </div>
         </div>
       </div>
