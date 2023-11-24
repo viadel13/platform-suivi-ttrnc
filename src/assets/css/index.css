@@ -4,7 +4,7 @@
     --header-height: 3rem;
     --nav-width: 68px;
     --first-color: #05010ff6;
-    --first-color-light: #AFA5D9;
+    --first-color-light: #a5cad9;
     --white-color: #F7F6FB;
     --body-font: 'Nunito', sans-serif;
     --normal-font-size: 1rem;
@@ -72,6 +72,12 @@ a {
     z-index: var(--z-fixed);
     overflow-y: auto; 
 
+}
+/* .table-hover tbody tr:hover td {
+    background: rgba(230, 243, 253, 0.808);
+} */
+#table-hover tbody tr{
+    font-size: 15px;
 }
 
 .l-navbar::-webkit-scrollbar{
@@ -300,6 +306,44 @@ input:focus{
     padding: 10px 18px 25px 18px;
     background-color: #ffffff !important;
     border-color: #f0f0f0 !important;
+}
+
+
+
+.card-dashboard{
+    border-radius: 2px;
+    padding: 5px 5px 5px 5px;
+    background-color: #ffffff !important;
+    border-color: #f0f0f0 !important;
+    border-bottom: 4px solid #3498db !important;
+    box-shadow: 0px 0px 5px 0px #e0dfdf;
+}
+
+.card-dashboard-2{
+    border-radius: 2px;
+    padding: 5px 5px 5px 5px;
+    background-color: #ffffff !important;
+    border-color: #f0f0f0 !important;
+    border-bottom: 4px solid #db345e !important;
+    box-shadow: 0px 0px 5px 0px #e0dfdf;
+}
+
+.card-dashboard-3{
+    border-radius: 2px;
+    padding: 5px 5px 5px 5px;
+    background-color: #ffffff !important;
+    border-color: #f0f0f0 !important;
+    border-bottom: 4px solid rgb(241, 206, 10)!important;
+    box-shadow: 0px 0px 5px 0px #e0e0df;
+}
+
+.card-dashboard-4{
+    border-radius: 2px;
+    padding: 5px 5px 5px 5px;
+    background-color: #ffffff !important;
+    border-color: #f0f0f0 !important;
+    border-bottom: 4px solid rgb(69, 209, 27)!important;
+    box-shadow: 0px 0px 5px 0px #e0e0df;
 }
 
 .scrollable-content {

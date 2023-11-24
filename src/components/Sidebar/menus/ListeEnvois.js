@@ -65,19 +65,19 @@ const ListeEnvois = () => {
 
           
           </div>
-          <table className="table">
+          <table className="table" id="table-hover">
             <thead>
               <tr className="text-center table-secondary" style={{fontSize : toggleSidebar ? '14px' : '', transition: '.3s'}}>
                 <th className="d-lg-none "></th>
-                <th className="Nsuivi">Numero suivi</th>
+                <th className="Nsuivi"  style={{width: '10%'}}>Numero suivi</th>
                 <th  className="Nsuivi">Client</th>
-                <th className="d-none d-md-table-cell">Produit</th>
+                <th className="d-none d-md-table-cell" style={{width: '10%'}}>Produit</th>
                 <th className="d-none d-md-table-cell">Quantite</th>
                 <th className="d-none d-md-table-cell">Categorie</th>
                 <th className="d-none d-md-table-cell">Poids</th>
                 <th className="d-none d-lg-table-cell">Volume</th>
                 <th className="d-none d-lg-table-cell">Prix</th>
-                <th className="d-none d-lg-table-cell w-25">Etat</th>
+                <th className="d-none d-lg-table-cell"  style={{width: '25%'}}>Etat</th>
               </tr>
             </thead>
             <tbody>
