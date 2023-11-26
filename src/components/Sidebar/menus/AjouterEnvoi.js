@@ -1,9 +1,7 @@
 import { useFormik } from "formik";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
 import { db } from "../../../firebase/firebaseConfig";
 import { collection, addDoc, onSnapshot, query } from "firebase/firestore";
-import { datasEnvoi } from "../../../redux/reducers/rootReducer";
 import { v4 as uuidv4 } from "uuid";
 import { useState } from "react";
 import Breadcrumb from "../../Breadcrumb/Index";
@@ -11,7 +9,6 @@ import { toast } from "react-toastify";
 
 const AjouterEnvoi = () => {
   console.log('Ajout envoi monte')
-  const dispatch = useDispatch();
   const uuid = uuidv4().slice(0, 10);
   const [donneesEnvoi, setDonneesEnvoi] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -37,6 +34,13 @@ const AjouterEnvoi = () => {
     });
   }, [q, donneesEnvoi]);
 
+  const obtenirDateActuelle = ()=>{
+    const date = new Date();
+    const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+    const dateFormatee = date.toLocaleDateString('fr-FR', options);
+    return dateFormatee;
+  }
+
   const initialValues = {
     client: "",
     nomProduit: "",
@@ -45,12 +49,21 @@ const AjouterEnvoi = () => {
     poids: "",
     volume: "",
     prix: "",
-    numeroSuivi: `${uuid}`,
+
   };
 
   const onSubmit = async (values) => {
-    dispatch(datasEnvoi(values));
-    await addDoc(collection(db, "DatasEnvoi"), values);
+    await addDoc(collection(db, "DatasEnvoi"), {
+      client: values.client,
+      nomProduit: values.nomProduit,
+      quantite: values.quantite,
+      categorie: values.categorie,
+      poids: values.poids,
+      volume: values.volume,
+      prix: values.prix,
+      numeroSuivi: `${uuid}`,
+      date: obtenirDateActuelle(),
+    });
     formik.handleReset();
     toast.success("Envoi ajouter avec success", {
       position: "top-right",

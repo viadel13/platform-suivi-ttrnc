@@ -78,6 +78,7 @@ const ListeEnvois = () => {
                 <th className="d-none d-lg-table-cell">Volume</th>
                 <th className="d-none d-lg-table-cell">Prix</th>
                 <th className="d-none d-lg-table-cell"  style={{width: '25%'}}>Etat</th>
+                <th className="d-none d-lg-table-cell" >Date</th>
               </tr>
             </thead>
             <tbody>
@@ -135,6 +136,7 @@ const ListeEnvois = () => {
                             <option value="4">Livré </option>
                           </select>
                         </td>
+                        <td className="d-none d-lg-table-cell">{i.date}</td>
                       </tr>
 
                       {/* ligne collapse pour les ecrans moyens  */}
@@ -196,6 +198,10 @@ const ListeEnvois = () => {
                                       <option value="4">Livré </option>
                                     </select>
                                   </td>
+                                </tr>
+                                <tr>
+                                  <th>Date</th>
+                                  <td>{i.date}</td>
                                 </tr>
                               </tbody>
                             </table>
