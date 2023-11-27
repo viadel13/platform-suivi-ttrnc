@@ -7,6 +7,7 @@ import 'react-circular-progressbar/dist/styles.css';
 import { GoContainer } from "react-icons/go";
 import { FaUsers } from 'react-icons/fa';
 import Chart from "../../Line/Index";
+import DoughnutChar from "../../Doughnut/Index";
 
 
 const Accueil = () => {
@@ -98,6 +99,11 @@ const Accueil = () => {
           <div className="col-lg-6 col-md-6 col-sm-6">
            <div className="card-chart">
               <Chart />
+           </div>
+          </div>
+          <div className="col-lg-6 col-md-6 col-sm-6">
+           <div className="card-chart">
+              <DoughnutChar />
            </div>
           </div>
         </div>

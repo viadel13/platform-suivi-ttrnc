@@ -38,6 +38,13 @@ const AjoutClient = () => {
     }
   }, [statutClient, setShowModal, selectCHoixError]);
 
+  const obtenirDateActuelle = ()=>{
+    const date = new Date();
+    const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+    const dateFormatee = date.toLocaleDateString('fr-FR', options);
+    return dateFormatee;
+  }
+
   const formik = useFormik({
     initialValues: {
       niu: "",
@@ -120,7 +127,18 @@ const AjoutClient = () => {
         // Créez un document dans la collection "Clients" avec l'UID de l'utilisateur comme ID
         try {
           const userDocRef = doc(db, "Clients", userUID);
-          await setDoc(userDocRef, formik.values);
+          await setDoc(userDocRef, {
+            niu: formik.values.niu,
+            email: formik.values.email,
+            sexe: formik.values.sexe,
+            nom: formik.values.nom,
+            telephone: formik.values.telephone,
+            password: formik.values.password,
+            prenom: formik.values.prenom,
+            entreprise: formik.values.entreprise,
+            siege: formik.values.siege,
+            date: obtenirDateActuelle(),
+          });
         } catch (error) {
           console.log(error.message);
         }

@@ -10,6 +10,7 @@ const Chart = () => {
   const [barThickness, setBarThickness] = useState(40);
   const [months, setMonths] = useState([]);
   const [donneesEnvoi, setDonneesEnvoi] = useState([]);
+  const [donneesClient, setDonneesClient] = useState([]);
   const [loading, setLoading] = useState(true);
   const currentYear = new Date().getFullYear();
   const[annee, setAnnee] = useState(currentYear);
@@ -34,6 +35,26 @@ const Chart = () => {
       };
     });
   }, [q, donneesEnvoi]);
+
+  const queryClient = query(collection(db, "Clients"));
+
+  useEffect(() => {
+    const unsubscribe = onSnapshot(queryClient, (querySnapchot) => {
+      const datas = [];
+      querySnapchot.forEach((doc) => {
+        datas.push(doc.data());
+      });
+
+      if (JSON.stringify(datas) !== JSON.stringify(donneesClient)) {
+        setDonneesClient(datas);
+      }
+
+      setLoading(false);
+      return () => {
+        unsubscribe();
+      };
+    });
+  }, [queryClient, donneesClient]);
 
   useEffect(() => {
     // Générer la liste des mois
@@ -65,7 +86,6 @@ const Chart = () => {
   }, []);
 
   const countByIndex = new Array(months.length).fill(0);
-
   const month = donneesEnvoi && months.forEach((month, index) => {
     // Initialiser le compteur pour cet index
     let countForIndex = 0;
@@ -88,18 +108,47 @@ const Chart = () => {
         }
       }else{
         return false;
-      }
-
-    
-
-   
+      } 
     });
 
     countByIndex[index] = countForIndex;
     // Ajouter un message indiquant quand la boucle pour un mois spécifique termine
     // console.log(`Fin de la boucle pour le mois ${index + 1}. Nombre d'éléments trouvés: ${countForIndex}`);
   });
+  // console.log("Nombre d'éléments trouvés par index:", countByIndex);
 
+
+
+  const countByIndexClient = new Array(months.length).fill(0);
+  const monthClient = donneesClient && months.forEach((month, index) => {
+    // Initialiser le compteur pour cet index
+    let countForIndex = 0;
+    const dataFilter = donneesClient.filter((entry) => {
+
+      const entryYear = parseInt(entry.date.split('/')[2]);
+
+      if (entryYear === parseInt(annee)) {
+        
+        const entryMonth = parseInt(entry.date.split('/')[1]);
+
+        if (entryMonth === index + 1) {
+          // console.log(`Trouvé: ${entryMonth} à l'index ${index + 1}`);
+          // Incrémenter le compteur si un élément est trouvé
+          countForIndex++;
+          return true;  // Garder l'élément dans le filtre
+        } else {
+          // console.log(`Non trouvé: ${entryMonth} à l'index ${index + 1}`);
+          return false;  // Exclure l'élément du filtre
+        }
+      }else{
+        return false;
+      } 
+    });
+
+    countByIndexClient[index] = countForIndex;
+    // Ajouter un message indiquant quand la boucle pour un mois spécifique termine
+    // console.log(`Fin de la boucle pour le mois ${index + 1}. Nombre d'éléments trouvés: ${countForIndex}`);
+  });
   // console.log("Nombre d'éléments trouvés par index:", countByIndex);
 
   useEffect(() => {
@@ -138,26 +187,26 @@ const Chart = () => {
       {
         label: 'conteneur entres',
         data: countByIndex,
-        backgroundColor: '#0994f1',
-        borderColor: '#0994f1',
+        backgroundColor: 'rgba(255, 159, 64, 0.2)',
+        borderColor: 'rgba(255, 159, 64)',
         borderWidth: 1,
         barThickness: barThickness,
       },
-      // {
-      //   type: 'line',
-      //   label: 'Line Dataset',
-      //   data: [30, 10, 14, 55, 40, 45, 65, 30, 24, 19, 39, 90],
-      //   borderColor: 'rgba(75, 192, 192, 1)',
-      //   borderWidth: 2,
-      //   fill: false,
-      //   yAxisID: 'y',
-      // },
+      {
+        type: 'line',
+        label: 'Clients inscrits',
+        data: countByIndexClient,
+        borderColor: 'rgba(54, 162, 235, 1)',
+        borderWidth: 3,
+        fill: false,
+        yAxisID: 'y',
+      },
     ],
   };
 
 
   return (
-    <div style={{ height: '50vh' }} className=' px-2 py-4'>
+    <div style={{ height: '50vh'}} className=' px-2 py-4'>
       <Bar data={data} options={options} />
       <div className='d-flex justify-content-end p-3'>
         <select className="form-select px-2" value={annee}  onChange={(e) => setAnnee(Number(e.target.value))} style={{ width: '90px', height: '35px', fontSize: '15px', border: '2px solid #0994f1' }} aria-label="Default select example">
