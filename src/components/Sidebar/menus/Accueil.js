@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Breadcrumb from "../../Breadcrumb/Index";
 import { IoMdPeople } from 'react-icons/io';
 import { FaFileSignature } from "react-icons/fa";
@@ -8,11 +8,57 @@ import { GoContainer } from "react-icons/go";
 import { FaUsers } from 'react-icons/fa';
 import Chart from "../../Line/Index";
 import DoughnutChar from "../../Doughnut/Index";
-
+import { db } from "../../../firebase/firebaseConfig";
+import { collection, addDoc, onSnapshot, query } from "firebase/firestore";
 
 const Accueil = () => {
+  const [donneesClient, setDonneesClient] = useState([]);
+  const [donneesEnvoi, setDonneesEnvoi] = useState([]);
+  const [loadingClient, setLoadingCLient] = useState(true);
+  const [loading, setLoading] = useState(true);
   const breadcrumbLinks = [];
   const percentage = 66;
+
+  const queryClient = query(collection(db, "Clients"));
+  useEffect(() => {
+    const unsubscribe = onSnapshot(queryClient, (querySnapchot) => {
+      const datas = [];
+      querySnapchot.forEach((doc) => {
+        datas.push(doc.data());
+      });
+  
+      if (JSON.stringify(datas) !== JSON.stringify(donneesClient)) {
+        setDonneesClient(datas);
+      }
+  
+      setLoadingCLient(false);
+      return () => {
+        unsubscribe();
+      };
+    });
+  }, [queryClient, donneesClient]);
+
+  const q = query(collection(db, "DatasEnvoi"));
+  useEffect(() => {
+    const unsubscribe = onSnapshot(q, (querySnapchot) => {
+      const datas = [];
+      querySnapchot.forEach((doc) => {
+        datas.push(doc.data());
+      });
+
+      if (JSON.stringify(datas) !== JSON.stringify(donneesEnvoi)) {
+        setDonneesEnvoi(datas);
+      }
+
+      setLoading(false);
+      return () => {
+        unsubscribe();
+      };
+    });
+  }, [q, donneesEnvoi]);
+
+
+
   return (
     <div className="container-fluid accueil">
       <div>
@@ -32,7 +78,17 @@ const Accueil = () => {
                   </div>
                   <div>
                     <p><strong style={{ color: '#808080' }}>Clients</strong></p>
-                    <h3 className="card-title"><strong>70</strong></h3>
+                    <h3 className="card-title">{loadingClient ?  (
+                      <div className="spinner-border" role="status" style={{color: '#3498db'}}>
+                      <span className="visually-hidden">Loading...</span>
+                    </div>
+                    ) :donneesClient.length !== 0 ? (
+                      <strong>{donneesClient.length}</strong>
+                    )  : (
+                      <strong>0</strong>
+                    )
+                  
+                  }</h3>
                   </div>
                 </div>
               </div>
@@ -73,7 +129,17 @@ const Accueil = () => {
                   </div>
                   <div>
                     <p><strong style={{ color: '#808080' }}>Conteneurs</strong></p>
-                    <h3 className="card-title"><strong>50</strong></h3>
+                    <h3 className="card-title">{loading ?  (
+                      <div className="spinner-border" role="status" style={{color: `rgb(241, 206, 10)`}}>
+                      <span className="visually-hidden">Loading...</span>
+                    </div>
+                    ) :donneesEnvoi.length !== 0 ? (
+                      <strong>{donneesEnvoi.length}</strong>
+                    )  : (
+                      <strong>0</strong>
+                    )
+                  
+                  }</h3>
                   </div>
                 </div>
               </div>

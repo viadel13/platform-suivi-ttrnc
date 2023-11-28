@@ -7,19 +7,62 @@ import { db } from '../../firebase/firebaseConfig';
 ChartJS.register(CategoryScale, LinearScale, PointElement, BarElement, LineElement);
 
 const DoughnutChar = () => {
+  const [donneesEnvoi, setDonneesEnvoi] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const q = query(collection(db, "Clients"));
+  useEffect(() => {
+    const unsubscribe = onSnapshot(q, (querySnapchot) => {
+      const datas = [];
+      querySnapchot.forEach((doc) => {
+        datas.push(doc.data());
+      });
+
+      if (JSON.stringify(datas) !== JSON.stringify(donneesEnvoi)) {
+        setDonneesEnvoi(datas);
+      }
+
+      setLoading(false);
+      return () => {
+        unsubscribe();
+      };
+    });
+  }, [q, donneesEnvoi]);
+
+  console.log(donneesEnvoi)
+
+let countEntrepriseNonVide = 0;
+let countEntrepriseVide = 0;
+
+const filterClient = donneesEnvoi.filter((i) => {
+  if (i.entreprise !== '') {
+    console.log('Entreprise non vide:', i);
+    countEntrepriseNonVide++;
+    return true; // Garder cet élément dans le filtre
+  } else {
+    console.log('Entreprise vide:', i);
+    countEntrepriseVide++;
+    return false; // Exclure cet élément du filtre
+  }
+});
+
+console.log('Nombre d\'éléments avec entreprise non vide:', countEntrepriseNonVide);
+console.log('Nombre d\'éléments avec entreprise vide:', countEntrepriseVide);
+
+  
+
+
   const data = {
     labels: [
-      'Red',
-      'Blue',
-      'Yellow'
+      'Clients entreprise',
+      'Clients individuel',
     ],
     datasets: [{
-      label: 'My First Dataset',
-      data: [300, 50, 100],
+      label: 'Nombre client',
+      data: [`${countEntrepriseNonVide}`, `${countEntrepriseVide}`],
       backgroundColor: [
-        'rgb(255, 99, 132)',
-        'rgb(54, 162, 235)',
-        'rgb(255, 205, 86)'
+        '#28A745',
+        '#007BFF',
       ],
       hoverOffset: 4,
     }]

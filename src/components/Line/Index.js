@@ -17,7 +17,6 @@ const Chart = () => {
   const [yearOptions, setYearOptions] = useState([]); 
 
   const q = query(collection(db, "DatasEnvoi"));
-
   useEffect(() => {
     const unsubscribe = onSnapshot(q, (querySnapchot) => {
       const datas = [];
@@ -37,7 +36,6 @@ const Chart = () => {
   }, [q, donneesEnvoi]);
 
   const queryClient = query(collection(db, "Clients"));
-
   useEffect(() => {
     const unsubscribe = onSnapshot(queryClient, (querySnapchot) => {
       const datas = [];
@@ -71,10 +69,11 @@ const Chart = () => {
 
     setMonths(monthList);
 
-  }, [annee]);
+  }, []);
 
   useEffect(() => {
     // Générer la liste des années pour le champ de sélection
+
     const currentYear = new Date().getFullYear();
     const previousYear = currentYear - 1;
     const years = [];

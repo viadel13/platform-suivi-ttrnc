@@ -12,10 +12,7 @@ const ListeClients = () => {
   const [selectOptionSexe, setSelectOptionSexe] = useState("");
   const [search, setSearch] = useState("");
 
-  console.log(selectOptionSexe);
-
   const q = query(collection(db, "Clients"));
-
   useEffect(() => {
     const unsubscribe = onSnapshot(q, (querySnapchot) => {
       const datas = [];
