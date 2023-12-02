@@ -30,16 +30,35 @@ const AjouterMarchandise = () => {
     });
   }, [q, donneesEnvoi]);
 
+  const obtenirDateActuelle = ()=>{
+    const date = new Date();
+    const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+    const dateFormatee = date.toLocaleDateString('fr-FR', options);
+    return dateFormatee;
+  }
+
+
   const initialValues = {
     cible: "",
     nomMarchandise: "",
     quantite: "",
-    categorie: "",
     prix: "",
+    unite: '',
+    packaging: '',
+    poids: '',
   };
 
   const onSubmit = async (values) => {
-    await addDoc(collection(db, "Marchandises"), values);
+    await addDoc(collection(db, "Marchandises"), {
+      cible: formik.values.cible,
+      nomMarchandise: formik.values.nomMarchandise,
+      quantite: formik.values.quantite,
+      prix: formik.values.prix,
+      unite: formik.values.unite,
+      packaging: formik.values.packaging,
+      poids: formik.values.poids,
+      date: obtenirDateActuelle(),
+    });
     formik.handleReset();
     toast.success("Marchandise ajouter avec success", {
       position: "top-right",
@@ -69,13 +88,20 @@ const AjouterMarchandise = () => {
       errors.quantite = "Veuillez entrer un nombre valide";
     }
 
-    if (!values.categorie) {
-      errors.categorie = "Ce champ est obligatoire";
-    }
-
     if (!values.prix) {
       errors.prix = "Ce champ est obligatoire";
     } else if (isNaN(values.prix)) {
+      errors.prix = "Veuillez entrer un nombre valide";
+    }
+    if (!values.unite) {
+      errors.unite = "Ce champ est obligatoire";
+    }
+    if (!values.packaging) {
+      errors.packaging = "Ce champ est obligatoire";
+    }
+    if (!values.poids) {
+      errors.poids = "Ce champ est obligatoire";
+    } else if (isNaN(values.poids)) {
       errors.prix = "Veuillez entrer un nombre valide";
     }
 
@@ -87,16 +113,6 @@ const AjouterMarchandise = () => {
     onSubmit,
     validate,
   });
-
-  const uniqueCategories = donneesEnvoi && donneesEnvoi.filter((i, index, self) => {
-    const categoryLowerCase = i.categorie.toLowerCase();
-    return (
-      self.findIndex(
-        (a) => a.categorie.toLowerCase() === categoryLowerCase
-      ) === index
-    );
-  });
-
 
   return (
     <div className="container-fluid ajouterMarchandise">
@@ -171,29 +187,6 @@ const AjouterMarchandise = () => {
             </div>
             <div className="col-12 col-md-6 col-lg-6">
               <div className="mb-3">
-                <label htmlFor="categorie" className="form-label">
-                  Catégorie
-                </label>
-                <select
-                  className="form-select"
-                  onChange={formik.handleChange}
-                  value={formik.values.categorie}
-                  id="categorie"
-                  name="categorie"
-                  style={{ border: formik.touched.categorie && formik.errors.categorie ? "1px solid red" : "" }}
-                >
-                  <option value="">Sélectionner une catégorie</option>
-                  {uniqueCategories.map((i, index) => {
-                    return <option key={index} >{i.categorie} </option>;
-                  })}
-                </select>
-                {formik.touched.categorie && formik.errors.categorie ? (
-                  <div className="text-danger mb-4"><p style={{ fontSize: "15px" }}>{formik.errors.categorie}</p></div>
-                ) : null}
-              </div>
-            </div>
-            <div className="col-12 col-md-6 col-lg-6">
-              <div className="mb-3">
                 <label htmlFor="prix" className="form-label">
                   Prix
                 </label>
@@ -211,6 +204,72 @@ const AjouterMarchandise = () => {
                   <div className="text-danger mb-4"><p style={{ fontSize: "15px" }}>{formik.errors.prix}</p></div>
                 ) : null}
               </div>
+            </div>
+            <div className="col-12 col-md-6 col-lg-6">
+              <div className="mb-3">
+                <label htmlFor="unite" className="form-label">
+                  Unite
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  onChange={formik.handleChange}
+                  value={formik.values.unite}
+                  id="unite"
+                  name="unite"
+                  style={{ border: formik.touched.unite && formik.errors.unite ? "1px solid red" : "" }}
+                />
+                {formik.touched.unite && formik.errors.unite ? (
+                  <div className="text-danger mb-4"><p style={{ fontSize: "15px" }}>{formik.errors.unite}</p></div>
+                ) : null}
+              </div>
+            </div>
+            <div className="col-12 col-md-6 col-lg-6">
+              <div className="mb-3">
+                <label htmlFor="packaging" className="form-label">
+                  Packaging
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  onChange={formik.handleChange}
+                  value={formik.values.packaging}
+                  id="packaging"
+                  name="packaging"
+                  style={{ border: formik.touched.packaging && formik.errors.packaging ? "1px solid red" : "" }}
+                />
+                {formik.touched.packaging && formik.errors.packaging ? (
+                  <div className="text-danger mb-4"><p style={{ fontSize: "15px" }}>{formik.errors.packaging}</p></div>
+                ) : null}
+              </div>
+            </div>
+            <div className="col-12 col-md-6 col-lg-6">
+              <>
+                <label htmlFor="poids" className="form-label">
+                  Poids brut
+                </label>
+                <div className="input-group mb-3">
+                  <input
+                    type="number"
+                    className="form-control"
+                    placeholder="0"
+                    aria-describedby="kgAddon"
+                    id="poids"
+                    name="poids"
+                    onChange={formik.handleChange}
+                    value={formik.values.poids}
+                    style={{ border: formik.touched.poids && formik.errors.poids ? "1px solid red" : "" }}
+                  />
+
+                  <span className="input-group-text" id="kgAddon">
+                    kg
+                  </span>
+
+                </div>
+                {formik.touched.poids && formik.errors.poids ? (
+                  <div className="text-danger mb-4"><p style={{ fontSize: "15px" }}>{formik.errors.poids}</p></div>
+                ) : null}
+              </>
             </div>
           </div>
           <div className="d-flex justify-content-center mt-4">

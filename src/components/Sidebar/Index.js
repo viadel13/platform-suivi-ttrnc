@@ -10,6 +10,10 @@ import { LiaUserSolid, LiaSignOutAltSolid } from "react-icons/lia";
 import { Link } from "react-router-dom";
 import { getAuth, signOut } from "firebase/auth";
 import { Scrollbars } from 'react-custom-scrollbars-2';
+import { FaUsers } from "react-icons/fa";
+import { RiUserAddFill } from "react-icons/ri";
+import { FaFileSignature } from "react-icons/fa";
+import { FaFileContract } from "react-icons/fa";
 
 const Sidebar = ({ isSidebarOpen }) => {
   console.log('sidebar monte');
@@ -34,14 +38,14 @@ const Sidebar = ({ isSidebarOpen }) => {
         <Scrollbars autoHide>
           <div className="navbar-conteneur">
             <div className="TitleAppli" style={{display: !isSidebarOpen &&  "flex" , flexDirection: !isSidebarOpen && "column" , alignItems: !isSidebarOpen && "center"}}>
-              <a
-                href="#"
+              <Link
+                to="/dashboard"
                 className="nav_logo"
                 style={{ textDecoration: "none" }}
               >
                 <BiLayer className="nav_logo-icon" />
                 <span className="nav_logo-name" style={{ display: !isSidebarOpen ? "none" : "" }} >TTNRC</span>
-              </a>
+              </Link>
             </div>
 
             <div className="nav_list" style={{display: !isSidebarOpen &&  "flex" , flexDirection: !isSidebarOpen && "column" , alignItems: !isSidebarOpen && "center"}}>
@@ -95,6 +99,23 @@ const Sidebar = ({ isSidebarOpen }) => {
               </Link>
 
               <div className="navTitle">
+                <span className={`nav_name  ${isSidebarOpen ? "" : "spanHover"}`} style={{ display: !isSidebarOpen ? "none" : "" }}>
+                  Gestion Fournisseurs
+                </span>
+              </div>
+
+              
+              <Link to="listeFournisseurs" className="nav_link">
+                <FaUsers className="nav_icon" />
+                <span className="nav_name" style={{ display: !isSidebarOpen ? "none" : "" }}>Fournisseurs</span>
+              </Link>
+
+              <Link to="ajoutFournisseur" className="nav_link">
+                <RiUserAddFill className="nav_icon" />
+                <span className="nav_name" style={{ display: !isSidebarOpen ? "none" : "" }}>Ajout Fournisseur</span>
+              </Link>
+
+              <div className="navTitle">
                 <span className={`nav_name ${isSidebarOpen ? "" : "spanHover"}`} style={{ display: !isSidebarOpen ? "none" : "" }}>
                   Gestion Documents
                 </span>
@@ -109,6 +130,22 @@ const Sidebar = ({ isSidebarOpen }) => {
               <Link to="ajoutDocument" className="nav_link">
                 <AiOutlineFileAdd className="nav_icon" />
                 <span className="nav_name" style={{ display: !isSidebarOpen ? "none" : "" }}>Ajout Document</span>
+              </Link>
+
+              <div className="navTitle">
+                <span className={`nav_name ${isSidebarOpen ? "" : "spanHover"}`} style={{ display: !isSidebarOpen ? "none" : "" }}>
+                  Gestion Factures
+                </span>
+              </div>
+
+              <Link to="listeFactures" className="nav_link">
+                <FaFileContract className="nav_icon" />
+                <span className="nav_name" style={{ display: !isSidebarOpen ? "none" : "" }}>Factures</span>
+              </Link>
+
+              <Link to="ajoutFacture" className="nav_link">
+                <FaFileSignature className="nav_icon" />
+                <span className="nav_name" style={{ display: !isSidebarOpen ? "none" : "" }}>Ajout Facture</span>
               </Link>
 
               <a href="#" className="nav_link" onClick={handleSignOut}>

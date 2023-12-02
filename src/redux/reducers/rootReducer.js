@@ -5,6 +5,7 @@ const initialState = {
     datasEnvoi: [],
     toggleSidebar: '',
     modalEtat: true,
+    modalEtatFournisseur: true,
     datasDoc: [],
 }
 
@@ -22,12 +23,15 @@ const platformeSuiviSlice = createSlice({
         },
         modalEtat: (state, action) => {
             state.modalEtat = action.payload;
+        },
+        modalEtatFournisseur: (state, action) => {
+            state.modalEtatFournisseur = action.payload;
         }
 
     }
 })
 
-export const { datasEnvoi, toggleSide, modalEtat, datasDoc } = platformeSuiviSlice.actions;
+export const { datasEnvoi, toggleSide, modalEtat, modalEtatFournisseur, datasDoc } = platformeSuiviSlice.actions;
 
 
 export default platformeSuiviSlice.reducer;

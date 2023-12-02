@@ -1,44 +1,42 @@
 import { useEffect, useLayoutEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { modalEtat } from "../../../redux/reducers/rootReducer";
 import { useSelector } from "react-redux";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { modalEtatFournisseur } from "../../../redux/reducers/rootReducer";
 import { db } from "../../../firebase/firebaseConfig";
-import { doc, setDoc } from "firebase/firestore";
+import { addDoc, collection, query, getDocs, where } from "firebase/firestore";
 import { toast } from "react-toastify";
 import { useFormik } from "formik";
 import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
 import Breadcrumb from "../../Breadcrumb/Index";
-import ModalAddClient from "../../ModalAddClient/Index";
+import ModalAddFournisseur from "../../ModalAddFournisseur/Index";
 import { IoReloadOutline } from "react-icons/io5";
 
-const AjoutClient = () => {
-  
-  const breadcrumbLinks = ["Gestion Clients", "Ajout un client"];
+const AjoutFournisseur = () => {
+  const breadcrumbLinks = ["Gestion Fournisseurs", "Ajout Fournisseur"];
   const [showModal, setShowModal] = useState(false);
-  const [statutClient, setStatutClient] = useState("");
+  const [statutFournisseur, setStatutFournisseur] = useState("");
   const [choixError, selectCHoixError] = useState(false);
   const dispatch = useDispatch();
-  const modalShowEtat = useSelector((state) => state.platformeSuivi.modalEtat);
+  const modalShowEtat = useSelector((state) => state.platformeSuivi.modalEtatFournisseur);
 
-  const auth = getAuth();
+  
 
   useEffect(() => {
-    return () => dispatch(modalEtat(true));
+    return () => dispatch(modalEtatFournisseur(true));
   }, [dispatch]);
 
-    useLayoutEffect(() => {
-    if (statutClient === "") {
+  useLayoutEffect(() => {
+    if (statutFournisseur === "") {
       setShowModal(true);
-    } else if (statutClient === "close") {
+    } else if (statutFournisseur === "close") {
       selectCHoixError(true);
     } else {
       setShowModal(false);
     }
-  }, [statutClient, setShowModal, selectCHoixError]);
+  }, [statutFournisseur, setShowModal, selectCHoixError]);
 
-  const obtenirDateActuelle = ()=>{
+  const obtenirDateActuelle = () => {
     const date = new Date();
     const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
     const dateFormatee = date.toLocaleDateString('fr-FR', options);
@@ -52,7 +50,6 @@ const AjoutClient = () => {
       sexe: "",
       nom: "",
       telephone: "",
-      password: "",
       prenom: "",
       entreprise: "",
       siege: "",
@@ -88,7 +85,7 @@ const AjoutClient = () => {
         errors.telephone = "Veuillez entrer un nombre valide";
       }
 
-      if (statutClient === "entreprise") {
+      if (statutFournisseur === "entreprise") {
         if (!values.entreprise) {
           errors.entreprise = "Ce champ est obligatoire";
         }
@@ -98,14 +95,7 @@ const AjoutClient = () => {
         errors.sexe = "Ce champ est obligatoire";
       }
 
-      if (!values.password) {
-        errors.password = "Ce champ est obligatoire";
-      } else if (values.password.length < 8) {
-        errors.password = "Veuillez entrer au moins 8 caractères";
-      }
-
-    
-      if (statutClient === "entreprise") {
+      if (statutFournisseur === "entreprise") {
         if (!values.siege) {
           errors.siege = "Ce champ est obligatoire";
         }
@@ -116,34 +106,37 @@ const AjoutClient = () => {
 
   async function register() {
     try {
-      const response = await createUserWithEmailAndPassword(
-        auth,
-        formik.values.email,
-        formik.values.password
-      );
-      if (response.user) {
-        const userUID = response.user.uid;
-
-        // Créez un document dans la collection "Clients" avec l'UID de l'utilisateur comme ID
-        try {
-          const userDocRef = doc(db, "Clients", userUID);
-          await setDoc(userDocRef, {
-            niu: formik.values.niu,
-            email: formik.values.email,
-            sexe: formik.values.sexe,
-            nom: formik.values.nom,
-            telephone: formik.values.telephone,
-            password: formik.values.password,
-            prenom: formik.values.prenom,
-            entreprise: formik.values.entreprise,
-            siege: formik.values.siege,
-            date: obtenirDateActuelle(),
-          });
-        } catch (error) {
-          console.log(error.message);
-        }
-
-        toast.success("Client cree avec success", {
+      // Vérifier si l'e-mail existe déjà
+      const emailExistsQuery = query(collection(db, "Fournisseurs"), where("email", "==", formik.values.email));
+      const emailExistsSnapshot = await getDocs(emailExistsQuery);
+  
+      if (!emailExistsSnapshot.empty) {
+        // L'e-mail existe déjà, afficher une erreur
+        toast.error("L'e-mail existe déjà. Veuillez utiliser un autre e-mail.", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      } else {
+        // L'e-mail n'existe pas encore, ajouter les données
+        await addDoc(collection(db, "Fournisseurs"), {
+          niu: formik.values.niu,
+          email: formik.values.email,
+          sexe: formik.values.sexe,
+          nom: formik.values.nom,
+          telephone: formik.values.telephone,
+          prenom: formik.values.prenom,
+          entreprise: formik.values.entreprise,
+          siege: formik.values.siege,
+          date: obtenirDateActuelle(),
+        });
+  
+        toast.success("Client créé avec succès", {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
@@ -157,23 +150,7 @@ const AjoutClient = () => {
     } catch (error) {
       if (navigator.onLine === false) {
         // Pas de connexion Internet
-
-        toast.error(
-          "Pas de connexion Internet. Veuillez vérifier votre connexion.",
-          {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          }
-        );
-      } else if (error.code === "auth/email-already-in-use") {
-        formik.handleReset();
-        toast.error("Utilisateur existe deja ", {
+        toast.error("Pas de connexion Internet. Veuillez vérifier votre connexion.", {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
@@ -184,7 +161,7 @@ const AjoutClient = () => {
           theme: "light",
         });
       } else {
-        toast.error("Une erreur s' est produite lors de la connexion", {
+        toast.error("Une erreur s'est produite lors de la connexion", {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
@@ -197,18 +174,19 @@ const AjoutClient = () => {
       }
     }
   }
+  
 
   function handleReload() {
     window.location.reload();
   }
 
   const showComponent = showModal ? (
-    <ModalAddClient show={modalShowEtat} setStatutClient={setStatutClient} />
+    <ModalAddFournisseur show={modalShowEtat} setStatutFournisseur={setStatutFournisseur} />
   ) : (
     <div className="container-fluid ajoutClient">
       <div>
         <h2 className="fs-4" style={{ fontWeight: "600" }}>
-          Ajouter un client
+          Ajouter un Fournisseur
         </h2>
         <Breadcrumb links={breadcrumbLinks} />
       </div>
@@ -240,7 +218,7 @@ const AjoutClient = () => {
                   </div>
                 ) : null}
               </div>
-              {statutClient === "entreprise" && (
+              {statutFournisseur === "entreprise" && (
                 <div className="mb-3">
                   <label htmlFor="entreprise" className="form-label">
                     Entreprise
@@ -323,7 +301,7 @@ const AjoutClient = () => {
               {/* fin*/}
 
               {/* ici est le champ nom visible seulemt sur les ecrans de petites taille */}
-              {statutClient === "entreprise" && (
+              {statutFournisseur === "entreprise" && (
                 <div className="mb-3 d-lg-none d-md-none">
                   <label htmlFor="siege" className="form-label">
                     Siege
@@ -484,32 +462,6 @@ const AjoutClient = () => {
                   </div>
                 ) : null}
               </div>
-
-              <div className="mb-3">
-                <label htmlFor="password" className="form-label">
-                  Mot de passe
-                </label>
-                <input
-                  type="password"
-                  className="form-control"
-                  id="password"
-                  name="password"
-                  autoComplete="false"
-                  onChange={formik.handleChange}
-                  value={formik.values.password}
-                  style={{
-                    border:
-                      formik.touched.password && formik.errors.password
-                        ? "1px solid red"
-                        : "",
-                  }}
-                />
-                {formik.touched.password && formik.errors.password ? (
-                  <div className="text-danger mb-4">
-                    <p style={{ fontSize: "15px" }}>{formik.errors.password}</p>
-                  </div>
-                ) : null}
-              </div>
             </div>
             {/* fin*/}
 
@@ -568,7 +520,7 @@ const AjoutClient = () => {
               {/* fin*/}
 
               {/* ici est le champ nom visible seulemt sur les ecrans de grande taille */}
-              {statutClient === "entreprise" && (
+              {statutFournisseur === "entreprise" && (
                 <div className="mb-3 d-none d-lg-block d-md-block">
                   <label htmlFor="siege" className="form-label">
                     Siege
@@ -599,7 +551,7 @@ const AjoutClient = () => {
           </div>
           <div className="d-flex justify-content-center">
             <button type="submit" className="btn btn-primary mt-4">
-              Ajouter Client
+              Ajouter Fournisseur
             </button>
           </div>
         </form>
@@ -607,9 +559,10 @@ const AjoutClient = () => {
     </div>
   );
 
+
   return (
     <>
-      {!choixError ? (
+          {!choixError ? (
         showComponent
       ) : (
         <div className="container-fluid choixError  d-flex  flex-column  align-items-center justify-content-center">
@@ -630,7 +583,7 @@ const AjoutClient = () => {
         </div>
       )}
     </>
-  );
-};
+  )
+}
 
-export default AjoutClient;
+export default AjoutFournisseur

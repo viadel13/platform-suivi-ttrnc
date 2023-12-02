@@ -67,7 +67,7 @@ const ListeMarchandises = () => {
       >
         <td>{i.cible}</td>
         <td>{i.nomMarchandise}</td>
-        <td>12/02/2023</td>
+        <td>{i.date}</td>
       </tr>
     )
 

@@ -17,20 +17,12 @@ const ModalDetailMarchandise = ({ show, datasIndex, onHide }) => {
       <Modal.Body>
         {datasIndex ? (
           <Container>
-            <Row>
-              <Col xs={6} md={6} className='fw-bold'>
-                Categorie
-              </Col>
-              <Col xs={6} md={6} style={{fontWeight: '500'}}>
-                {datasIndex.categorie}
-              </Col>
-            </Row>
             <Row className='mt-3'>
               <Col xs={6} md={6} className='fw-bold'>
                 Prix
               </Col>
               <Col xs={6} md={6} style={{fontWeight: '500'}}>
-              {datasIndex.prix} FRCFA
+              {datasIndex.prix}$
               </Col>
             </Row>
             <Row className='mt-3'>
@@ -39,6 +31,30 @@ const ModalDetailMarchandise = ({ show, datasIndex, onHide }) => {
               </Col>
               <Col xs={6} md={6} style={{fontWeight: '500'}}>
               {datasIndex.quantite}
+              </Col>
+            </Row>
+            <Row className='mt-3'>
+              <Col xs={6} md={6} className='fw-bold'>
+                Unite
+              </Col>
+              <Col xs={6} md={6} style={{fontWeight: '500'}}>
+              {datasIndex.unite}
+              </Col>
+            </Row>
+            <Row className='mt-3'>
+              <Col xs={6} md={6} className='fw-bold'>
+                Packaging
+              </Col>
+              <Col xs={6} md={6} style={{fontWeight: '500'}}>
+              {datasIndex.packaging}
+              </Col>
+            </Row>
+            <Row className='mt-3'>
+              <Col xs={6} md={6} className='fw-bold'>
+                Poids brut
+              </Col>
+              <Col xs={6} md={6} style={{fontWeight: '500'}}>
+              {datasIndex.poids}Kg
               </Col>
             </Row>
           </Container>

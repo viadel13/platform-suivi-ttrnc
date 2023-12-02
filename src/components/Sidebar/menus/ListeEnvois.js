@@ -117,8 +117,8 @@ const ListeEnvois = () => {
                           {i.categorie}
                         </td>
                         <td className="d-none d-md-table-cell">{i.poids}Kg</td>
-                        <td className="d-none d-lg-table-cell">{i.volume}m³</td>
-                        <td className="d-none d-lg-table-cell">{i.prix} FRCFA</td>
+                        <td className="d-none d-lg-table-cell">{i.volume}{i.volume && 'm³'}</td>
+                        <td className="d-none d-lg-table-cell">{i.prix}$</td>
                         <td
                           className="d-none d-lg-table-cell"
                           style={{ width: "290px" }}
@@ -133,7 +133,9 @@ const ListeEnvois = () => {
                             </option>
                             <option value="2">En transit </option>
                             <option value="3">En livraison</option>
-                            <option value="4">Livré </option>
+                            <option value="4">PMD </option>
+                            <option value="4">PAD </option>
+                            <option value="4">BMD </option>
                           </select>
                         </td>
                         <td className="d-none d-lg-table-cell">{i.date}</td>
@@ -168,11 +170,11 @@ const ListeEnvois = () => {
                                 </tr>
                                 <tr>
                                   <th>Volume</th>
-                                  <td>{i.volume}m³</td>
+                                  <td>{i.volume} {i.volume && 'm³'}</td>
                                 </tr>
                                 <tr>
                                   <th>Prix</th>
-                                  <td>{i.prix}</td>
+                                  <td>{i.prix}$</td>
                                 </tr>
 
                                 <tr>

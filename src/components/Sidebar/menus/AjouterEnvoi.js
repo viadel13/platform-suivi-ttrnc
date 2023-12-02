@@ -34,7 +34,7 @@ const AjouterEnvoi = () => {
     });
   }, [q, donneesEnvoi]);
 
-  const obtenirDateActuelle = ()=>{
+  const obtenirDateActuelle = () => {
     const date = new Date();
     const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
     const dateFormatee = date.toLocaleDateString('fr-FR', options);
@@ -100,9 +100,7 @@ const AjouterEnvoi = () => {
       errors.poids = "Veuillez entrer un nombre valide";
     }
 
-    if (!values.volume) {
-      errors.volume = "Ce champ est obligatoire";
-    } else if (isNaN(values.poids)) {
+    if (isNaN(values.poids)) {
       errors.volume = "Veuillez entrer un nombre valide";
     }
     if (!values.prix) {

@@ -358,6 +358,12 @@ input:focus{
     overflow-x: auto;
   }
 
+  #formFacture{
+    box-shadow: 1px  1px 3px 1px rgb(231, 230, 230);
+    padding: 12px;
+  }
+
+
     @media screen and (min-width:992px) {
       
         .body {

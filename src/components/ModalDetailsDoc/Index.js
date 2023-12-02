@@ -71,7 +71,13 @@ const MoadalDetailsDoc = (props) => {
                     {datasIndex.ConnaissementBL}
                   </Col>
                 </Row>
-                <Row className='mt-3'>
+                <Row className='mt-3 py-2' style={{ borderTop: '1px solid #cfd0d1', borderBottom: '1px solid #cfd0d1' }}>
+                  <Col xs={6} md={6} className='fw-bold mb-3'>
+                    Date
+                  </Col>
+                  <Col xs={6} md={6} style={{fontWeight: '500'}}>
+                    {datasIndex.date}
+                  </Col>
                   <Col xs={6} md={6} className='fw-bold'>
                     Numero Facture
                   </Col>
@@ -129,6 +135,34 @@ const MoadalDetailsDoc = (props) => {
                   </Col>
                   <Col xs={6} md={6}>
                     <button className='btn btn-success btn-sm' onClick={()=>handleDownload(datasIndex.FichierPAD)}> Telecharger </button>
+                  </Col>
+                </Row>
+                <Row className='mt-3 py-2' style={{ borderTop: '1px solid #cfd0d1', borderBottom: '1px solid #cfd0d1' }}>
+                  <Col xs={6} md={6} className='mb-3 fw-bold'>
+                    Declaration
+                  </Col>
+                  <Col xs={6} md={6} className='mb-3'  style={{fontWeight: '500'}}>
+                    {datasIndex.numeroDeclaration}
+                  </Col>
+                  <Col xs={6} md={6} className='fw-bold'>
+                    Fichier
+                  </Col>
+                  <Col xs={6} md={6}>
+                    <button className='btn btn-success btn-sm' onClick={()=>handleDownload(datasIndex.Fichierdeclaration)}> Telecharger </button>
+                  </Col>
+                </Row>
+                <Row className='mt-3 py-2' style={{ borderTop: '1px solid #cfd0d1', borderBottom: '1px solid #cfd0d1' }}>
+                  <Col xs={6} md={6} className='mb-3 fw-bold'>
+                    Quittance
+                  </Col>
+                  <Col xs={6} md={6} className='mb-3'  style={{fontWeight: '500'}}>
+                    {datasIndex.Numeroquittance}
+                  </Col>
+                  <Col xs={6} md={6} className='fw-bold'>
+                    Fichier
+                  </Col>
+                  <Col xs={6} md={6}>
+                    <button className='btn btn-success btn-sm' onClick={()=>handleDownload(datasIndex.Fichierquittance)}> Telecharger </button>
                   </Col>
                 </Row>
                 <Row className='mt-3'>

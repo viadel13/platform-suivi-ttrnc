@@ -6,6 +6,9 @@ import { useState, useEffect, useRef } from "react";
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { Fragment } from "react";
 import { toast } from "react-toastify";
+import DatePicker from "react-datepicker";
+import { format } from "date-fns";
+import "react-datepicker/dist/react-datepicker.css";
 
 const AjoutDocument = () => {
   console.log('Ajout Document est monte');
@@ -18,6 +21,10 @@ const AjoutDocument = () => {
   const form6 = useRef(null);
   const form7 = useRef(null);
   const form8 = useRef(null);
+  const form9 = useRef(null);
+  const form10 = useRef(null);
+  const form11 = useRef(null);
+  const form12 = useRef(null);
 
   const [loading, setLoading] = useState(true);
   const [donneesEnvoi, setDonneesEnvoi] = useState([]);
@@ -90,7 +97,10 @@ const AjoutDocument = () => {
   const initialValues = {
     suivi: "",
     cbl: "",
+    fichierCbl: "",
+    date: null,
     Nfacture: "",
+    Ffacture: "",
     Lcolissage: "",
     Corigine: "",
     CphytoSanitaire: "",
@@ -98,6 +108,10 @@ const AjoutDocument = () => {
     FichierRcv: "",
     Numeropad: "",
     FichierPad: "",
+    Numerodeclaration: "",
+    Fichierdeclaration: "",
+    Numeroquittance: "",
+    Fichierquittance: "",
     Auenlevement: "",
     Bsortie: "",
     files: [],
@@ -105,7 +119,8 @@ const AjoutDocument = () => {
 
   const onSubmit = (values) => {
     const uploadTasks = [];
-    const fileInputNames = ["Lcolissage", "Corigine", "CphytoSanitaire", "FichierRcv", "FichierPad", "Auenlevement", "Bsortie", "files"];
+    const formattedDate = values.date ? format(new Date(values.date), 'dd/MM/yyyy') : '';
+    const fileInputNames = ["fichierCbl", "Ffacture", "Lcolissage", "Corigine", "CphytoSanitaire", "FichierRcv", "FichierPad", "Fichierdeclaration", "Fichierquittance", "Auenlevement", "Bsortie", "files"];
     setTeleverseShow(true);
 
     const promises = [];
@@ -175,21 +190,28 @@ const AjoutDocument = () => {
           await addDoc(collection(db, "Documents"), {
             NumeroSuivi: values.suivi || '',
             ConnaissementBL: values.cbl || '',
+            FihierCbl: downloadURLs[0] || '',
+            date: formattedDate || '',
             numeroFacture: values.Nfacture || '',
-            listeColissage: downloadURLs[0] || '',
-            certificatOrigine: downloadURLs[1] || '',
-            certificatPhytoSanitaire: downloadURLs[2] || '',
+            Ffacture: downloadURLs[1] || '',
+            listeColissage: downloadURLs[2] || '',
+            certificatOrigine: downloadURLs[3] || '',
+            certificatPhytoSanitaire: downloadURLs[4] || '',
             RCV: values.Numerorcv || '',
-            fichierRCV: downloadURLs[3] || '',
+            fichierRCV: downloadURLs[5] || '',
             PAD: values.Numeropad || '',
-            FichierPAD: downloadURLs[4] || '',
-            autorisationEnlevement: downloadURLs[5] || '',
-            bonSortie: downloadURLs[6] || '',
-            autres: downloadURLs.length < 8 ? [] : downloadURLs.length > 8 ? downloadURLs.slice(7) : [downloadURLs[7]] || [],
+            FichierPAD: downloadURLs[6] || '',
+            numeroDeclaration: values.Numerodeclaration || '',
+            Fichierdeclaration: downloadURLs[7] || '',
+            Numeroquittance: values.Numeroquittance || '',
+            Fichierquittance: downloadURLs[8] || '',
+            autorisationEnlevement: downloadURLs[9] || '',
+            bonSortie: downloadURLs[10] || '',
+            autres: downloadURLs.length < 12 ? [] : downloadURLs.length > 12 ? downloadURLs.slice(11) : [downloadURLs[11]] || [],
           });
           formik.handleReset();
-          if (form8.current) {
-            form8.current.value = null;
+          if (form12.current) {
+            form12.current.value = null;
           }
 
 
@@ -215,54 +237,91 @@ const AjoutDocument = () => {
     if (!values.cbl) {
       errors.cbl = "Ce champ est obligatoire";
     }
+
+    if (!values.fichierCbl) {
+      errors.fichierCbl = "Ce champ est obligatoire";
+    }
+    else if (form1.current.files[0].type !== "application/pdf") {
+      errors.fichierCbl = "Choisissez un fichier PDF"
+    }
+
+    if (values.date === null) {
+      errors.date = "Ce champ est obligatoire";
+    }
+
     if (!values.Nfacture) {
       errors.Nfacture = "Ce champ est obligatoire";
     } else if (isNaN(values.Nfacture)) {
       errors.Nfacture = "Veuillez entrer un nombre valide";
     }
+    if (!values.Ffacture) {
+      errors.Ffacture = "Ce champ est obligatoire";
+    } else if (form2.current.files[0].type !== "application/pdf") {
+      errors.Ffacture = "Choisissez un fichier PDF";
+    }
+
     if (!values.Lcolissage) {
       errors.Lcolissage = "Ce champ est obligatoire";
-    } else if (form1.current.files[0].type !== "application/pdf") {
+    } else if (form3.current.files[0].type !== "application/pdf") {
       errors.Lcolissage = "Choisissez un fichier PDF";
     }
     if (!values.Corigine) {
       errors.Corigine = "Ce champ est obligatoire";
-    } else if (form2.current.files[0].type !== "application/pdf") {
+    } else if (form4.current.files[0].type !== "application/pdf") {
       errors.Corigine = "Choisissez un fichier PDF";
     }
     if (!values.CphytoSanitaire) {
       errors.CphytoSanitaire = "Ce champ est obligatoire";
-    } else if (form3.current.files[0].type !== "application/pdf") {
+    } else if (form5.current.files[0].type !== "application/pdf") {
       errors.CphytoSanitaire = "Choisissez un fichier PDF";
     }
     if (!values.Numerorcv) {
       errors.Numerorcv = "Ce champ est obligatoire";
-    } else if (isNaN(values.Numerorcv)) {
-      errors.Numerorcv = "Veuillez entrer un nombre valide";
-    }
+    } 
+
     if (!values.FichierRcv) {
       errors.FichierRcv = "Ce champ est obligatoire";
-    } else if (form4.current.files[0].type !== "application/pdf") {
+    } else if (form6.current.files[0].type !== "application/pdf") {
       errors.FichierRcv = "Choisissez un fichier PDF";
     }
     if (!values.Numeropad) {
       errors.Numeropad = "Ce champ est obligatoire";
-    } else if (isNaN(values.Numeropad)) {
-      errors.Numeropad = "Veuillez entrer un nombre valide";
     }
     if (!values.FichierPad) {
       errors.FichierPad = "Ce champ est obligatoire";
-    } else if (form5.current.files[0].type !== "application/pdf") {
+    } else if (form7.current.files[0].type !== "application/pdf") {
       errors.FichierPad = "Choisissez un fichier PDF";
     }
+
+    if (!values.Numerodeclaration) {
+      errors.Numerodeclaration = "Ce champ est obligatoire";
+    } 
+
+    if (!values.Fichierdeclaration) {
+      errors.Fichierdeclaration = "Ce champ est obligatoire";
+    } else if (form8.current.files[0].type !== "application/pdf") {
+      errors.Fichierdeclaration = "Choisissez un fichier PDF";
+    }
+
+    if (!values.Numeroquittance) {
+      errors.Numeroquittance = "Ce champ est obligatoire";
+    } 
+
+    if (!values.Fichierquittance) {
+      errors.Fichierquittance = "Ce champ est obligatoire";
+    } else if (form9.current.files[0].type !== "application/pdf") {
+      errors.Fichierquittance = "Choisissez un fichier PDF";
+    }
+
+
     if (!values.Auenlevement) {
       errors.Auenlevement = "Ce champ est obligatoire";
-    } else if (form6.current.files[0].type !== "application/pdf") {
+    } else if (form10.current.files[0].type !== "application/pdf") {
       errors.Auenlevement = "Choisissez un fichier PDF";
     }
     if (!values.Bsortie) {
       errors.Bsortie = "Ce champ est obligatoire";
-    } else if (form7.current.files[0].type !== "application/pdf") {
+    } else if (form11.current.files[0].type !== "application/pdf") {
       errors.Bsortie = "Choisissez un fichier PDF";
     }
     if (values.files || values.files.length !== 0) {
@@ -333,46 +392,111 @@ const AjoutDocument = () => {
                       <div className="text-danger mb-4"><p style={{ fontSize: "15px" }}>{formik.errors.suivi}</p></div>
                     ) : null}
                   </div>
+                  <div className="row mb-4">
+                    <div className="col-4">
+                      <label htmlFor="cbl" className="form-label">
+                        C BL-LTA
+                      </label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="cbl"
+                        name="cbl"
+                        onChange={formik.handleChange}
+                        value={formik.values.cbl}
+                        style={{ border: formik.touched.cbl && formik.errors.cbl ? "1px solid red" : "" }}
+                      />
+                      {formik.touched.cbl && formik.errors.cbl ? (
+                        <div className="text-danger mb-4"><p style={{ fontSize: "15px" }}>{formik.errors.cbl}</p></div>
+                      ) : null}
+                    </div>
+                    <div className="col">
+                      <label htmlFor="Lcolissage" className="form-label">
+                        Fichier
+                      </label>
+                      <input
+                        className="form-control"
+                        type="file"
+                        id="fichierCbl"
+                        name="fichierCbl"
+                        accept=".pdf"
+                        onChange={(event) => formik.setFieldValue("fichierCbl", event.target.files[0])}
+                        ref={form1}
+                        style={{ border: formik.touched.fichierCbl && formik.errors.fichierCbl ? "1px solid red" : "" }}
+                      />
+                      {formik.touched.fichierCbl && formik.errors.fichierCbl ? (
+                        <div className="text-danger mb-4"><p style={{ fontSize: "15px" }}>{formik.errors.fichierCbl}</p></div>
+                      ) : null}
 
-                  <div className="mb-4">
-                    <label htmlFor="cbl" className="form-label">
-                      Connaissement-BL-LTA
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="cbl"
-                      name="cbl"
-                      onChange={formik.handleChange}
-                      value={formik.values.cbl}
-                      style={{ border: formik.touched.cbl && formik.errors.cbl ? "1px solid red" : "" }}
-                    />
-                    {formik.touched.cbl && formik.errors.cbl ? (
-                      <div className="text-danger mb-4"><p style={{ fontSize: "15px" }}>{formik.errors.cbl}</p></div>
-                    ) : null}
+                    </div>
                   </div>
 
-                  <div className="mb-4">
-                    <label htmlFor="Nfacture" className="form-label">
-                      Numero facture
-                    </label>
-                    <input
-                      type="number"
-                      className="form-control"
-                      id="Nfacture"
-                      name="Nfacture"
-                      onChange={formik.handleChange}
-                      value={formik.values.Nfacture}
-                      style={{ border: formik.touched.Nfacture && formik.errors.Nfacture ? "1px solid red" : "" }}
-                    />
-                    {formik.touched.Nfacture && formik.errors.Nfacture ? (
-                      <div className="text-danger mb-4"><p style={{ fontSize: "15px" }}>{formik.errors.Nfacture}</p></div>
-                    ) : null}
+                  <div id="formFacture" className="mb-3">
+                    <div className="row mb-4">
+                      <div className="col-4">
+                        <label style={{ display: 'block' }} htmlFor="Date" className="form-label">
+                          Date
+                        </label>
+                        <DatePicker
+                          className={`form-control ${formik.touched.date && formik.errors.date ? "is-invalid" : ""}`}
+                          id="date"
+                          name="date"
+                          selected={formik.values.date}
+                          onChange={(date) => formik.setFieldValue('date', date)}
+                          dateFormat="dd/MM/yyyy"
+                          placeholderText="JJ/MM/AAAA"
+                        />
+                        {formik.touched.date && formik.errors.date && (
+                          <div className="invalid-feedback">{formik.errors.date}</div>
+                        )}
+                        {formik.touched.date && formik.errors.date ? (
+                          <div className="text-danger mb-4"><p style={{ fontSize: "15px" }}>{formik.errors.date}</p></div>
+                        ) : null}
+
+                      </div>
+                      <div className="col">
+                        <label htmlFor="Nfacture" className="form-label">
+                          Numero facture
+                        </label>
+                        <input
+                          type="number"
+                          className="form-control"
+                          id="Nfacture"
+                          name="Nfacture"
+                          onChange={formik.handleChange}
+                          value={formik.values.Nfacture}
+                          style={{ border: formik.touched.Nfacture && formik.errors.Nfacture ? "1px solid red" : "" }}
+                        />
+                        {formik.touched.Nfacture && formik.errors.Nfacture ? (
+                          <div className="text-danger mb-4"><p style={{ fontSize: "15px" }}>{formik.errors.Nfacture}</p></div>
+                        ) : null}
+                      </div>
+                    </div>
+                    <div className="row mb-4">
+                      <div className="col">
+                        <label htmlFor="Ffacture" className="form-label">
+                          Fichier
+                        </label>
+                        <input
+                          type="file"
+                          className="form-control"
+                          id="Ffacture"
+                          name="Ffacture"
+                          accept=".pdf"
+                          ref={form2}
+                          onChange={(event) => formik.setFieldValue("Ffacture", event.target.files[0])}
+                          style={{ border: formik.touched.Ffacture && formik.errors.Ffacture ? "1px solid red" : "" }}
+                        />
+                        {formik.touched.Ffacture && formik.errors.Ffacture ? (
+                          <div className="text-danger mb-4"><p style={{ fontSize: "15px" }}>{formik.errors.Ffacture}</p></div>
+                        ) : null}
+                      </div>
+                    </div>
                   </div>
 
                   <div className="mb-4">
                     <label htmlFor="Lcolissage" className="form-label">
-                      Liste collisage
+                      Liste colisage
                     </label>
                     <input
                       className="form-control"
@@ -380,9 +504,8 @@ const AjoutDocument = () => {
                       id="Lcolissage"
                       name="Lcolissage"
                       accept=".pdf"
-                      onChange={formik.handleChange}
-                      ref={form1}
-                      value={formik.values.Lcolissage}
+                      onChange={(event) => formik.setFieldValue("Lcolissage", event.target.files[0])}
+                      ref={form3}
                       style={{ border: formik.touched.Lcolissage && formik.errors.Lcolissage ? "1px solid red" : "" }}
                     />
                     {formik.touched.Lcolissage && formik.errors.Lcolissage ? (
@@ -400,9 +523,8 @@ const AjoutDocument = () => {
                       id="Corigine"
                       name="Corigine"
                       accept=".pdf"
-                      onChange={formik.handleChange}
-                      ref={form2}
-                      value={formik.values.Corigine}
+                      ref={form4}
+                      onChange={(event) => formik.setFieldValue("Corigine", event.target.files[0])}
                       style={{ border: formik.touched.Corigine && formik.errors.Corigine ? "1px solid red" : "" }}
                     />
                     {formik.touched.Corigine && formik.errors.Corigine ? (
@@ -420,9 +542,8 @@ const AjoutDocument = () => {
                       name="CphytoSanitaire"
                       id="CphytoSanitaire"
                       accept=".pdf"
-                      onChange={formik.handleChange}
-                      ref={form3}
-                      value={formik.values.CphytoSanitaire}
+                      ref={form5}
+                      onChange={(event) => formik.setFieldValue("CphytoSanitaire", event.target.files[0])}
                       style={{ border: formik.touched.CphytoSanitaire && formik.errors.CphytoSanitaire ? "1px solid red" : "" }}
                     />
                     {formik.touched.CphytoSanitaire && formik.errors.CphytoSanitaire ? (
@@ -438,7 +559,7 @@ const AjoutDocument = () => {
                       </label>
                       <input
                         className="form-control"
-                        type="number"
+                        type="text"
                         id="Numerorcv"
                         name="Numerorcv"
                         onChange={formik.handleChange}
@@ -459,9 +580,8 @@ const AjoutDocument = () => {
                         id="FichierRcv"
                         name="FichierRcv"
                         accept=".pdf"
-                        onChange={formik.handleChange}
-                        ref={form4}
-                        value={formik.values.FichierRcv}
+                        ref={form6}
+                        onChange={(event) => formik.setFieldValue("FichierRcv", event.target.files[0])}
                         style={{ border: formik.touched.FichierRcv && formik.errors.FichierRcv ? "1px solid red" : "" }}
                       />
                       {formik.touched.FichierRcv && formik.errors.FichierRcv ? (
@@ -476,7 +596,7 @@ const AjoutDocument = () => {
                       </label>
                       <input
                         className="form-control"
-                        type="number"
+                        type="text"
                         id="Numeropad"
                         name="Numeropad"
                         onChange={formik.handleChange}
@@ -497,13 +617,90 @@ const AjoutDocument = () => {
                         id="FichierPad"
                         name="FichierPad"
                         accept=".pdf"
-                        onChange={formik.handleChange}
-                        ref={form5}
-                        value={formik.values.FichierPad}
+                        ref={form7}
+                        onChange={(event) => formik.setFieldValue("FichierPad", event.target.files[0])}
                         style={{ border: formik.touched.FichierPad && formik.errors.FichierPad ? "1px solid red" : "" }}
                       />
                       {formik.touched.FichierPad && formik.errors.FichierPad ? (
                         <div className="text-danger mb-4"><p style={{ fontSize: "15px" }}>{formik.errors.FichierPad}</p></div>
+                      ) : null}
+                    </div>
+                  </div>
+
+                  <div className="row mb-4">
+                    <div className="col-4">
+                      <label htmlFor="Numerodeclaration" className="form-label">
+                        Declaration
+                      </label>
+                      <input
+                        className="form-control"
+                        type="text"
+                        id="Numerodeclaration"
+                        name="Numerodeclaration"
+                        onChange={formik.handleChange}
+                        value={formik.values.Numerodeclaration}
+                        style={{ border: formik.touched.Numerodeclaration && formik.errors.Numerodeclaration ? "1px solid red" : "" }}
+                      />
+                      {formik.touched.Numerodeclaration && formik.errors.Numerodeclaration ? (
+                        <div className="text-danger mb-4"><p style={{ fontSize: "15px" }}>{formik.errors.Numerodeclaration}</p></div>
+                      ) : null}
+                    </div>
+
+                    <div className="col">
+                      <label htmlFor="Fichierdeclaration" className="form-label">
+                        Fichier
+                      </label>
+                      <input
+                        className="form-control"
+                        type="file"
+                        id="Fichierdeclaration"
+                        name="Fichierdeclaration"
+                        accept=".pdf"
+                        ref={form8}
+                        onChange={(event) => formik.setFieldValue("Fichierdeclaration", event.target.files[0])}
+                        style={{ border: formik.touched.Fichierdeclaration && formik.errors.Fichierdeclaration ? "1px solid red" : "" }}
+                      />
+                      {formik.touched.Fichierdeclaration && formik.errors.Fichierdeclaration ? (
+                        <div className="text-danger mb-4"><p style={{ fontSize: "15px" }}>{formik.errors.Fichierdeclaration}</p></div>
+                      ) : null}
+                    </div>
+                  </div>
+
+                  <div className="row mb-4">
+                    <div className="col-4">
+                      <label htmlFor="Numeroquittance" className="form-label">
+                        Quittance
+                      </label>
+                      <input
+                        className="form-control"
+                        type="text"
+                        id="Numeroquittance"
+                        name="Numeroquittance"
+                        onChange={formik.handleChange}
+                        value={formik.values.Numeroquittance}
+                        style={{ border: formik.touched.Numeroquittance && formik.errors.Numeroquittance ? "1px solid red" : "" }}
+                      />
+                      {formik.touched.Numeroquittance && formik.errors.Numeroquittance ? (
+                        <div className="text-danger mb-4"><p style={{ fontSize: "15px" }}>{formik.errors.Numeroquittance}</p></div>
+                      ) : null}
+                    </div>
+
+                    <div className="col">
+                      <label htmlFor="Fichierquittance" className="form-label">
+                        Fichier
+                      </label>
+                      <input
+                        className="form-control"
+                        type="file"
+                        id="Fichierquittance"
+                        name="Fichierquittance"
+                        accept=".pdf"
+                        ref={form9}
+                        onChange={(event) => formik.setFieldValue("Fichierquittance", event.target.files[0])}
+                        style={{ border: formik.touched.Fichierquittance && formik.errors.Fichierquittance ? "1px solid red" : "" }}
+                      />
+                      {formik.touched.Fichierquittance && formik.errors.Fichierquittance ? (
+                        <div className="text-danger mb-4"><p style={{ fontSize: "15px" }}>{formik.errors.Fichierquittance}</p></div>
                       ) : null}
                     </div>
                   </div>
@@ -518,9 +715,8 @@ const AjoutDocument = () => {
                       id="Auenlevement"
                       accept=".pdf"
                       name="Auenlevement"
-                      onChange={formik.handleChange}
-                      ref={form6}
-                      value={formik.values.Auenlevement}
+                      ref={form10}
+                      onChange={(event) => formik.setFieldValue("Auenlevement", event.target.files[0])}
                       style={{ border: formik.touched.Auenlevement && formik.errors.Auenlevement ? "1px solid red" : "" }}
                     />
                     {formik.touched.Auenlevement && formik.errors.Auenlevement ? (
@@ -538,9 +734,8 @@ const AjoutDocument = () => {
                       id="Bsortie"
                       name="Bsortie"
                       accept=".pdf"
-                      onChange={formik.handleChange}
-                      ref={form7}
-                      value={formik.values.Bsortie}
+                      ref={form11}
+                      onChange={(event) => formik.setFieldValue("Bsortie", event.target.files[0])}
                       style={{ border: formik.touched.Bsortie && formik.errors.Bsortie ? "1px solid red" : "" }}
                     />
                     {formik.touched.Bsortie && formik.errors.Bsortie ? (
@@ -558,7 +753,7 @@ const AjoutDocument = () => {
                       id="autre"
                       name="files"
                       accept=".pdf"
-                      ref={form8}
+                      ref={form12}
                       multiple
                       onChange={(event) => {
                         formik.setFieldValue("files", event.currentTarget.files);
