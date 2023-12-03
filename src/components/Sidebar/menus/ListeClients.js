@@ -87,14 +87,14 @@ const ListeClients = () => {
         );
       })
   ) : (
-    <h3 className="text-center">Acun client</h3>
+    <h3 className="text-center">Aucun client</h3>
   );
 
   return (
     <div className="container-fluid ListeClient">
       <div>
         <h2 className="fs-4" style={{ fontWeight: "600" }}>
-          Ajouter un client
+          Clients
         </h2>
         <Breadcrumb links={breadcrumbLinks} />
       </div>

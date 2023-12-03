@@ -15,6 +15,8 @@ const Accueil = () => {
   const [donneesClient, setDonneesClient] = useState([]);
   const [donneesEnvoi, setDonneesEnvoi] = useState([]);
   const [loadingClient, setLoadingCLient] = useState(true);
+  const [donneesFournisseur, setDonneesFournisseur] = useState([]);
+  const [loadingFournisseur, setLoadingFournisseur] = useState(true);
   const [loading, setLoading] = useState(true);
   const breadcrumbLinks = [];
   const percentage = 66;
@@ -37,6 +39,25 @@ const Accueil = () => {
       };
     });
   }, [queryClient, donneesClient]);
+
+  const queryFournisseur = query(collection(db, "Fournisseurs"));
+  useEffect(() => {
+    const unsubscribe = onSnapshot(queryFournisseur, (querySnapchot) => {
+      const datas = [];
+      querySnapchot.forEach((doc) => {
+        datas.push(doc.data());
+      });
+  
+      if (JSON.stringify(datas) !== JSON.stringify(donneesFournisseur)) {
+        setDonneesFournisseur(datas);
+      }
+  
+      setLoadingFournisseur(false);
+      return () => {
+        unsubscribe();
+      };
+    });
+  }, [queryFournisseur, donneesFournisseur]);
 
   const q = query(collection(db, "DatasEnvoi"));
   useEffect(() => {
@@ -154,7 +175,17 @@ const Accueil = () => {
                   </div>
                   <div>
                     <p><strong style={{ color: '#808080' }}>Fournisseurs</strong></p>
-                    <h3 className="card-title"><strong>40</strong></h3>
+                    <h3 className="card-title">{loading ?  (
+                      <div className="spinner-border" role="status" style={{color: `rgb(69, 209, 27)`}}>
+                      <span className="visually-hidden">Loading...</span>
+                    </div>
+                    ) :donneesFournisseur.length !== 0 ? (
+                      <strong>{donneesFournisseur.length}</strong>
+                    )  : (
+                      <strong>0</strong>
+                    )
+                  
+                  }</h3>
                   </div>
                 </div>
               </div>

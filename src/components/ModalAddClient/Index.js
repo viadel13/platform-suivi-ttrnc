@@ -6,7 +6,7 @@ import { memo } from 'react';
 
 
 const ModalAddClient = ({ show, setStatutClient }) => {
-  console.log('modal client est monte');
+  
   const dispatch = useDispatch();
 
   const handleClose = (statut) => {

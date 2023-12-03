@@ -14,7 +14,7 @@ import ModalAddClient from "../../ModalAddClient/Index";
 import { IoReloadOutline } from "react-icons/io5";
 
 const AjoutClient = () => {
-  
+
   const breadcrumbLinks = ["Gestion Clients", "Ajout un client"];
   const [showModal, setShowModal] = useState(false);
   const [statutClient, setStatutClient] = useState("");
@@ -25,20 +25,26 @@ const AjoutClient = () => {
   const auth = getAuth();
 
   useEffect(() => {
-    return () => dispatch(modalEtat(true));
+    return () => {
+      dispatch(modalEtat(true));
+      selectCHoixError(false);
+    }
   }, [dispatch]);
 
-    useLayoutEffect(() => {
+  console.log('error  client' , choixError)
+
+  useLayoutEffect(() => {
     if (statutClient === "") {
       setShowModal(true);
     } else if (statutClient === "close") {
       selectCHoixError(true);
     } else {
       setShowModal(false);
+      selectCHoixError(false);
     }
   }, [statutClient, setShowModal, selectCHoixError]);
 
-  const obtenirDateActuelle = ()=>{
+  const obtenirDateActuelle = () => {
     const date = new Date();
     const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
     const dateFormatee = date.toLocaleDateString('fr-FR', options);
@@ -104,7 +110,7 @@ const AjoutClient = () => {
         errors.password = "Veuillez entrer au moins 8 caractères";
       }
 
-    
+
       if (statutClient === "entreprise") {
         if (!values.siege) {
           errors.siege = "Ce champ est obligatoire";

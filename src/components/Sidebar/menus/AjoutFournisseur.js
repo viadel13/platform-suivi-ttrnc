@@ -20,12 +20,17 @@ const AjoutFournisseur = () => {
   const dispatch = useDispatch();
   const modalShowEtat = useSelector((state) => state.platformeSuivi.modalEtatFournisseur);
 
-  
+
 
   useEffect(() => {
-    return () => dispatch(modalEtatFournisseur(true));
+    return () => {
+      dispatch(modalEtatFournisseur(true));
+      selectCHoixError(false);
+    };
   }, [dispatch]);
 
+  console.log('error  fournisseur' , choixError)
+ 
   useLayoutEffect(() => {
     if (statutFournisseur === "") {
       setShowModal(true);
@@ -57,7 +62,6 @@ const AjoutFournisseur = () => {
 
     onSubmit: (values) => {
       register();
-      formik.handleReset();
     },
 
     validate: (values) => {
@@ -109,7 +113,7 @@ const AjoutFournisseur = () => {
       // Vérifier si l'e-mail existe déjà
       const emailExistsQuery = query(collection(db, "Fournisseurs"), where("email", "==", formik.values.email));
       const emailExistsSnapshot = await getDocs(emailExistsQuery);
-  
+
       if (!emailExistsSnapshot.empty) {
         // L'e-mail existe déjà, afficher une erreur
         toast.error("L'e-mail existe déjà. Veuillez utiliser un autre e-mail.", {
@@ -135,8 +139,8 @@ const AjoutFournisseur = () => {
           siege: formik.values.siege,
           date: obtenirDateActuelle(),
         });
-  
-        toast.success("Client créé avec succès", {
+
+        toast.success("Fournisseur créé avec succès", {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
@@ -146,6 +150,7 @@ const AjoutFournisseur = () => {
           progress: undefined,
           theme: "light",
         });
+        formik.handleReset();
       }
     } catch (error) {
       if (navigator.onLine === false) {
@@ -174,7 +179,7 @@ const AjoutFournisseur = () => {
       }
     }
   }
-  
+
 
   function handleReload() {
     window.location.reload();
@@ -562,7 +567,7 @@ const AjoutFournisseur = () => {
 
   return (
     <>
-          {!choixError ? (
+      {!choixError ? (
         showComponent
       ) : (
         <div className="container-fluid choixError  d-flex  flex-column  align-items-center justify-content-center">

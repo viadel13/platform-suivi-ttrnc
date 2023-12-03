@@ -19,7 +19,7 @@ const ModalAddFournisseur = ({show, setStatutFournisseur }) => {
   return (
     <Modal centered show={show} onHide={() => handleClose('close')}>
     <Modal.Header closeButton>
-      <Modal.Title>Ajout client</Modal.Title>
+      <Modal.Title>Ajout Fournisseur</Modal.Title>
     </Modal.Header>
     <Modal.Body>veuillez choisir le type de Fournisseur à ajouter</Modal.Body>
     <Modal.Footer className='d-flex justify-content-center'>
