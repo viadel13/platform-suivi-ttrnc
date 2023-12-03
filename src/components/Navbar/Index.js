@@ -16,7 +16,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { getAuth, signOut } from "firebase/auth";
 import { useState } from "react";
 import { useDispatch } from 'react-redux';
-import { modalEtat } from "../../redux/reducers/rootReducer";
+import { modalEtat, modalEtatFournisseur } from "../../redux/reducers/rootReducer";
 import { memo } from "react";
 
 
@@ -30,6 +30,9 @@ const Navbar = ({ toggleSidebar, isSidebarOpen }) => {
     setClickLien(true);
     if (destination === 'ajoutClient') {
       dispatch(modalEtat(false));
+    }
+    if (destination === 'ajoutFournisseur') {
+      dispatch(modalEtatFournisseur(false));
     }
     navigate(`${destination}`);
     window.location.reload();
