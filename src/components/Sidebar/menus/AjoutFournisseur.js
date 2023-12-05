@@ -23,11 +23,16 @@ const AjoutFournisseur = () => {
 
 
   useEffect(() => {
-    return () => {
+    const cleanup = () => {
       dispatch(modalEtatFournisseur(true));
       selectCHoixError(false);
     };
+  
+    cleanup(); // Appelé au montage
+  
+    return cleanup; // Appelé au démontage
   }, [dispatch]);
+  
 
   console.log('error  fournisseur' , choixError)
  

@@ -27,6 +27,7 @@ const AjoutDocument = () => {
   const form12 = useRef(null);
 
   const [loading, setLoading] = useState(true);
+  const [loadingDoc, setLoadingDoc] = useState(true);
   const [donneesEnvoi, setDonneesEnvoi] = useState([]);
   const [donneesEnvoiDoc, setDonneesEnvoiDoc] = useState([]);
   const storage = getStorage();
@@ -65,7 +66,7 @@ const AjoutDocument = () => {
         setDonneesEnvoiDoc(datas);
       }
 
-      setLoading(false);
+      setLoadingDoc(false);
       return () => {
         unsubscribe();
       };
