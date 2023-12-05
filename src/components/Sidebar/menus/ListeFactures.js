@@ -64,15 +64,15 @@ const ListeFactures = () => {
         }
       }}
       style={{cursor: isMediumScreen ? 'pointer': ''}}
-      className={` ${isRowHovered && isMediumScreen ? 'table-primary' : ''}`}
+      className={`text-center ${isRowHovered && isMediumScreen ? 'table-primary' : ''}`}
       onMouseEnter={() => handleMouseEnter(index)}
       onMouseLeave={handleMouseLeave}
       >
         <td className="d-none d-md-table-cell">{i.niu}</td>
         <td>{i.nom}</td>
-        <td>{i.valeurDeclaree}</td>
-        <td>{i.droitDouane}</td>
-        <td>{i.HADCAD}</td>
+        <td>{i.valeurDeclaree}$</td>
+        <td>{i.droitDouane}$</td>
+        <td>{i.HADCAD}$</td>
       </tr>
     )
   })
@@ -106,7 +106,7 @@ const ListeFactures = () => {
           </div>
           <table className="table mt-2">
             <thead>
-              <tr className="table-info" style={{ fontSize: '14px' }} >
+              <tr className="table-info text-center" style={{ fontSize: '14px' }} >
                 <th scope="col" className="d-none d-md-table-cell" >NIU</th>
                 <th scope="col">Nom</th>
                 <th scope="col">Valeur declaree</th>

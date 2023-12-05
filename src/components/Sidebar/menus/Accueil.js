@@ -17,9 +17,11 @@ const Accueil = () => {
   const [loadingClient, setLoadingCLient] = useState(true);
   const [donneesFournisseur, setDonneesFournisseur] = useState([]);
   const [loadingFournisseur, setLoadingFournisseur] = useState(true);
+  const [donneesFacture, setDonneesFacture] = useState([]);
+  const [loadingFacture, setLoadingFacture] = useState(true);
   const [loading, setLoading] = useState(true);
   const breadcrumbLinks = [];
-  const percentage = 66;
+
 
   const queryClient = query(collection(db, "Clients"));
   useEffect(() => {
@@ -78,7 +80,34 @@ const Accueil = () => {
     });
   }, [q, donneesEnvoi]);
 
+  const queryFacture = query(collection(db, "Factures"));
+  useEffect(() => {
+    const unsubscribe = onSnapshot(queryFacture, (querySnapchot) => {
+      const datas = [];
+      querySnapchot.forEach((doc) => {
+        datas.push(doc.data());
+      });
 
+      if (JSON.stringify(datas) !== JSON.stringify(donneesFacture)) {
+        setDonneesFacture(datas);
+      }
+
+      setLoadingFacture(false);
+      return () => {
+        unsubscribe();
+      };
+    });
+  }, [queryFacture, donneesFacture]);
+
+  const clientFacture = donneesFacture && donneesFacture.length
+
+  const calculatePercentage = () => {
+    const clientFacture = donneesFacture && donneesFacture.length;
+    const percentage = donneesClient && (clientFacture / donneesClient.length) * 100;
+    return isNaN(percentage) ? 0 : percentage; // Assurez-vous de renvoyer un nombre valide
+  };
+
+  const percent = calculatePercentage();
 
   return (
     <div className="container-fluid accueil">
@@ -127,12 +156,12 @@ const Accueil = () => {
                     <div className="d-flex justify-content-between">
                       <div className="d-flex align-items-center " style={{ position: 'relative', top: '5px' }}>
                         <h3>
-                          <strong>20 <span style={{ color: '#808080', fontSize: '20px' }}>%</span></strong>
+                          <strong>{percent} <span style={{ color: '#808080', fontSize: '20px' }}>%</span></strong>
                         </h3>
                       </div>
 
                       <div style={{ width: 40 }}>
-                        <CircularProgressbar styles={buildStyles({ pathColor: `rgba(255, 0, 0, ${percentage / 100})`, textColor: '#000', trailColor: '#d6d6d6', backgroundColor: '#db345e', textSize: '26px', })} value={percentage} text={`${percentage}`} />
+                        <CircularProgressbar styles={buildStyles({ pathColor: `rgba(255, 0, 0, ${percent / 100})`, textColor: '#000', trailColor: '#d6d6d6', backgroundColor: '#db345e', textSize: '26px', })} value={percent} text={`${clientFacture}`} />
                       </div>
                     </div>
 
