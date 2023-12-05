@@ -14,6 +14,7 @@ const Dashboard = () => {
   const [userSession, setUserSession] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(true); 
   
   const updateSidebarState = () => {
     if (window.innerWidth <= 768) {
@@ -32,9 +33,11 @@ const Dashboard = () => {
     const userStatut = onAuthStateChanged(auth, (user) => {
       if (user) {
         setUserSession(user);
+        
       } else {
         navigate("/");
       }
+      
     });
     return () => {
       window.removeEventListener("resize", updateSidebarState);

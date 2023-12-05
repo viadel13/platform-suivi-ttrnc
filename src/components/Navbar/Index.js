@@ -78,7 +78,7 @@ const Navbar = ({ toggleSidebar, isSidebarOpen }) => {
                 <span className="ms-2">Profil</span>
               </Link>
             </li>
-            <li onClick={()=>setShow(true)}>
+            <li onClick={()=>setShow(false)}>
               <Link to="#" className="d-flex align-items-center mt-2" style={{ textDecoration: 'none', color: "white", fontSize: '17px' }}>
                 <IoMdSettings />
                 <span className="ms-2">Setting</span>
@@ -106,7 +106,7 @@ const Navbar = ({ toggleSidebar, isSidebarOpen }) => {
                 <span className="ms-2">Profil</span>
               </Link>
             </li>
-            <li onClick={()=>setShow(true)}>
+            <li onClick={()=>setShow(false)}>
               <Link to="#" className="d-flex align-items-center mt-2" style={{ textDecoration: 'none', color: "white", fontSize: '17px' }}>
                 <IoMdSettings />
                 <span className="ms-2">Setting</span>
