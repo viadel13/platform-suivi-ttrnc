@@ -32,7 +32,7 @@ const ModalSetting = ({ show, setShow }) => {
                 Langue
               </Col>
               <Col xs={6} md={6} lg={6}>
-                <div className="dropdown">
+                <div className="dropdown ">
                   <Link className="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style={{ textDecoration: 'none', color: "white", fontSize: '15px' }}>
                     {valueTheme}
                   </Link>
