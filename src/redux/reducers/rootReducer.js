@@ -7,6 +7,7 @@ const initialState = {
     modalEtat: true,
     modalEtatFournisseur: true,
     datasDoc: [],
+    theme: '',
 }
 
 const platformeSuiviSlice = createSlice({

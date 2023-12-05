@@ -7,7 +7,6 @@ import { TbUsersPlus } from "react-icons/tb";
 import { BsCardList } from "react-icons/bs";
 import { MdAssignmentAdd, MdAddShoppingCart } from "react-icons/md";
 import { FaUsers } from "react-icons/fa";
-import { RiUserAddFill } from "react-icons/ri";
 import { BiLayer } from "react-icons/bi";
 import { LiaUserSolid, LiaSignOutAltSolid } from "react-icons/lia";
 import { FaFileSignature } from "react-icons/fa";
@@ -18,11 +17,15 @@ import { useState } from "react";
 import { useDispatch } from 'react-redux';
 import { modalEtat, modalEtatFournisseur } from "../../redux/reducers/rootReducer";
 import { memo } from "react";
+import { FaUser } from "react-icons/fa";
+import { IoMdSettings } from "react-icons/io";
+import ModalSetting from "../ModalSetting/Index";
 
 
 const Navbar = ({ toggleSidebar, isSidebarOpen }) => {
   console.log('navbar monte');
   const [clickLien, setClickLien] = useState(false);
+  const [show, setShow] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -57,14 +60,32 @@ const Navbar = ({ toggleSidebar, isSidebarOpen }) => {
       <header className={`header ${isSidebarOpen ? 'header-active' : 'header'}`} id="header-lg">
         <div className="header_toggle d-none d-md-none d-lg-block">
           {isSidebarOpen ? (
-            <MdOutlineClose className="header-toggle" onClick={toggleSidebar} />
+            <MdOutlineClose size={30} className="header-toggle" onClick={toggleSidebar} />
           ) : (
-            <AiOutlineMenu className="header-toggle" onClick={toggleSidebar} />
+            <AiOutlineMenu size={30} className="header-toggle" onClick={toggleSidebar} />
           )}
         </div>
 
-        <div className="header_img">
-          <img src={profilUser} alt="profilUtilisateur" />
+        <div className="header_img dropdown">
+          <Link data-bs-toggle="dropdown">
+            <img src={profilUser} alt="profilUtilisateur" />
+          </Link>
+
+          <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-start mt-3 p-2" style={{ transition: '.3s' }}>
+            <li>
+              <Link to="#" className="d-flex align-items-center mt-2" style={{ textDecoration: 'none', color: "white", fontSize: '17px' }}>
+                <FaUser />
+                <span className="ms-2">Profil</span>
+              </Link>
+            </li>
+            <li onClick={()=>setShow(true)}>
+              <Link to="#" className="d-flex align-items-center mt-2" style={{ textDecoration: 'none', color: "white", fontSize: '17px' }}>
+                <IoMdSettings />
+                <span className="ms-2">Setting</span>
+              </Link>
+            </li>
+
+          </ul>
         </div>
       </header>
 
@@ -72,8 +93,27 @@ const Navbar = ({ toggleSidebar, isSidebarOpen }) => {
         <div className="header_toggle" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample" style={{ position: 'relative', left: '-65px' }}>
           <AiOutlineMenu size={30} />
         </div>
-        <div className="header_img">
-          <img src={profilUser} alt="profilUtilisateur" />
+       
+        <div className="header_img dropdown">
+          <Link data-bs-toggle="dropdown">
+            <img src={profilUser} alt="profilUtilisateur" />
+          </Link>
+
+          <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-start mt-3 p-2" style={{ transition: '.3s' }}>
+            <li>
+              <Link to="#" className="d-flex align-items-center mt-2" style={{ textDecoration: 'none', color: "white", fontSize: '17px' }}>
+                <FaUser />
+                <span className="ms-2">Profil</span>
+              </Link>
+            </li>
+            <li onClick={()=>setShow(true)}>
+              <Link to="#" className="d-flex align-items-center mt-2" style={{ textDecoration: 'none', color: "white", fontSize: '17px' }}>
+                <IoMdSettings />
+                <span className="ms-2">Setting</span>
+              </Link>
+            </li>
+
+          </ul>
         </div>
       </header>
 
@@ -195,7 +235,7 @@ const Navbar = ({ toggleSidebar, isSidebarOpen }) => {
           </nav>
         </div>
       </div>
-
+      <ModalSetting show={show} setShow={setShow} />
     </div>
 
   );
