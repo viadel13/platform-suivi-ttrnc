@@ -7,7 +7,7 @@ const initialState = {
     modalEtat: true,
     modalEtatFournisseur: true,
     datasDoc: [],
-    theme: '',
+    theme: 'light',
 }
 
 const platformeSuiviSlice = createSlice({
@@ -27,12 +27,15 @@ const platformeSuiviSlice = createSlice({
         },
         modalEtatFournisseur: (state, action) => {
             state.modalEtatFournisseur = action.payload;
-        }
+        },
+        theme: (state, action) =>{
+            state.theme = action.payload;
+        },
 
     }
 })
 
-export const { datasEnvoi, toggleSide, modalEtat, modalEtatFournisseur, datasDoc } = platformeSuiviSlice.actions;
+export const { datasEnvoi, toggleSide, modalEtat, modalEtatFournisseur, datasDoc, theme } = platformeSuiviSlice.actions;
 
 
 export default platformeSuiviSlice.reducer;

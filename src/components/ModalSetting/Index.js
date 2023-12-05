@@ -7,11 +7,11 @@ import Row from 'react-bootstrap/Row';
 import Modal from 'react-bootstrap/Modal';
 
 const ModalSetting = ({ show, setShow }) => {
-  const[valueTheme, setValueTheme] = useState('Dark')
-  
+  const [valueTheme, setValueTheme] = useState('Francais')
+
   const handleClose = () => setShow(false);
 
-  const handleChange = (value) =>{
+  const handleChange = (value) => {
     setValueTheme(value)
   }
 
@@ -29,17 +29,17 @@ const ModalSetting = ({ show, setShow }) => {
           <Container>
             <Row>
               <Col xs={6} md={6} lg={6}>
-                Theme
+                Langue
               </Col>
               <Col xs={6} md={6} lg={6}>
-                <div class="dropdown">
+                <div className="dropdown">
                   <Link className="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style={{ textDecoration: 'none', color: "white", fontSize: '15px' }}>
                     {valueTheme}
                   </Link>
 
-                  <ul class="dropdown-menu dropdown-menu-dark">
-                    <li><Link className="dropdown-item" to="#" onClick={()=>handleChange('Dark')} style={{ textDecoration: 'none', color: "white", fontSize: '15px' }}>Dark</Link></li>
-                    <li><Link className="dropdown-item" to="#" onClick={()=>handleChange('Light')} style={{ textDecoration: 'none', color: "white", fontSize: '15px' }}>Light</Link></li>
+                  <ul className="dropdown-menu dropdown-menu-dark">
+                    <li><Link className="dropdown-item" to="#" onClick={() => handleChange('Francais')} style={{ textDecoration: 'none', color: "white", fontSize: '15px' }}>Francais</Link></li>
+                    <li><Link className="dropdown-item" to="#" onClick={() => handleChange('Anglais')} style={{ textDecoration: 'none', color: "white", fontSize: '15px' }}>Anglais</Link></li>
                   </ul>
                 </div>
               </Col>

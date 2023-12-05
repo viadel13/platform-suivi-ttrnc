@@ -71,7 +71,7 @@ const Navbar = ({ toggleSidebar, isSidebarOpen }) => {
             <img src={profilUser} alt="profilUtilisateur" />
           </Link>
 
-          <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-start mt-3 p-2" style={{ transition: '.3s' }}>
+          <ul className="dropdown-menu dropdown-menu-dark dropdown-menu-start mt-3 p-2" style={{ transition: '.3s' }}>
             <li>
               <Link to="#" className="d-flex align-items-center mt-2" style={{ textDecoration: 'none', color: "white", fontSize: '17px' }}>
                 <FaUser />
@@ -99,7 +99,7 @@ const Navbar = ({ toggleSidebar, isSidebarOpen }) => {
             <img src={profilUser} alt="profilUtilisateur" />
           </Link>
 
-          <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-start mt-3 p-2" style={{ transition: '.3s' }}>
+          <ul className="dropdown-menu dropdown-menu-dark dropdown-menu-start mt-3 p-2" style={{ transition: '.3s' }}>
             <li>
               <Link to="#" className="d-flex align-items-center mt-2" style={{ textDecoration: 'none', color: "white", fontSize: '17px' }}>
                 <FaUser />

@@ -5,6 +5,7 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
+
 const Login = () => {
   const [menuActif, setMenuActif] = useState("");
   const [email, setEmail] = useState("");

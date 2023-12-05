@@ -6,6 +6,8 @@ import { useState } from "react";
 import Breadcrumb from "../../Breadcrumb/Index";
 import { toast } from "react-toastify";
 
+
+
 const AjoutFacture = () => {
   const [donneesEnvoi, setDonneesEnvoi] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -13,7 +15,6 @@ const AjoutFacture = () => {
   const [loadingFacture, setLoadingFacture] = useState(true);
   const breadcrumbLinks = ['Gestion Factures', 'Ajout facture'];
   const [selectedNiu, setSelectedNiu] = useState("");
-
   const q = query(collection(db, "Clients"));
 
   useEffect(() => {
@@ -107,13 +108,13 @@ const AjoutFacture = () => {
     } else if (isNaN(values.valeurDeclaree)) {
       errors.valeurDeclaree = "Veuillez entrer un nombre valide";
     }
-    
+
     if (!values.droitDouane) {
       errors.droitDouane = "Ce champ est obligatoire";
     } else if (isNaN(values.droitDouane)) {
       errors.droitDouane = "Veuillez entrer un nombre valide";
     }
-    
+
     if (!values.HADCAD) {
       errors.HADCAD = "Ce champ est obligatoire";
     } else if (isNaN(values.HADCAD)) {
@@ -262,6 +263,8 @@ const AjoutFacture = () => {
             <button type="submit" className="btn btn-primary">
               Ajouter facture
             </button>
+          </div>
+          <div>
           </div>
         </form>
       </div>
