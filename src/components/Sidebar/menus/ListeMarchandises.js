@@ -5,7 +5,7 @@ import { db } from "../../../firebase/firebaseConfig";
 import Breadcrumb from "../../Breadcrumb/Index";
 
 const ListeMarchandises = () => {
-  console.log('composant ListeMarchandises est monte')
+  
   const [donneesEnvoi, setDonneesEnvoi] = useState([]);
   const [loading, setLoading] = useState(true);
   const breadcrumbLinks = ["Marchandises", "Liste marchandises"];

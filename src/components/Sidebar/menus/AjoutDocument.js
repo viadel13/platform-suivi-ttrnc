@@ -11,7 +11,6 @@ import { format } from "date-fns";
 import "react-datepicker/dist/react-datepicker.css";
 
 const AjoutDocument = () => {
-  console.log('Ajout Document est monte');
   const breadcrumbLinks = ["Gestion Documents", "Ajout Document"];
   const form1 = useRef(null);
   const form2 = useRef(null);
@@ -185,8 +184,8 @@ const AjoutDocument = () => {
     Promise.all(promises)
       .then(async (downloadURLs) => {
         // Tous les liens de fichiers téléversés ont été récupérés
-        console.log("Liens de téléchargement :", downloadURLs);
-        console.log("mon values", values);
+        // console.log("Liens de téléchargement :", downloadURLs);
+        // console.log("mon values", values);
         try {
           await addDoc(collection(db, "Documents"), {
             NumeroSuivi: values.suivi || '',

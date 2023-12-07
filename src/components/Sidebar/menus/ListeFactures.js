@@ -18,7 +18,7 @@ const ListeFactures = () => {
 
   const q = query(collection(db, "Factures"));
   useEffect(() => {
-
+    
     const unsubscribe = onSnapshot(q, (querySnapchot) => {
       const datas = [];
       querySnapchot.forEach((doc) => {

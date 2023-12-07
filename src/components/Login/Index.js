@@ -1,9 +1,10 @@
 import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword, signInWithCustomToken } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 
 const Login = () => {
@@ -13,7 +14,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const navigate = useNavigate();
-  
+
   useEffect(() => {
     setMenuActif("active");
     return () => {
@@ -23,7 +24,7 @@ const Login = () => {
 
   const formik = useFormik({
     initialValues: {
-      
+
       email: "",
       password: "",
     },
@@ -65,13 +66,22 @@ const Login = () => {
   async function Authentification() {
     try {
       const auth = getAuth();
-      const response = await signInWithEmailAndPassword(auth, email, password);
-      if (response.user) {
-        setTimeout(() => {
-          setLoading(false);
-          navigate("/dashboard", { replace: true });
-        }, 1000);
-      }
+
+      // Effectuez votre appel API pour obtenir le jeton personnalisé côté backend
+      const response = await axios.post("https://api-platform-suivi.onrender.com/signIn", {
+        email: email,
+        password: password,
+      });
+
+      // Récupérez le jeton personnalisé à partir de la réponse du backend
+      const customToken = response.data.customToken;
+
+      // Utilisez le jeton personnalisé pour vous connecter côté client
+      await signInWithCustomToken(auth, customToken);
+
+      setLoading(false);
+      navigate("/dashboard", { replace: true });
+
     } catch (error) {
       setLoading(false);
       if (navigator.onLine === false) {
@@ -90,9 +100,14 @@ const Login = () => {
           }
         );
         setError(false);
-      } else if (error.code === "auth/invalid-login-credentials") {
+      } else if (
+        (error.response && error.response.data.error === "InvalidCredentials") ||
+        (error.response && error.response.data.error === "Invalid email or password")
+      ) {
         setError(true);
-      } else {
+      }
+      
+      else {
         toast.error("Une erreur s' est produite lors de la connexion", {
           position: "top-right",
           autoClose: 5000,
@@ -117,7 +132,7 @@ const Login = () => {
   ) : (
     <>
       <div className="d-flex justify-content-center align-items-center p-2 login flex-column">
-      
+
         <div className="card card-login p-4">
           <div className="d-flex justify-content-center">
             <h1 className="display-4" style={{ fontWeight: "400" }}>

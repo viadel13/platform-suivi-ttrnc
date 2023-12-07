@@ -2,7 +2,7 @@ import { useEffect, useLayoutEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { modalEtat } from "../../../redux/reducers/rootReducer";
 import { useSelector } from "react-redux";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth } from "firebase/auth";
 import { db } from "../../../firebase/firebaseConfig";
 import { doc, setDoc } from "firebase/firestore";
 import { toast } from "react-toastify";
@@ -12,6 +12,10 @@ import PhoneInput from "react-phone-number-input";
 import Breadcrumb from "../../Breadcrumb/Index";
 import ModalAddClient from "../../ModalAddClient/Index";
 import { IoReloadOutline } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import bcrypt from 'bcryptjs';
+
 
 const AjoutClient = () => {
 
@@ -22,20 +26,19 @@ const AjoutClient = () => {
   const dispatch = useDispatch();
   const modalShowEtat = useSelector((state) => state.platformeSuivi.modalEtat);
 
+
+
   const auth = getAuth();
   useEffect(() => {
     const cleanup = () => {
       dispatch(modalEtat(true));
       selectCHoixError(false);
     };
-  
+
     cleanup(); // Appelé au montage
-  
+
     return cleanup; // Appelé au démontage
   }, [dispatch]);
-  
-
-  console.log('error  client' , choixError)
 
   useLayoutEffect(() => {
     if (statutClient === "") {
@@ -126,15 +129,17 @@ const AjoutClient = () => {
 
   async function register() {
     try {
-      const response = await createUserWithEmailAndPassword(
-        auth,
-        formik.values.email,
-        formik.values.password
-      );
-      if (response.user) {
-        const userUID = response.user.uid;
+      const response = await axios.post("https://api-platform-suivi.onrender.com/register", {
+        email: formik.values.email,
+        passowrd: formik.values.password
+      });
+      console.log(response);
+      if (response?.data) {
+        const userUID = response.data.uid;
 
         // Créez un document dans la collection "Clients" avec l'UID de l'utilisateur comme ID
+            // Hasher le mot de passe
+         const hashedPassword = await bcrypt.hash(formik.values.password, 5);
         try {
           const userDocRef = doc(db, "Clients", userUID);
           await setDoc(userDocRef, {
@@ -143,26 +148,40 @@ const AjoutClient = () => {
             sexe: formik.values.sexe,
             nom: formik.values.nom,
             telephone: formik.values.telephone,
-            password: formik.values.password,
+            password: hashedPassword,
             prenom: formik.values.prenom,
             entreprise: formik.values.entreprise,
             siege: formik.values.siege,
             date: obtenirDateActuelle(),
           });
+
+          toast.success("Client cree avec success", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+
         } catch (error) {
+          if (response?.data === "already-authenticated") {
+            formik.handleReset();
+            toast.error("Email existe deja ", {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
+          }
           console.log(error.message);
         }
-
-        toast.success("Client cree avec success", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
       }
     } catch (error) {
       if (navigator.onLine === false) {
@@ -181,19 +200,8 @@ const AjoutClient = () => {
             theme: "light",
           }
         );
-      } else if (error.code === "auth/email-already-in-use") {
-        formik.handleReset();
-        toast.error("Utilisateur existe deja ", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
-      } else {
+      }
+      else {
         toast.error("Une erreur s' est produite lors de la connexion", {
           position: "top-right",
           autoClose: 5000,

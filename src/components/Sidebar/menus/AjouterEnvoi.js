@@ -8,7 +8,6 @@ import Breadcrumb from "../../Breadcrumb/Index";
 import { toast } from "react-toastify";
 
 const AjouterEnvoi = () => {
-  console.log('Ajout envoi monte')
   const uuid = uuidv4().slice(0, 10);
   const [donneesEnvoi, setDonneesEnvoi] = useState([]);
   const [loading, setLoading] = useState(true);

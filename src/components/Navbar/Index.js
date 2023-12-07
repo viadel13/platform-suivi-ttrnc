@@ -23,7 +23,7 @@ import ModalSetting from "../ModalSetting/Index";
 
 
 const Navbar = ({ toggleSidebar, isSidebarOpen }) => {
-  console.log('navbar monte');
+  
   const [clickLien, setClickLien] = useState(false);
   const [show, setShow] = useState(false);
   const dispatch = useDispatch();

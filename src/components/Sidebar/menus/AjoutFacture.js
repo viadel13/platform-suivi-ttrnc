@@ -15,10 +15,12 @@ const AjoutFacture = () => {
   const [loadingFacture, setLoadingFacture] = useState(true);
   const breadcrumbLinks = ['Gestion Factures', 'Ajout facture'];
   const [selectedNiu, setSelectedNiu] = useState("");
+  
   const q = query(collection(db, "Clients"));
-
   useEffect(() => {
+    console.log('useEffect est lancee');
     const unsubscribe = onSnapshot(q, (querySnapchot) => {
+      console.log('unsc est lancee')
       const datas = [];
       querySnapchot.forEach((doc) => {
         datas.push(doc.data());

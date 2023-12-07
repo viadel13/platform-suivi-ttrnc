@@ -30,11 +30,11 @@ const Accueil = () => {
       querySnapchot.forEach((doc) => {
         datas.push(doc.data());
       });
-  
+
       if (JSON.stringify(datas) !== JSON.stringify(donneesClient)) {
         setDonneesClient(datas);
       }
-  
+
       setLoadingCLient(false);
       return () => {
         unsubscribe();
@@ -49,11 +49,11 @@ const Accueil = () => {
       querySnapchot.forEach((doc) => {
         datas.push(doc.data());
       });
-  
+
       if (JSON.stringify(datas) !== JSON.stringify(donneesFournisseur)) {
         setDonneesFournisseur(datas);
       }
-  
+
       setLoadingFournisseur(false);
       return () => {
         unsubscribe();
@@ -104,10 +104,13 @@ const Accueil = () => {
   const calculatePercentage = () => {
     const clientFacture = donneesFacture && donneesFacture.length;
     const percentage = donneesClient && (clientFacture / donneesClient.length) * 100;
-    return isNaN(percentage) ? 0 : percentage; // Assurez-vous de renvoyer un nombre valide
-  };
+    // Utilisez Math.floor pour obtenir la partie entière
+    const wholeNumber = isNaN(percentage) ? 0 : Math.floor(percentage);
 
-  const percent = calculatePercentage();
+    // Assurez-vous de renvoyer un nombre valide (et non une chaîne)
+    return parseFloat(wholeNumber);
+  }
+  const percent = calculatePercentage()
 
   return (
     <div className="container-fluid accueil">
@@ -128,17 +131,17 @@ const Accueil = () => {
                   </div>
                   <div>
                     <p><strong style={{ color: '#808080' }}>Clients</strong></p>
-                    <h3 className="card-title">{loadingClient ?  (
-                      <div className="spinner-border" role="status" style={{color: '#3498db'}}>
-                      <span className="visually-hidden">Loading...</span>
-                    </div>
-                    ) :donneesClient.length !== 0 ? (
+                    <h3 className="card-title">{loadingClient ? (
+                      <div className="spinner-border" role="status" style={{ color: '#3498db' }}>
+                        <span className="visually-hidden">Loading...</span>
+                      </div>
+                    ) : donneesClient.length !== 0 ? (
                       <strong>{donneesClient.length}</strong>
-                    )  : (
+                    ) : (
                       <strong>0</strong>
                     )
-                  
-                  }</h3>
+
+                    }</h3>
                   </div>
                 </div>
               </div>
@@ -179,17 +182,17 @@ const Accueil = () => {
                   </div>
                   <div>
                     <p><strong style={{ color: '#808080' }}>Conteneurs</strong></p>
-                    <h3 className="card-title">{loading ?  (
-                      <div className="spinner-border" role="status" style={{color: `rgb(241, 206, 10)`}}>
-                      <span className="visually-hidden">Loading...</span>
-                    </div>
-                    ) :donneesEnvoi.length !== 0 ? (
+                    <h3 className="card-title">{loading ? (
+                      <div className="spinner-border" role="status" style={{ color: `rgb(241, 206, 10)` }}>
+                        <span className="visually-hidden">Loading...</span>
+                      </div>
+                    ) : donneesEnvoi.length !== 0 ? (
                       <strong>{donneesEnvoi.length}</strong>
-                    )  : (
+                    ) : (
                       <strong>0</strong>
                     )
-                  
-                  }</h3>
+
+                    }</h3>
                   </div>
                 </div>
               </div>
@@ -204,17 +207,17 @@ const Accueil = () => {
                   </div>
                   <div>
                     <p><strong style={{ color: '#808080' }}>Fournisseurs</strong></p>
-                    <h3 className="card-title">{loading ?  (
-                      <div className="spinner-border" role="status" style={{color: `rgb(69, 209, 27)`}}>
-                      <span className="visually-hidden">Loading...</span>
-                    </div>
-                    ) :donneesFournisseur.length !== 0 ? (
+                    <h3 className="card-title">{loading ? (
+                      <div className="spinner-border" role="status" style={{ color: `rgb(69, 209, 27)` }}>
+                        <span className="visually-hidden">Loading...</span>
+                      </div>
+                    ) : donneesFournisseur.length !== 0 ? (
                       <strong>{donneesFournisseur.length}</strong>
-                    )  : (
+                    ) : (
                       <strong>0</strong>
                     )
-                  
-                  }</h3>
+
+                    }</h3>
                   </div>
                 </div>
               </div>
@@ -223,14 +226,14 @@ const Accueil = () => {
         </div>
         <div className="row">
           <div className="col-lg-6 col-md-6 col-sm-6">
-           <div className="card-chart">
+            <div className="card-chart">
               <Chart />
-           </div>
+            </div>
           </div>
           <div className="col-lg-6 col-md-6 col-sm-6">
-           <div className="card-chart">
+            <div className="card-chart">
               <DoughnutChar />
-           </div>
+            </div>
           </div>
         </div>
       </div>

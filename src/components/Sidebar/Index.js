@@ -16,7 +16,7 @@ import { FaFileSignature } from "react-icons/fa";
 import { FaFileContract } from "react-icons/fa";
 
 const Sidebar = ({ isSidebarOpen }) => {
-  console.log('sidebar monte');
+  
   function handleSignOut() {
     setTimeout(async () => {
       try {

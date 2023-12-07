@@ -5,9 +5,8 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 
 const ModalDetailMarchandise = ({ show, datasIndex, onHide }) => {
-  console.log('modal ModalDetailMarchandise est monte')
-  return (
 
+  return (
     <Modal centered show={show} onHide={onHide}>
       <Modal.Header closeButton>
         <Modal.Title>

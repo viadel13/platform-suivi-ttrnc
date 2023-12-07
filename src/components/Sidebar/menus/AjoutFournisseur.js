@@ -33,9 +33,6 @@ const AjoutFournisseur = () => {
     return cleanup; // Appelé au démontage
   }, [dispatch]);
   
-
-  console.log('error  fournisseur' , choixError)
- 
   useLayoutEffect(() => {
     if (statutFournisseur === "") {
       setShowModal(true);

@@ -6,7 +6,7 @@ import Modal from 'react-bootstrap/Modal';
 import Row from 'react-bootstrap/Row';
 
 const MoadalDetailsDoc = (props) => {
-  console.log('Composant modal detail est monte')
+ 
   const datasIndex = props.datasIndex
   // console.log(datasIndex)
   function handleDownload(link){
@@ -43,7 +43,7 @@ const MoadalDetailsDoc = (props) => {
       // Attendre que toutes les promesses de téléchargement soient résolues
       await Promise.all(downloadPromises);
 
-      console.log('Tous les fichiers ont été téléchargés avec succès.');
+      // console.log('Tous les fichiers ont été téléchargés avec succès.');
     } catch (error) {
       console.error('Erreur lors du téléchargement des fichiers:', error);
     }

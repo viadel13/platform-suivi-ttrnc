@@ -7,7 +7,7 @@ import 'animate.css';
 
 
 function App() {
-
+  console.log("%c Welcome to TTNRC", "color:white; background:#0d6dfda4; font-size: 25px; text-align: center; text-transform: uppercase;padding: 3px;");
   return (
     <Provider store={store}>
       <>

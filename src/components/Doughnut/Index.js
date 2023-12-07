@@ -29,25 +29,25 @@ const DoughnutChar = () => {
     });
   }, [q, donneesEnvoi]);
 
-  console.log(donneesEnvoi)
+  // console.log(donneesEnvoi)
 
 let countEntrepriseNonVide = 0;
 let countEntrepriseVide = 0;
 
 const filterClient = donneesEnvoi.filter((i) => {
   if (i.entreprise !== '') {
-    console.log('Entreprise non vide:', i);
+    // console.log('Entreprise non vide:', i);
     countEntrepriseNonVide++;
     return true; // Garder cet élément dans le filtre
   } else {
-    console.log('Entreprise vide:', i);
+    // console.log('Entreprise vide:', i);
     countEntrepriseVide++;
     return false; // Exclure cet élément du filtre
   }
 });
 
-console.log('Nombre d\'éléments avec entreprise non vide:', countEntrepriseNonVide);
-console.log('Nombre d\'éléments avec entreprise vide:', countEntrepriseVide);
+// console.log('Nombre d\'éléments avec entreprise non vide:', countEntrepriseNonVide);
+// console.log('Nombre d\'éléments avec entreprise vide:', countEntrepriseVide);
 
   
 
