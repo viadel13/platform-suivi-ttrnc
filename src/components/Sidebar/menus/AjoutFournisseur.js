@@ -22,16 +22,16 @@ const AjoutFournisseur = () => {
 
 
 
-  useEffect(() => {
-    const cleanup = () => {
-      dispatch(modalEtatFournisseur(true));
-      selectCHoixError(false);
-    };
+  // useEffect(() => {
+  //   const cleanup = () => {
+  //     dispatch(modalEtatFournisseur(true));
+  //     selectCHoixError(false);
+  //   };
   
-    cleanup(); // Appelé au montage
+  //   cleanup(); // Appelé au montage
   
-    return cleanup; // Appelé au démontage
-  }, [dispatch]);
+  //   return cleanup; // Appelé au démontage
+  // }, [dispatch]);
   
   useLayoutEffect(() => {
     if (statutFournisseur === "") {

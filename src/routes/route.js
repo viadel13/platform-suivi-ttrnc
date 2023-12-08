@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useSelector } from "react-redux";
 import Login from "../components/Login/Index";
 import Accueil from "../components/Sidebar/menus/Accueil";
 import Dashboard from "../components/Dashboard/Index";
@@ -14,29 +15,45 @@ import AjoutFournisseur from "../components/Sidebar/menus/AjoutFournisseur";
 import ListeFournisseurs from "../components/Sidebar/menus/ListeFournisseurs";
 import AjoutFacture from "../components/Sidebar/menus/AjoutFacture";
 import ListeFactures from "../components/Sidebar/menus/ListeFactures";
+import Hello from "../componentsClient/Hello";
 
 const Root = () => {
+
+  const isAdmin = useSelector((state) => state.platformeSuivi.Admin);
+
+  console.log(isAdmin)
+
+  const adminRoutes = (
+    <>
+      <Route index element={<Accueil />} />
+      <Route path="listeEnvois" element={<ListeEnvois />} />
+      <Route path="ajouterEnvoi" element={<AjouterEnvoi />} />
+      <Route path="listMarchandises" element={<ListeMarchandises />} />
+      <Route path="addMarchandise" element={<AjouterMarchandise />} />
+      <Route path="ajoutClient" element={<AjoutClient />} />
+      <Route path="listeClients" element={<ListeClients />} />
+      <Route path="ajoutFournisseur" element={<AjoutFournisseur />} />
+      <Route path="listeFournisseurs" element={<ListeFournisseurs />} />
+      <Route path="ajoutDocument" element={<AjoutDocument />} />
+      <Route path="listeDocuments" element={<ListeDocuments />} />
+      <Route path="ajoutFacture" element={<AjoutFacture />} />
+      <Route path="listeFactures" element={<ListeFactures />} />
+    </>
+  )
+
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/dashboard" element={<Dashboard />} >
-          <Route index element={<Accueil />} />
-          <Route path="listeEnvois" element={<ListeEnvois />} />
-          <Route path="ajouterEnvoi" element={<AjouterEnvoi />} />
-          <Route path="listMarchandises" element={<ListeMarchandises />} />
-          <Route path="addMarchandise" element={<AjouterMarchandise />} />
-          <Route path="ajoutClient" element={<AjoutClient />} />
-          <Route path="listeClients" element={<ListeClients />} />
-          <Route path="ajoutFournisseur" element={<AjoutFournisseur />} />
-          <Route path="listeFournisseurs" element={<ListeFournisseurs />} />
-          <Route path="ajoutDocument" element={<AjoutDocument />} />
-          <Route path="listeDocuments" element={<ListeDocuments />} />
-          <Route path="ajoutFacture" element={<AjoutFacture />} />
-          <Route path="listeFactures" element={<ListeFactures />} />
+          {
+            isAdmin ? adminRoutes : <Route path="hello" element={<Hello />} />
+          }
+
         </Route>
+
       </Routes>
-   
+
     </Router>
   );
 };

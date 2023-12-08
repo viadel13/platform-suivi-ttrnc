@@ -1,11 +1,13 @@
 import { useCallback, useEffect, useState } from "react";
 import Navbar from "../Navbar/Index";
+import NavbarClient from '../../componentsClient/Navbar/Index';
 import Sidebar from "../Sidebar/Index";
 import { Outlet } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from '../../firebase/firebaseConfig';
 import { useDispatch } from "react-redux";
+import { Admin } from "../../redux/reducers/rootReducer";
 import { toggleSide } from "../../redux/reducers/rootReducer";
 
 const Dashboard = () => {
@@ -18,7 +20,7 @@ const Dashboard = () => {
   const [isAdmin, setIsAdmin] = useState(false);
 
   const updateSidebarState = () => {
-    if (window.innerWidth <= 768) {
+    if (window.innerWidth <= 768 && isAdmin ) {
       setIsSidebarOpen(false);
       const bodypd = document.getElementById("body-pd");
       bodypd.classList.remove("body-pd");
@@ -49,8 +51,10 @@ const Dashboard = () => {
 
         if (userType === 'admin') {
           setIsAdmin(true);
+          dispatch(Admin(true));
         } else {
           setIsAdmin(false);
+          dispatch(Admin(false));
         }
 
         setIsLoading(false);
@@ -98,8 +102,8 @@ const Dashboard = () => {
 
       ) : (
         <>
-
-          <p>Bonjour</p>
+         <NavbarClient />
+         <Outlet />
         </>
       )}
     </>

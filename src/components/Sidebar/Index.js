@@ -34,7 +34,7 @@ const Sidebar = ({ isSidebarOpen }) => {
   return (
     <div className={`l-navbar d-none d-lg-block ${isSidebarOpen ? "showDash" : ""}`} id="nav-bar" >
    
-        <nav className="navbar p-0">
+        <nav className="navbar navbar-side  p-0">
         <Scrollbars autoHide>
           <div className="navbar-conteneur">
             <div className="TitleAppli" style={{display: !isSidebarOpen &&  "flex" , flexDirection: !isSidebarOpen && "column" , alignItems: !isSidebarOpen && "center"}}>

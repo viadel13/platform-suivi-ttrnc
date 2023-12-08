@@ -1,7 +1,7 @@
 import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { getAuth, signInWithEmailAndPassword, signInWithCustomToken } from "firebase/auth";
+import { getAuth, signInWithCustomToken, signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
@@ -22,6 +22,16 @@ const Login = () => {
     };
   }, []);
 
+  useEffect(()=>{
+    handleSignOut();
+  
+  },[])
+
+  const auth = getAuth();
+  
+  async function handleSignOut() {
+      await signOut(auth);
+  }
   const formik = useFormik({
     initialValues: {
 

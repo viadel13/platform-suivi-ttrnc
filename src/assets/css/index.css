@@ -101,7 +101,7 @@ a {
 	display:block;
 }
 
-.navbar {
+.navbar-side  {
     height: 100vh;
     display: flex;
     flex-direction: column;

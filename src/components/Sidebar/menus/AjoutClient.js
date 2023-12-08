@@ -26,19 +26,16 @@ const AjoutClient = () => {
   const dispatch = useDispatch();
   const modalShowEtat = useSelector((state) => state.platformeSuivi.modalEtat);
 
+  // useEffect(() => {
+  //   const cleanup = () => {
+  //     dispatch(modalEtat(true));
+  //     selectCHoixError(false);
+  //   };
 
+  //   cleanup(); // Appelé au montage
 
-  const auth = getAuth();
-  useEffect(() => {
-    const cleanup = () => {
-      dispatch(modalEtat(true));
-      selectCHoixError(false);
-    };
-
-    cleanup(); // Appelé au montage
-
-    return cleanup; // Appelé au démontage
-  }, [dispatch]);
+  //   return cleanup; // Appelé au démontage
+  // }, [dispatch]);
 
   useLayoutEffect(() => {
     if (statutClient === "") {
