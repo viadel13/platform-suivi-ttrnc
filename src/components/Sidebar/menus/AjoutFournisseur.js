@@ -11,6 +11,7 @@ import PhoneInput from "react-phone-number-input";
 import Breadcrumb from "../../Breadcrumb/Index";
 import ModalAddFournisseur from "../../ModalAddFournisseur/Index";
 import { IoReloadOutline } from "react-icons/io5";
+import { useMediaQuery } from 'react-responsive';
 
 const AjoutFournisseur = () => {
   const breadcrumbLinks = ["Gestion Fournisseurs", "Ajout Fournisseur"];
@@ -20,18 +21,21 @@ const AjoutFournisseur = () => {
   const dispatch = useDispatch();
   const modalShowEtat = useSelector((state) => state.platformeSuivi.modalEtatFournisseur);
 
+  const isMediumScreen = useMediaQuery({
+    query: '(max-width: 767px)'
+  });
+
+  const isTablet = useMediaQuery({
+    query: '(min-width: 768px) and (max-width: 1023px)'
+  });
 
 
-  // useEffect(() => {
-  //   const cleanup = () => {
-  //     dispatch(modalEtatFournisseur(true));
-  //     selectCHoixError(false);
-  //   };
-  
-  //   cleanup(); // Appelé au montage
-  
-  //   return cleanup; // Appelé au démontage
-  // }, [dispatch]);
+  useEffect(() => {
+    if(!isMediumScreen && !isTablet){
+      dispatch(modalEtatFournisseur(true));
+    }
+    selectCHoixError(false);
+  }, [dispatch, isMediumScreen, isTablet]);
   
   useLayoutEffect(() => {
     if (statutFournisseur === "") {

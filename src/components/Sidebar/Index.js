@@ -30,7 +30,7 @@ const Sidebar = ({ isSidebarOpen }) => {
       }
     }, 1000);
   }
-
+  
   return (
     <div className={`l-navbar d-none d-lg-block ${isSidebarOpen ? "showDash" : ""}`} id="nav-bar" >
    

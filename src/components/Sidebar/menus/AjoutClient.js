@@ -15,7 +15,7 @@ import { IoReloadOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import bcrypt from 'bcryptjs';
-
+import { useMediaQuery } from 'react-responsive';
 
 const AjoutClient = () => {
 
@@ -26,16 +26,21 @@ const AjoutClient = () => {
   const dispatch = useDispatch();
   const modalShowEtat = useSelector((state) => state.platformeSuivi.modalEtat);
 
-  // useEffect(() => {
-  //   const cleanup = () => {
-  //     dispatch(modalEtat(true));
-  //     selectCHoixError(false);
-  //   };
+  const isMediumScreen = useMediaQuery({
+    query: '(max-width: 767px)'
+  });
 
-  //   cleanup(); // Appelé au montage
+  const isTablet = useMediaQuery({
+    query: '(min-width: 768px) and (max-width: 1023px)'
+  });
 
-  //   return cleanup; // Appelé au démontage
-  // }, [dispatch]);
+
+  useEffect(() => {
+    if(!isMediumScreen && !isTablet){
+      dispatch(modalEtat(true));
+    }
+    selectCHoixError(false);
+  }, [dispatch, isMediumScreen, isTablet]);
 
   useLayoutEffect(() => {
     if (statutClient === "") {
