@@ -9,6 +9,7 @@ import { auth } from '../../firebase/firebaseConfig';
 import { useDispatch } from "react-redux";
 import { Admin } from "../../redux/reducers/rootReducer";
 import { toggleSide } from "../../redux/reducers/rootReducer";
+import Accueil from "../../componentsClient/Accueil/Index";
 
 const Dashboard = () => {
 
@@ -102,7 +103,7 @@ const Dashboard = () => {
 
       ) : (
         <>
-         <NavbarClient />
+         <Accueil />
          <Outlet />
         </>
       )}
