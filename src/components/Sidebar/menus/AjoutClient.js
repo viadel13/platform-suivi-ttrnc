@@ -14,7 +14,7 @@ import ModalAddClient from "../../ModalAddClient/Index";
 import { IoReloadOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import bcrypt from 'bcryptjs';
+// import bcrypt from 'bcryptjs';
 import { useMediaQuery } from 'react-responsive';
 
 const AjoutClient = () => {
@@ -141,7 +141,7 @@ const AjoutClient = () => {
 
         // Créez un document dans la collection "Clients" avec l'UID de l'utilisateur comme ID
             // Hasher le mot de passe
-         const hashedPassword = await bcrypt.hash(formik.values.password, 5);
+        //  const hashedPassword = await bcrypt.hash(formik.values.password, 5);
         try {
           const userDocRef = doc(db, "Clients", userUID);
           await setDoc(userDocRef, {
@@ -150,7 +150,7 @@ const AjoutClient = () => {
             sexe: formik.values.sexe,
             nom: formik.values.nom,
             telephone: formik.values.telephone,
-            password: hashedPassword,
+            password: formik.values.password,
             prenom: formik.values.prenom,
             entreprise: formik.values.entreprise,
             siege: formik.values.siege,
