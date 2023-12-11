@@ -11,6 +11,7 @@ const AjouterEnvoi = () => {
   const uuid = uuidv4().slice(0, 10);
   const [donneesEnvoi, setDonneesEnvoi] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedClient, setSelectedClient] = useState("");
   const breadcrumbLinks = ['Gestion des Envois', 'Ajout un envoi'];
 
   const q = query(collection(db, "Clients"));
@@ -42,18 +43,21 @@ const AjouterEnvoi = () => {
 
   const initialValues = {
     client: "",
+    email: "",
     nomProduit: "",
     quantite: "",
     categorie: "",
     poids: "",
     volume: "",
     prix: "",
+  
 
   };
 
   const onSubmit = async (values) => {
     await addDoc(collection(db, "DatasEnvoi"), {
       client: values.client,
+      email: values.email,
       nomProduit: values.nomProduit,
       quantite: values.quantite,
       categorie: values.categorie,
@@ -117,6 +121,22 @@ const AjouterEnvoi = () => {
     validate,
   });
 
+  const handleClientChange = (e) => {
+    const selectedClient = e.target.value;
+
+    // Mettez à jour le state avec le NIU sélectionné
+    setSelectedClient(selectedClient);
+
+    // Obtenez le nom correspondant au NIU sélectionné
+    const selectedClientData = donneesEnvoi.find((data) => data.nom === selectedClient);
+
+    // Mettez à jour le champ "nom" dans formik avec le nom correspondant
+    formik.setFieldValue("email", selectedClientData ? selectedClientData.email : "");
+
+    // Appelez handleChange de formik pour traiter les validations, etc.
+    formik.handleChange(e);
+  };
+
   return (
     <div className="container-fluid ajoutEnvoi">
 
@@ -137,7 +157,7 @@ const AjouterEnvoi = () => {
                 <select
                   className="form-select"
                   aria-label="Default select example"
-                  onChange={formik.handleChange}
+                  onChange={handleClientChange}
                   value={formik.values.client}
                   name="client"
                   id="client"
@@ -152,6 +172,20 @@ const AjouterEnvoi = () => {
                   <div className="text-danger mb-4"><p style={{ fontSize: "15px" }}>{formik.errors.client}</p></div>
                 ) : null}
               </div>
+              {/* <div className="mb-4">
+                <label htmlFor="client" className="form-label">
+                  email
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="email"
+                  name="nom"
+                  onChange={formik.handleChange}
+                  value={formik.values.email}
+                  readOnly
+                />
+              </div> */}
               <div className="mb-3">
                 <label htmlFor="nomProduit" className="form-label">
                   Nom du produit

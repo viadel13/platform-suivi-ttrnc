@@ -9,6 +9,7 @@ const initialState = {
     datasDoc: [],
     theme: 'light',
     Admin: true,
+    userOnline: "",
 }
 
 const platformeSuiviSlice = createSlice({
@@ -35,11 +36,14 @@ const platformeSuiviSlice = createSlice({
         Admin: (state, action) =>{
             state.Admin = action.payload;
         },
+        userOnline: (state, action) =>{
+            state.userOnline = action.payload;
+        },
 
     }
 })
 
-export const { datasEnvoi, toggleSide, modalEtat, modalEtatFournisseur, datasDoc, theme, Admin } = platformeSuiviSlice.actions;
+export const { datasEnvoi, toggleSide, modalEtat, modalEtatFournisseur, datasDoc, theme, Admin, userOnline } = platformeSuiviSlice.actions;
 
 
 export default platformeSuiviSlice.reducer;

@@ -1,48 +1,141 @@
 import { Bar } from 'react-chartjs-2';
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from '../../firebase/firebaseConfig';
+import { useEffect, useState } from 'react';
+import { collection, query, onSnapshot, where } from "firebase/firestore";
+import { db } from '../../firebase/firebaseConfig';
+import { useSelector } from 'react-redux';
 import ChartJS, { CategoryScale, LinearScale, PointElement, BarElement, LineElement } from 'chart.js/auto';
 
 const LineChartClient = () => {
-  const options = {
-    indexAxis: 'y', // Spécifiez que l'axe avec des libellés personnalisés est l'axe Y
-    scales: {
-      x: {
-        type: 'category',
-        grid: {
-          display: false,
-        },
-      },
-      y: {
-        beginAtZero: true,
-        ticks: {
-          stepSize: 1,
-        },
-        labels: ['GH', 'PAD', 'PMD', 'BMD', 'CAO', 'CPD', 'CYP'],
+ const user = useSelector((state) => state.platformeSuivi.userOnline);
+ const [donneesEnvoi, setDonneesEnvoi] = useState([]);
+ const [loading, setLoading] = useState(true);
+  console.log(user)
+ console.log(donneesEnvoi)
+
+ const q = query(collection(db, "DatasEnvoi"), where("email", "==", `${user.email}`));
+ useEffect(() => {
+  const unsubscribe = onSnapshot(q, (querySnapchot) => {
+    const datas = [];
+    querySnapchot.forEach((doc) => {
+      datas.push(doc.data());
+    });
+
+    if (JSON.stringify(datas) !== JSON.stringify(donneesEnvoi)) {
+      setDonneesEnvoi(datas);
+    }
+
+    setLoading(false);
+    return () => {
+      unsubscribe();
+    };
+  });
+}, [q, donneesEnvoi]);
+
+console.log(donneesEnvoi)
+
+const labelEnvois = donneesEnvoi && donneesEnvoi.map(i=>i.nomProduit);
+const dataLabelEnvois = donneesEnvoi && donneesEnvoi.map(i=>i.etat);
+
+const options = {
+  scales: {
+    x: {
+      type: 'category',
+      grid: {
+        display: false,
       },
     },
-    maintainAspectRatio: false,
-  };
+    y: {
+      beginAtZero: true,
+      ticks: {
+        stepSize: 1,
+        callback: function (value, index, values) {
+          switch (value) {
+            case 1:
+              return 'PAD';
+            case 2:
+              return 'BMD';
+            case 3:
+              return 'PMD';
+            case 4:
+              return 'A quai';
+            case 5:
+              return 'dédouanement';
+            case 6:
+              return 'Sortie port';
+            case 7:
+              return 'En transit';
+            case 8:
+              return 'Livraison partielle';
+            case 9:
+              return 'Livraison totale';
+            default:
+              return value;
+          }
+        },
+      },
+    },
+  },
+  maintainAspectRatio: false,
+  plugins: {
+    legend: {
+      display: false, // Masque la légende complète
+    },
+    tooltip: {
+      callbacks: {
+        label: function (context) {
+          // Utilisez context.raw pour obtenir la valeur brute (le chiffre)
+          const rawValue = context.raw;
+          
+          // Utilisez la même logique de switch pour obtenir le nom correspondant
+          switch (rawValue) {
+            case 1:
+              return 'PAD';
+            case 2:
+              return 'BMD';
+            case 3:
+              return 'PMD';
+            case 4:
+              return 'A quai';
+            case 5:
+              return 'dédouanement';
+            case 6:
+              return 'Sortie port';
+            case 7:
+              return 'En transit';
+            case 8:
+              return 'Livraison partielle';
+            case 9:
+              return 'Livraison totale';
+            default:
+              return rawValue;
+          }
+        },
+      },
+    },
+  },
+};
 
 
   const data = {
-    labels: ["lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi", "dimanche"],
+    labels: labelEnvois,
     datasets: [
       {
-        label: 'conteneur entres',
-        data: [1, 2, 3, 4, 5, 6, 7], 
+        data: dataLabelEnvois, 
         backgroundColor: 'rgba(255, 159, 64, 0.2)',
         borderColor: 'rgba(255, 159, 64)',
         borderWidth: 1,
         barThickness: 40,
       },
-      // {
-      //   type: 'line',
-      //   label: 'Clients inscrits',
-      //   data:  [10, 8, 5, 4, 11, 16, 20], 
-      //   borderColor: 'rgba(54, 162, 235, 1)',
-      //   borderWidth: 3,
-      //   fill: false,
-      //   yAxisID: 'y',
-      // },
+      {
+        type: 'line',
+        data:  dataLabelEnvois, 
+        borderColor: 'rgba(54, 162, 235, 1)',
+        borderWidth: 3,
+        fill: false,
+        yAxisID: 'y',
+      },
     ],
   };
 

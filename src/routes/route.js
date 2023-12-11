@@ -20,9 +20,7 @@ import Hello from "../componentsClient/Hello";
 const Root = () => {
 
   const isAdmin = useSelector((state) => state.platformeSuivi.Admin);
-
-  console.log(isAdmin)
-
+  
   const adminRoutes = (
     <>
       <Route index element={<Accueil />} />

@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useState } from "react";
 import { db } from "../../../firebase/firebaseConfig";
-import { collection, query, onSnapshot } from "firebase/firestore";
+import { collection, query, onSnapshot, updateDoc, doc, where, getDocs } from "firebase/firestore";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import Breadcrumb from "../../Breadcrumb/Index";
 import { useSelector } from "react-redux";
@@ -35,6 +35,31 @@ const ListeEnvois = () => {
       };
     });
   }, [q, donneesEnvoi]);
+
+  const handleEtatChange = async (e, IdEnvoi) => {
+    const nouvelEtat = parseInt(e.target.value);
+    // Effectuer une recherche pour vérifier si IdEnvoi correspond à un numéro spécifique
+    const q = query(collection(db, "DatasEnvoi"), where("numeroSuivi", "==", `${IdEnvoi}`));
+    const querySnapshot = await getDocs(q);
+    if (querySnapshot.docs.length > 0) {
+      // Le document avec IdEnvoi et email correspondant existe, mettez à jour l'état
+      const docRef = querySnapshot.docs[0].ref;
+      try {
+        await updateDoc(docRef, {
+          etat: nouvelEtat,
+        });
+        // La mise à jour dans Firestore a réussi
+      } catch (error) {
+        console.error('Erreur lors de la mise à jour de l\'état dans Firestore :', error);
+      }
+    } else {
+      // Aucun document trouvé avec IdEnvoi et email correspondant
+      console.error('Aucun document trouvé avec IdEnvoi et email correspondant');
+    }
+
+
+  };
+
 
   return (
     <div className="container-fluid ListeEnvoi">
@@ -126,18 +151,20 @@ const ListeEnvois = () => {
                           <select
                             className="form-select text-center"
                             aria-label="Default select example"
+                            value={i.etat}
+                            onChange={(e) => handleEtatChange(e, i.numeroSuivi)}
                             style={{ border: "none" }}
                           >
 
-                            <option value="4">PAD </option>
-                            <option value="4">BMD </option>
-                            <option value="4">PMD </option>
+                            <option value="1">PAD </option>
+                            <option value="2">BMD </option>
+                            <option value="3">PMD </option>
                             <option value="4">A quai </option>
-                            <option value="1">En attente de dédouanement </option>
-                            <option value="1">Sortie du port </option>
-                            <option value="2">En transit </option>
-                            <option value="3">En livraison partielle</option>
-                            <option value="3">En livraison totale</option>
+                            <option value="5">En attente de dédouanement </option>
+                            <option value="6">Sortie du port </option>
+                            <option value="7">En transit </option>
+                            <option value="8">En livraison partielle</option>
+                            <option value="9">En livraison totale</option>
 
 
                           </select>
@@ -192,19 +219,22 @@ const ListeEnvois = () => {
                                     }}
                                   >
                                     <select
-                                      className="form-select"
+                                      className="form-select text-center"
                                       aria-label="Default select example"
+                                      value={i.etat}
+                                      onChange={(e) => handleEtatChange(e, i.numeroSuivi)}
                                       style={{ border: "none" }}
                                     >
-                                      <option value="4">PAD </option>
-                                      <option value="4">BMD </option>
-                                      <option value="4">PMD </option>
+
+                                      <option value="1">PAD </option>
+                                      <option value="2">BMD </option>
+                                      <option value="3">PMD </option>
                                       <option value="4">A quai </option>
-                                      <option value="1">En attente de dédouanement </option>
-                                      <option value="1">Sortie du port </option>
-                                      <option value="2">En transit </option>
-                                      <option value="3">En livraison partielle</option>
-                                      <option value="3">En livraison totale</option>
+                                      <option value="5">En attente de dédouanement </option>
+                                      <option value="6">Sortie du port </option>
+                                      <option value="7">En transit </option>
+                                      <option value="8">En livraison partielle</option>
+                                      <option value="9">En livraison totale</option>
                                     </select>
                                   </td>
                                 </tr>

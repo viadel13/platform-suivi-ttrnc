@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from '../../firebase/firebaseConfig';
 import { useDispatch } from "react-redux";
-import { Admin } from "../../redux/reducers/rootReducer";
+import { Admin, userOnline } from "../../redux/reducers/rootReducer";
 import { toggleSide } from "../../redux/reducers/rootReducer";
 import Accueil from "../../componentsClient/Accueil/Index";
 
@@ -46,8 +46,7 @@ const Dashboard = () => {
     const userStatut = onAuthStateChanged(auth, (user) => {
       if (user) {
         setUserSession(user);
-        console.log(user);
-
+        dispatch(userOnline(user));
         const userType = getUserType(user);
 
         if (userType === 'admin') {
