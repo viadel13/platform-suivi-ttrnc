@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
 import Navbar from "../Navbar/Index";
-import NavbarClient from '../../componentsClient/Navbar/Index';
 import Sidebar from "../Sidebar/Index";
 import { Outlet } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -46,7 +45,7 @@ const Dashboard = () => {
     const userStatut = onAuthStateChanged(auth, (user) => {
       if (user) {
         setUserSession(user);
-        dispatch(userOnline(user));
+        dispatch(userOnline(user.email));
         const userType = getUserType(user);
 
         if (userType === 'admin') {

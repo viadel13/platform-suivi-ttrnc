@@ -3,36 +3,11 @@ import { Link } from 'react-router-dom'
 import { FaUser } from "react-icons/fa";
 import { BiExit } from "react-icons/bi";
 import { getAuth, signOut } from "firebase/auth";
-import { collection, getDocs } from "firebase/firestore";
-import {db} from '../../firebase/firebaseConfig'
-import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { memo } from 'react';
 
-const Navbar = () => {
+
+const Navbar = ({displayName}) => {
   const auth = getAuth();
-  const [userData, setUserData] = useState(null);
-  const userOnline = useSelector((state) => state.platformeSuivi.userOnline);
-
-  const usersCollectionRef = collection(db, "Clients");
-
-  const fetchData = async () => {
-    try {
-      const querySnapshot = await getDocs(usersCollectionRef);
-      querySnapshot.forEach((doc) => {
-        const data = doc.data();
-        if (userOnline.email === data.email) {
-          setUserData(data);
-        }
-      });
-    } catch (error) {
-      console.error("Erreur lors de la récupération des données : ", error);
-    }
-  };
-  useEffect(() => {
-    fetchData ();
-  }, []);
-
-  console.log(userData)
 
   async function handleSignOut() {
     await signOut(auth);
@@ -65,8 +40,8 @@ const Navbar = () => {
 
             </ul>
           </div>
-          <Link style={{ textDecoration: 'none', fontSize: '16px', color: 'white' }}>
-            <span className='ms-2'>{userData && userData.prenom}</span>
+          <Link to="#" style={{ textDecoration: 'none', fontSize: '16px', color: 'white' }}>
+            <span className='ms-2'>{displayName}</span>
           </Link>
         </div>
 
@@ -76,4 +51,4 @@ const Navbar = () => {
   )
 }
 
-export default Navbar
+export default  memo(Navbar)

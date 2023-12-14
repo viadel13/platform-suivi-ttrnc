@@ -12,8 +12,9 @@ const Hash = () => {
 
   return (
     <div>
-      <input type="text" value={pass} onChange={(e) => setPass(e.target.value)} />
+      
       <br /><br />
+      <input type="text" value={pass} onChange={(e)=>e.target.value} />
       <button onClick={hash}>Generer pass</button><br /> <br />
 
       <input type="text" value={passHash} readOnly />

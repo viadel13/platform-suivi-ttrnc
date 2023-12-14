@@ -1,40 +1,28 @@
 import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { getAuth, signInWithCustomToken, signOut } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import axios from "axios";
 
 
 const Login = () => {
-  const [menuActif, setMenuActif] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    setMenuActif("active");
-    return () => {
-      setMenuActif("");
-    };
-  }, []);
-
   useEffect(()=>{
     handleSignOut();
-  
   },[])
 
   const auth = getAuth();
-  
   async function handleSignOut() {
       await signOut(auth);
   }
   const formik = useFormik({
     initialValues: {
-
       email: "",
       password: "",
     },
@@ -69,31 +57,21 @@ const Login = () => {
 
   useEffect(() => {
     if (password && email) {
-      Authentification();
+      Login();
     }
   }, [password, email]);
 
-  async function Authentification() {
+  async function Login () {
     try {
-      const auth = getAuth();
-
-      // Effectuez votre appel API pour obtenir le jeton personnalisé côté backend
-      const response = await axios.post("https://api-platform-suivi.onrender.com/signIn", {
-        email: email,
-        password: password,
-      });
-
-      // Récupérez le jeton personnalisé à partir de la réponse du backend
-      const customToken = response.data.customToken;
-
-      // Utilisez le jeton personnalisé pour vous connecter côté client
-      await signInWithCustomToken(auth, customToken);
-
-      setLoading(false);
-      navigate("/dashboard", { replace: true });
-
+      const response = await signInWithEmailAndPassword(auth, email, password)
+      if(response){
+        console.log(response);
+        setLoading(false);
+        navigate("/dashboard", { replace: true });
+      }
     } catch (error) {
       setLoading(false);
+      const errorCode = error.code;
       if (navigator.onLine === false) {
         // Pas de connexion Internet
         toast.error(
@@ -110,13 +88,21 @@ const Login = () => {
           }
         );
         setError(false);
-      } else if (
-        (error.response && error.response.data.error === "InvalidCredentials") ||
-        (error.response && error.response.data.error === "Invalid email or password")
-      ) {
-        setError(true);
+      } else if (errorCode === "auth/invalid-login-credentials"){
+         toast.warning(
+          "Informations incorrectes.",
+          {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          }
+        );
       }
-      
       else {
         toast.error("Une erreur s' est produite lors de la connexion", {
           position: "top-right",
@@ -132,6 +118,7 @@ const Login = () => {
       }
     }
   }
+
 
   const showLogin = loading ? (
     <div className="d-flex justify-content-center align-items-center p-2 login flex-column">

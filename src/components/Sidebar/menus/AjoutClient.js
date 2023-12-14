@@ -22,7 +22,8 @@ const AjoutClient = () => {
   const breadcrumbLinks = ["Gestion Clients", "Ajout un client"];
   const [showModal, setShowModal] = useState(false);
   const [statutClient, setStatutClient] = useState("");
-  const [choixError, selectCHoixError] = useState(false);
+  const [choixError, setCHoixError] = useState(false);
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const modalShowEtat = useSelector((state) => state.platformeSuivi.modalEtat);
 
@@ -36,22 +37,22 @@ const AjoutClient = () => {
 
 
   useEffect(() => {
-    if(!isMediumScreen && !isTablet){
+    if (!isMediumScreen && !isTablet) {
       dispatch(modalEtat(true));
     }
-    selectCHoixError(false);
+    setCHoixError(false);
   }, [dispatch, isMediumScreen, isTablet]);
 
   useLayoutEffect(() => {
     if (statutClient === "") {
       setShowModal(true);
     } else if (statutClient === "close") {
-      selectCHoixError(true);
+      setCHoixError(true);
     } else {
       setShowModal(false);
-      selectCHoixError(false);
+      setCHoixError(false);
     }
-  }, [statutClient, setShowModal, selectCHoixError]);
+  }, [statutClient, setShowModal, setCHoixError]);
 
   const obtenirDateActuelle = () => {
     const date = new Date();
@@ -74,6 +75,7 @@ const AjoutClient = () => {
     },
 
     onSubmit: (values) => {
+      setLoading(true)
       register();
       formik.handleReset();
     },
@@ -133,14 +135,15 @@ const AjoutClient = () => {
     try {
       const response = await axios.post("https://api-platform-suivi.onrender.com/register", {
         email: formik.values.email,
-        passowrd: formik.values.password
+        password: formik.values.password,
+        phone: formik.values.telephone,
+        prenom: formik.values.prenom,
       });
-      console.log(response);
       if (response?.data) {
         const userUID = response.data.uid;
-
+        setLoading(false);
         // Créez un document dans la collection "Clients" avec l'UID de l'utilisateur comme ID
-            // Hasher le mot de passe
+        // Hasher le mot de passe
         //  const hashedPassword = await bcrypt.hash(formik.values.password, 5);
         try {
           const userDocRef = doc(db, "Clients", userUID);
@@ -169,6 +172,7 @@ const AjoutClient = () => {
           });
 
         } catch (error) {
+          setLoading(false);
           if (response?.data === "already-authenticated") {
             formik.handleReset();
             toast.error("Email existe deja ", {
@@ -182,10 +186,26 @@ const AjoutClient = () => {
               theme: "light",
             });
           }
+       
+          if (response?.data === "phone-number-already-in-use") {
+            formik.handleReset();
+            toast.error("Numero telephone existe deja ", {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
+          }
           console.log(error.message);
         }
+      
       }
     } catch (error) {
+      setLoading(false);
       if (navigator.onLine === false) {
         // Pas de connexion Internet
 
@@ -619,7 +639,11 @@ const AjoutClient = () => {
           </div>
           <div className="d-flex justify-content-center">
             <button type="submit" className="btn btn-primary mt-4">
-              Ajouter Client
+              {!loading ? "Ajouter Client" : (
+                <div className="spinner-border text-light" role="status">
+                  <span className="visually-hidden">Loading...</span>
+                </div>
+              )}
             </button>
           </div>
         </form>

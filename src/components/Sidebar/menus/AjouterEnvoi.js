@@ -50,8 +50,6 @@ const AjouterEnvoi = () => {
     poids: "",
     volume: "",
     prix: "",
-  
-
   };
 
   const onSubmit = async (values) => {
@@ -65,6 +63,7 @@ const AjouterEnvoi = () => {
       volume: values.volume,
       prix: values.prix,
       numeroSuivi: `${uuid}`,
+      etat: 1,
       date: obtenirDateActuelle(),
     });
     formik.handleReset();

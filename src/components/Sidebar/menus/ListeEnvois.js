@@ -4,6 +4,7 @@ import { collection, query, onSnapshot, updateDoc, doc, where, getDocs } from "f
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import Breadcrumb from "../../Breadcrumb/Index";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 
 const ListeEnvois = () => {
@@ -11,6 +12,7 @@ const ListeEnvois = () => {
   const [donneesEnvoi, setDonneesEnvoi] = useState([]);
   const [loading, setLoading] = useState(true);
   const breadcrumbLinks = ["Gestion des Envois", "Liste des envois"];
+  const [deviseMonnaie, setDeviseMonnaie] = useState('$');
   const toggleSidebar = useSelector((state) => state.platformeSuivi.toggleSidebar);
 
   // const [collapseShow, setCollapseShow] = useState(false);
@@ -143,7 +145,26 @@ const ListeEnvois = () => {
                         </td>
                         <td className="d-none d-md-table-cell">{i.poids}Kg</td>
                         <td className="d-none d-lg-table-cell">{i.volume}{i.volume && 'm³'}</td>
-                        <td className="d-none d-lg-table-cell">{i.prix}$</td>
+                        <td className="d-none d-lg-table-cell">
+                          {i.prix}
+                          <span className="dropdown">
+                            <Link className="ms-2" data-bs-toggle="dropdown" style={{ textDecoration: 'none', color: "green", fontSize: '15px' }}>
+                              {deviseMonnaie}
+                            </Link>
+                            <ul className="dropdown-menu dropdown-menu-dark dropdown-menu-start mt-3 p-2" style={{ transition: '.3s' }}>
+                              <li>
+                                <Link to="#" className="d-flex align-items-center mt-2" style={{ textDecoration: 'none', color: "white", fontSize: '15px' }} onClick={() => setDeviseMonnaie('FRCFA')}>
+                                  FRCFA
+                                </Link>
+                              </li>
+                              <li>
+                                <Link to="#" className="d-flex align-items-center mt-2" style={{ textDecoration: 'none', color: "white", fontSize: '15px' }} onClick={() => setDeviseMonnaie('$')}>
+                                  $
+                                </Link>
+                              </li>
+                            </ul>
+                          </span>
+                        </td>
                         <td
                           className="d-none d-lg-table-cell"
                           style={{ width: "290px" }}
@@ -205,7 +226,26 @@ const ListeEnvois = () => {
                                 </tr>
                                 <tr>
                                   <th>Prix</th>
-                                  <td>{i.prix}$</td>
+                                  <td>
+                                    {i.prix}
+                                    <span className="dropdown">
+                                      <Link className="ms-2" data-bs-toggle="dropdown" style={{ textDecoration: 'none', color: "green", fontSize: '15px' }}>
+                                        {deviseMonnaie}
+                                      </Link>
+                                      <ul className="dropdown-menu dropdown-menu-dark dropdown-menu-start mt-3 p-2" style={{ transition: '.3s' }}>
+                                        <li>
+                                          <Link to="#" className="d-flex align-items-center mt-2" style={{ textDecoration: 'none', color: "white", fontSize: '15px' }} onClick={() => setDeviseMonnaie('FRCFA')}>
+                                            FRCFA
+                                          </Link>
+                                        </li>
+                                        <li>
+                                          <Link to="#" className="d-flex align-items-center mt-2" style={{ textDecoration: 'none', color: "white", fontSize: '15px' }} onClick={() => setDeviseMonnaie('$')}>
+                                            $
+                                          </Link>
+                                        </li>
+                                      </ul>
+                                    </span>
+                                  </td>
                                 </tr>
 
                                 <tr>

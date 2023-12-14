@@ -11,10 +11,9 @@ const LineChartClient = () => {
  const user = useSelector((state) => state.platformeSuivi.userOnline);
  const [donneesEnvoi, setDonneesEnvoi] = useState([]);
  const [loading, setLoading] = useState(true);
-  console.log(user)
- console.log(donneesEnvoi)
 
- const q = query(collection(db, "DatasEnvoi"), where("email", "==", `${user.email}`));
+
+ const q = query(collection(db, "DatasEnvoi"), where("email", "==", `${user}`));
  useEffect(() => {
   const unsubscribe = onSnapshot(q, (querySnapchot) => {
     const datas = [];
@@ -33,7 +32,6 @@ const LineChartClient = () => {
   });
 }, [q, donneesEnvoi]);
 
-console.log(donneesEnvoi)
 
 const labelEnvois = donneesEnvoi && donneesEnvoi.map(i=>i.nomProduit);
 const dataLabelEnvois = donneesEnvoi && donneesEnvoi.map(i=>i.etat);

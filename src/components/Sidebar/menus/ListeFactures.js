@@ -70,9 +70,9 @@ const ListeFactures = () => {
       >
         <td className="d-none d-md-table-cell">{i.niu}</td>
         <td>{i.nom}</td>
-        <td>{i.valeurDeclaree}$</td>
-        <td>{i.droitDouane}$</td>
-        <td>{i.HADCAD}$</td>
+        <td>{i.valeurDeclaree}FRCFA</td>
+        <td>{i.droitDouane}FRCFA</td>
+        <td>{i.HADCAD}FRCFA</td>
       </tr>
     )
   })
@@ -111,7 +111,7 @@ const ListeFactures = () => {
                 <th scope="col">Nom</th>
                 <th scope="col">Valeur declaree</th>
                 <th scope="col">Droit douane</th>
-                <th scope="col">HAP-CAD</th>
+                <th scope="col">HAD-CAD</th>
               </tr>
             </thead>
             <tbody>
@@ -126,7 +126,7 @@ const ListeFactures = () => {
               )
                 : donneesEnvoi.length !== 0 ? tableDatas : (
                   <tr>
-                    <td colSpan="4" className="text-center p-4">
+                    <td colSpan="5" className="text-center p-4">
                       Aucune donnée
                     </td>
                   </tr>
