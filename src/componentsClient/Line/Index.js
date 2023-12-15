@@ -1,17 +1,19 @@
 import { Bar } from 'react-chartjs-2';
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from '../../firebase/firebaseConfig';
-import { useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import { collection, query, onSnapshot, where } from "firebase/firestore";
 import { db } from '../../firebase/firebaseConfig';
 import { useSelector } from 'react-redux';
 import ChartJS, { CategoryScale, LinearScale, PointElement, BarElement, LineElement } from 'chart.js/auto';
 
-const LineChartClient = () => {
- const user = useSelector((state) => state.platformeSuivi.userOnline);
+const LineChartClient = ({searchActif, setSearchActif}) => {
+  const user = useSelector((state) => state.platformeSuivi.userOnline);
+  const numero = useSelector((state) => state.platformeSuivi.numeroSuiviSearch.nomProduit);
+  const numeroEtat = useSelector((state) => state.platformeSuivi.numeroSuiviSearch.etat);
+  
  const [donneesEnvoi, setDonneesEnvoi] = useState([]);
  const [loading, setLoading] = useState(true);
-
 
  const q = query(collection(db, "DatasEnvoi"), where("email", "==", `${user}`));
  useEffect(() => {
@@ -117,10 +119,10 @@ const options = {
 
 
   const data = {
-    labels: labelEnvois,
+    labels: searchActif ? [`${numero}`] : labelEnvois,
     datasets: [
       {
-        data: dataLabelEnvois, 
+       data: searchActif ? [`${numeroEtat}`] : dataLabelEnvois, 
         backgroundColor: 'rgba(255, 159, 64, 0.2)',
         borderColor: 'rgba(255, 159, 64)',
         borderWidth: 1,
@@ -128,7 +130,7 @@ const options = {
       },
       {
         type: 'line',
-        data:  dataLabelEnvois, 
+        data: searchActif ? [`${numeroEtat}`] : dataLabelEnvois, 
         borderColor: 'rgba(54, 162, 235, 1)',
         borderWidth: 3,
         fill: false,
@@ -139,9 +141,10 @@ const options = {
 
   return (
     <div style={{ height: '50vh' }} className='px-2 py-4'>
+      {searchActif && <button type="button" className="btn btn-primary mb-4" onClick={()=>setSearchActif(false)}>Voir tous les envois</button>}
       <Bar data={data} options={options} />
     </div>
   );
 }
 
-export default LineChartClient;
+export default memo(LineChartClient);

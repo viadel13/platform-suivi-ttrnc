@@ -20,7 +20,7 @@ const Dashboard = () => {
   const [isAdmin, setIsAdmin] = useState(false);
 
   const updateSidebarState = () => {
-    if (window.innerWidth <= 768 && isAdmin ) {
+    if (window.innerWidth <= 768 && isAdmin) {
       setIsSidebarOpen(false);
       const bodypd = document.getElementById("body-pd");
       bodypd.classList.remove("body-pd");
@@ -62,7 +62,7 @@ const Dashboard = () => {
         navigate("/");
         setIsLoading(false);
       }
-      
+
     });
     return () => {
       window.removeEventListener("resize", updateSidebarState);
@@ -88,7 +88,7 @@ const Dashboard = () => {
   ) : (
 
     <>
-     {isAdmin ? (
+      {isAdmin ? (
         <div className="body">
           <div id="body-pd">
             <Navbar toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
@@ -97,12 +97,13 @@ const Dashboard = () => {
               <Outlet />
             </div>
           </div>
+
         </div>
 
       ) : (
         <>
-         <Accueil />
-         <Outlet />
+          <Accueil />
+          <Outlet />
         </>
       )}
     </>

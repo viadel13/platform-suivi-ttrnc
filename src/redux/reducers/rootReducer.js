@@ -10,6 +10,7 @@ const initialState = {
     theme: 'light',
     Admin: true,
     userOnline: "",
+    numeroSuiviSearch: [],
 }
 
 const platformeSuiviSlice = createSlice({
@@ -39,11 +40,14 @@ const platformeSuiviSlice = createSlice({
         userOnline: (state, action) =>{
             state.userOnline = action.payload;
         },
+        numeroSuiviSearch: (state, action) =>{
+            state.numeroSuiviSearch = action.payload;
+        },
 
     }
 })
 
-export const { datasEnvoi, toggleSide, modalEtat, modalEtatFournisseur, datasDoc, theme, Admin, userOnline } = platformeSuiviSlice.actions;
+export const { datasEnvoi, toggleSide, modalEtat, modalEtatFournisseur, datasDoc, theme, Admin, userOnline, numeroSuiviSearch } = platformeSuiviSlice.actions;
 
 
 export default platformeSuiviSlice.reducer;

@@ -6,7 +6,7 @@ import { getAuth, signOut } from "firebase/auth";
 import { memo } from 'react';
 
 
-const Navbar = ({displayName}) => {
+const Navbar = ({ displayName }) => {
   const auth = getAuth();
 
   async function handleSignOut() {
@@ -25,12 +25,7 @@ const Navbar = ({displayName}) => {
               <img src={profilUser} alt="profilUtilisateur" />
             </Link>
             <ul className="dropdown-menu dropdown-menu-dark dropdown-menu-start mt-3 p-2" style={{ transition: '.3s' }}>
-              <li>
-                <Link to="#" className="d-flex align-items-center mt-2" style={{ textDecoration: 'none', color: "white", fontSize: '17px' }}>
-                  <FaUser />
-                  <span className="ms-2">Profil</span>
-                </Link>
-              </li>
+
               <li>
                 <Link to="#" className="d-flex align-items-center mt-2" style={{ textDecoration: 'none', color: "white" }} onClick={handleSignOut}>
                   <BiExit />
@@ -40,9 +35,7 @@ const Navbar = ({displayName}) => {
 
             </ul>
           </div>
-          <Link to="#" style={{ textDecoration: 'none', fontSize: '16px', color: 'white' }}>
-            <span className='ms-2'>{displayName}</span>
-          </Link>
+          <span className='ms-2' style={{ color: "white" }}>{displayName}</span>
         </div>
 
       </div>
@@ -51,4 +44,4 @@ const Navbar = ({displayName}) => {
   )
 }
 
-export default  memo(Navbar)
+export default memo(Navbar)
