@@ -130,7 +130,7 @@ const AjoutDocument = () => {
       if (file && file.length > 0) {
         Array.from(file).forEach((currentFile, index) => {
           const metadata = {
-            contentType: ' file.type'
+            contentType: 'application/pdf'
           }
 
           const storageRef = ref(storage, currentFile.name);
